@@ -20,5 +20,14 @@ namespace FleetMgmt_Business.Objects {
 
         public string TypeVoertuig { get; set; }
 
+        public Voertuig(Brandstof brandstof, string chassisnummer, string kleur, int aantaldeuren, string merk, string typevoertuig) {
+            this.Brandstof = brandstof;
+            this.Chassisnummer = chassisnummer;
+            this.Kleur = kleur;
+            this.AantalDeuren = aantaldeuren;
+            this.Merk = merk;
+            this.TypeVoertuig = typevoertuig;
+        }
+
     }
 }

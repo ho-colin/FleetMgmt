@@ -15,5 +15,12 @@ namespace FleetMgmt_Business.Objects {
 
         public Bestuurder InBezitVan { get; set; }
 
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan) {
+            this.KaartNummer = kaartnummer;
+            this.GeldigheidsDatum = geldigheidsdatum;
+            this.Pincode = pincode;
+            this.InBezitVan = inbezitvan;
+        }
+
     }
 }
