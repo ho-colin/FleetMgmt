@@ -55,15 +55,13 @@ namespace FleetMgmt_xUnit.Objects
         }
 
         [Fact]
-        public void Test_ZetGeboorteDatum_inValid()
-        {
+        public void Test_ZetGeboorteDatum_inValid() {
             var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", DateTime.MinValue));
             Assert.Equal("Bestuurder: Datum heeft geen geldige waarde!", exc.Message);
         }
 
         [Fact]
-        public void Test_GeboortedatumIsGeenToekomst()
-        {
+        public void Test_GeboortedatumIsGeenToekomst() {
             DateTime dt = new DateTime(2050, 12, 12);
             var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", dt));
             Assert.Equal("Bestuurder: Datum mag niet in de toekomst zijn!", exc.Message);
