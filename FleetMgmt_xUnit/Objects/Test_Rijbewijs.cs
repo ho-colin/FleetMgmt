@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xunit;
 using FleetMgmt_Business.Exceptions;
 using FleetMgmt_Business.Objects;
+using System.Diagnostics;
 
 namespace FleetMgmt_xUnit.Objects
 {
@@ -26,9 +27,11 @@ namespace FleetMgmt_xUnit.Objects
         }
 
         [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
         [InlineData(null)]
         public void Test_ZetCategorie_InValid(string categorie) {
-            Rijbewijs rb = new Rijbewijs(categorie, new DateTime(2019, 03, 13));
+            Rijbewijs rb = new Rijbewijs("B", new DateTime(2019, 03, 13));
             var exc = Assert.Throws<RijbewijsException>(() => rb.ZetCategorie(categorie));
             Assert.Equal("Rijbewijs: Categorienaam mag niet leeg zijn!", exc.Message);
         }

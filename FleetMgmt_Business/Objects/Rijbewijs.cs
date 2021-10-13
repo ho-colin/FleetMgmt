@@ -8,9 +8,9 @@ using FleetMgmt_Business.Exceptions;
 namespace FleetMgmt_Business.Objects {
     public class Rijbewijs {
 
-        public string Categorie { get; set; }
+        public string Categorie { get; private set; }
 
-        public DateTime BehaaldOp { get; set; }
+        public DateTime BehaaldOp { get; private set; }
 
         public Rijbewijs(string categorie, DateTime behaaldop) {
             ZetCategorie(categorie);
