@@ -41,16 +41,14 @@ namespace FleetMgmt_xUnit.Objects
         }
 
         [Fact]
-        public void Test_ZetBehaaldOp_InValid()
-        {
+        public void Test_ZetBehaaldOp_InValid() {
             var date = DateTime.MinValue; 
             var exc = Assert.Throws<RijbewijsException>(() => new Rijbewijs("B", date));
             Assert.Equal("Rijbewijs: Datum heeft geen geldige waarde!", exc.Message);
         }
 
         [Fact]
-        public void Test_ZetBehaaldOpIsGeenToekomst()
-        {
+        public void Test_ZetBehaaldOpIsGeenToekomst() {
             var exc = Assert.Throws<RijbewijsException>(() => new Rijbewijs("B", new DateTime(2030, 10, 12)));
             Assert.Equal("Rijbewijs: Datum mag niet in de toekomst zijn!", exc.Message);
         }
