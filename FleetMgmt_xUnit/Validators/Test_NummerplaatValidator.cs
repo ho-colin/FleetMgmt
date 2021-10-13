@@ -28,5 +28,32 @@ namespace FleetMgmt_xUnit.Validators {
             var ex = Assert.Throws<NummerplaatException>(() => NummerplaatValidator.isGeldig(nummerplaat));
             Assert.Equal("Indexcijfer moet groter zijn dan 0!", ex.Message);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("-ABC-123")]
+        [InlineData("12-ABC-123")]
+        public void Test_Lengte_Invalid(string nummerplaat) {
+            var ex = Assert.Throws<NummerplaatException>(() => NummerplaatValidator.isGeldig(nummerplaat));
+            Assert.Equal("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123", ex.Message);
+        }
+
+        [Theory]
+        [InlineData("1-123-123")]
+        [InlineData("1-AB1-123")]
+        [InlineData("1-12A-123")]
+        public void Test_Letters_Invalid(string nummerplaat) {
+            var ex = Assert.Throws<NummerplaatException>(() => NummerplaatValidator.isGeldig(nummerplaat));
+            Assert.Equal("2e set karakters moeten 3 letters zijn!", ex.Message);
+        }
+
+        [Theory]
+        [InlineData("1-ABC-ABC")]
+        [InlineData("1-ABC-AB1")]
+        [InlineData("1-ABC-12A")]
+        public void Test_Cijfers_Invalid(string nummerplaat) {
+            var ex = Assert.Throws<NummerplaatException>(() => NummerplaatValidator.isGeldig(nummerplaat));
+            Assert.Equal("3e zet karakters moeten 3 cijfers zijn!", ex.Message);
+        }
     }
 }
