@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Exceptions {
-    class NummerplaatException {
+    public class NummerplaatException : Exception {
+
+        public NummerplaatException(string message) : base(message) { }
+
+        public NummerplaatException(string message, Exception innerException) : base(message, innerException) { }
+
     }
 }
