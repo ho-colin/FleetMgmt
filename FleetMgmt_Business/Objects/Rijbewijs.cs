@@ -11,5 +11,10 @@ namespace FleetMgmt_Business.Objects {
 
         public DateTime BehaaldOp { get; set; }
 
+        public Rijbewijs(string categorie, DateTime behaaldop) {
+            this.Categorie = categorie;
+            this.BehaaldOp = behaaldop;
+        }
+
     }
 }
