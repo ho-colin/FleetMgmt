@@ -14,7 +14,7 @@ namespace FleetManagement.Checkers {
             //Lengte belgische nummerplaat = 9 karakters, 1 indexcijfer + 3 letters + 3 cijfers en 2 koppeltekens
             //Voorbeeld geldige nummerplaat = 1-AAA-123
 
-            if (teValideren.Length != nummerplaatLengte) throw new NummerplaatException("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123");
+            if (teValideren == null || teValideren.Length != nummerplaatLengte) throw new NummerplaatException("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123");
 
             //Splitsen opgegeven string door koppelteken
             string[] gesplitstDoorKoppelteken = teValideren.Split('-');
@@ -26,10 +26,10 @@ namespace FleetManagement.Checkers {
             if (indexcijfer < 1) throw new NummerplaatException("Indexcijfer moet groter zijn dan 0!");
 
             //array[1] is 3 letters (A-Z)
-            if (gesplitstDoorKoppelteken[1].Length != 3 || !gesplitstDoorKoppelteken[1].All(char.IsLetter)) throw new NummerplaatException("2e set karakters moeten letters zijn!");
+            if (gesplitstDoorKoppelteken[1].Length != 3 || !gesplitstDoorKoppelteken[1].All(char.IsLetter)) throw new NummerplaatException("2e set karakters moeten 3 letters zijn!");
 
             //array[2] is 3 cijfers (0-9)
-            if (gesplitstDoorKoppelteken[2].Length != 3 || !gesplitstDoorKoppelteken[2].All(char.IsDigit)) throw new NummerplaatException("3e zet karakters moeten cijfers zijn!");
+            if (gesplitstDoorKoppelteken[2].Length != 3 || !gesplitstDoorKoppelteken[2].All(char.IsDigit)) throw new NummerplaatException("3e zet karakters moeten 3 cijfers zijn!");
 
             //Als alle bovenstaande checks kloppen is het een geldige nummerplaat
             return true;
