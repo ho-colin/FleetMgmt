@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FleetManagement.Validators {
+namespace FleetMgmt_Business.Validators {
     public static class RijksregisterValidator {
 
         public static bool isGeldig(string teControleren, DateTime geboorteDatum) {

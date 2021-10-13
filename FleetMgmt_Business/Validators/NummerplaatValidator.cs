@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FleetManagement.Checkers {
+namespace FleetMgmt_Business.Validators {
     public static class NummerplaatValidator {
 
         private static int nummerplaatLengte = 9;
