@@ -28,7 +28,7 @@ namespace FleetMgmt_xUnit.Objects
         [Theory]
         [InlineData(null)]
         public void Test_ZetCategorie_InValid(string categorie) {
-            Rijbewijs rb = new Rijbewijs("", new DateTime(2019, 03, 13));
+            Rijbewijs rb = new Rijbewijs(categorie, new DateTime(2019, 03, 13));
             var exc = Assert.Throws<RijbewijsException>(() => rb.ZetCategorie(categorie));
             Assert.Equal("Rijbewijs: Categorienaam mag niet leeg zijn!", exc.Message);
         }
