@@ -66,5 +66,28 @@ namespace FleetMgmt_xUnit.Objects
             var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", dt));
             Assert.Equal("Bestuurder: Datum mag niet in de toekomst zijn!", exc.Message);
         }
+
+        [Fact]
+        public void Test_UpdateTankkaart_Valid() {
+            Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
+            Tankkaart tk = new Tankkaart("1234", new DateTime(2025, 10, 13), "1236", new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11)));
+            b.updateTankkaart(tk);
+            Assert.True(true);
+        }
+
+        [Fact]
+        public void Test_UpdateTankkaart_InValid() {
+
+        }
+
+        [Fact]
+        public void Test_UpdateVoertuig_Valid() {
+
+        }
+
+        [Fact]
+        public void Test_UpdateVoertuig_InValid() {
+
+        }
     }
 }

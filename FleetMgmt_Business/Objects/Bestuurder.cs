@@ -17,6 +17,10 @@ namespace FleetMgmt_Business.Objects {
 
         public DateTime GeboorteDatum { get; set; }
 
+        public Tankkaart Tankkaart { get; set; }
+
+        public Voertuig Voertuig { get; set; }
+
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) {
             ZetRijksRegisternummer(rijksregisternummer, geboortedatum);
             ZetNaam(naam);
@@ -44,6 +48,26 @@ namespace FleetMgmt_Business.Objects {
             if (geboortedatum.GetHashCode() == 0) throw new BestuurderException("Bestuurder: Datum heeft geen geldige waarde!");
             if(geboortedatum > DateTime.Today) throw new BestuurderException("Bestuurder: Datum mag niet in de toekomst zijn!");
             this.GeboorteDatum = geboortedatum;
+        }
+
+        public void updateTankkaart(Tankkaart tankkaart)
+        {
+            if (tankkaart == null)
+            {
+                this.Tankkaart = null;
+                return;
+            }
+            this.Tankkaart = tankkaart;
+        }
+
+        public void updateVoertuig(Voertuig voertuig)
+        {
+            if (voertuig == null)
+            {
+                this.Voertuig = null;
+                return;
+            }
+            this.Voertuig = voertuig;
         }
 
         public override string ToString() {
