@@ -76,11 +76,6 @@ namespace FleetMgmt_xUnit.Objects
         }
 
         [Fact]
-        public void Test_UpdateTankkaart_InValid() {
-
-        }
-
-        [Fact]
         public void Test_UpdateVoertuig_Valid() {
 
         }
