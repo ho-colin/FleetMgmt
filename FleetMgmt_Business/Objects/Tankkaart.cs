@@ -21,11 +21,14 @@ namespace FleetMgmt_Business.Objects {
         public List<string> Brandstoffen { get; private set; }
 
 
-        public Tankkaart(string kaartnummer, List<string> brandstoffen, DateTime geldigheidsdatum, string pincode) {
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
             zetKaartnummer(kaartnummer);
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
+            updateInBezitVan(inbezitvan);
+
+            zetGeblokkeerd(false);
         }
 
 
