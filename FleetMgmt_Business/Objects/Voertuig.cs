@@ -28,6 +28,6 @@ namespace FleetMgmt_Business.Objects {
             this.Merk = merk;
             this.TypeVoertuig = typevoertuig;
         }
-
+        //check
     }
 }
