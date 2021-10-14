@@ -30,55 +30,73 @@ namespace FleetMgmt_Business.Objects {
 
         public Voertuig(Brandstof brandstof, string chassisnummer, string kleur, int aantaldeuren, string merk, string model, string typevoertuig, string nummerplaat) {
             this.Brandstof = brandstof;
-            ZetChassisnummer(chassisnummer);
-            ZetKleur(kleur);
-            ZetAantalDeuren(aantaldeuren);
-            this.Merk = merk;
-            this.Model = model;
-            this.TypeVoertuig = typevoertuig;
-            ZetNummerplaat(nummerplaat);
+            zetChassisnummer(chassisnummer);
+            zetKleur(kleur);
+            zetAantalDeuren(aantaldeuren);
+            zetMerk(merk);
+            zetModel(model);
+            zetTypeVoertuig(typevoertuig);
+            zetNummerplaat(nummerplaat);
         }
         
-        public void ZetKleur(string kleur)
-        {
-            if (string.IsNullOrWhiteSpace(kleur)) throw new VoertuigException("Voertuig - kleur mag niet leeg zijn");
-            Kleur = kleur;
+        private void zetModel(string model) {
+            if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException("Voertuig - Model mag niet leeg zijn");
+            this.Model = model;
         }
-        public void ZetAantalDeuren(int aantal)
-        {
-            if (aantal < 1) throw new VoertuigException("Voertuig - aantal deuren mag niet minder dan 1 zijn");
-            AantalDeuren = aantal;
+
+        private void zetMerk(string merk) {
+            if (string.IsNullOrWhiteSpace(merk)) throw new VoertuigException("Voertuig - Merk mag niet leeg zijn");
+            this.Merk = merk;
         }
-        public void ZetChassisnummer(string chassisnummer)
-        {
-            ChassisnummerValidator.isGeldig(chassisnummer);
-            Chassisnummer = chassisnummer;
+
+        private void zetTypeVoertuig(string type) {
+            if (string.IsNullOrWhiteSpace(type)) throw new VoertuigException("Voertuig - Type voertuig mag niet leeg zijn");
+            this.TypeVoertuig = type;
         }
-        public void ZetNummerplaat(string nummerplaat)
-        {
-            NummerplaatValidator.isGeldig(nummerplaat);
-            Nummerplaat = nummerplaat;
+
+        private void zetKleur(string kleur){
+            if (string.IsNullOrWhiteSpace(kleur)) {
+                this.Kleur = null;
+            } else this.Kleur = kleur;
         }
-        public void UpdateBestuurder(Bestuurder bestuurder)
-        {
-            if(bestuurder == null)
-            {
-                Bestuurder = null;
+
+        private void zetAantalDeuren(int aantal){
+            if (aantal < 1) {
+                this.AantalDeuren = 0;
+            } else this.AantalDeuren = aantal;
+        }
+
+        private void zetChassisnummer(string chassisnummer){
+            if (ChassisnummerValidator.isGeldig(chassisnummer)) { 
+                this.Chassisnummer = chassisnummer; 
+            }           
+        }
+
+        private void zetNummerplaat(string nummerplaat){
+            if (NummerplaatValidator.isGeldig(nummerplaat)) {
+                this.Nummerplaat = nummerplaat;
             }
-            else 
-            {
-                Bestuurder = bestuurder;
-            }            
         }
-        public void UpdateAantalDeuren(int aantal)
-        {
-            if (aantal < 1) throw new VoertuigException("Voertuig - aantal deuren mag niet minder dan 1 zijn");
-            AantalDeuren = aantal;
+
+
+
+        public void updateBestuurder(Bestuurder bestuurder){
+            if (bestuurder == null) {
+                this.Bestuurder = null;
+            } else this.Bestuurder = bestuurder;            
         }
-        public void UpdateKleur(string kleur)
-        {
-            if (string.IsNullOrWhiteSpace(kleur)) throw new VoertuigException("Voertuig - kleur mag niet leeg zijn");
-            Kleur = kleur;
+
+        public void updateAantalDeuren(int aantal){
+            if(aantal < 1) {
+                this.AantalDeuren = 0;
+            }else this.AantalDeuren = aantal;
+        }
+
+        public void updateKleur(string kleur){
+            if (string.IsNullOrWhiteSpace(kleur)) {
+                this.Kleur = null;
+            }else this.Kleur = kleur;
+
         }
     }
 }
