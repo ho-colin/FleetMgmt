@@ -11,12 +11,12 @@ namespace FleetMgmt_Business.Repos {
         void voegVoertuigToe(Voertuig voertuig);
         void verwijderVoertuig(Voertuig voertuig);
         IEnumerable<Voertuig> toonVoertuigen();
-        void geefVoertuig(Voertuig voertuig);
+        Voertuig geefVoertuig(Voertuig voertuig);
         //void bewerkVoertuig(Voertuig voertuig);
         bool bestaatVoertuig(Voertuig voertuig);
 
-        void updateBestuurder(Voertuig voertuig);
-        void updateAaantalDeuren(Voertuig voertuig);
-        void updateKleur(Voertuig voertuig);
+        void updateBestuurder(Voertuig voertuig, Bestuurder bestuurder);
+        void updateAantalDeuren(Voertuig voertuig, int aantal);
+        void updateKleur(Voertuig voertuig, string kleur);
     }
 }

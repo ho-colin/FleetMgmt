@@ -10,7 +10,7 @@ namespace FleetMgmt_Business.Repos {
         void voegTankkaartToe(Tankkaart tankkaart);
         void verwijderTankkaart(Tankkaart tankkaart);
         IEnumerable<Tankkaart> geefTankkaarten();
-        void geefTankkaart(int id);
+        Tankkaart geefTankkaart(int id);
         //void bewerkTankkaart(Tankkaart tankkaart);
         bool bestaatTankkaart(Tankkaart tankkaart);
 

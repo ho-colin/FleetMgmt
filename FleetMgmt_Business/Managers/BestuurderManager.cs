@@ -10,7 +10,8 @@ using System.Collections;
 
 namespace FleetMgmt_Business.Managers {
     public class BestuurderManager : IBestuurderRepository {
-        public IBestuurderRepository repo;
+
+        private IBestuurderRepository repo;
 
         public BestuurderManager(IBestuurderRepository repo) {
             this.repo = repo;
@@ -34,19 +35,19 @@ namespace FleetMgmt_Business.Managers {
         public void geefBestuurder(int id) {
             if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
             else
-                geefBestuurder(id);
+                repo.geefBestuurder(id);
         }
 
         public IEnumerable<Bestuurder> toonBestuurders() {
-            return toonBestuurders();
+            return repo.toonBestuurders();
         }
 
         public void updateTankkaart(Bestuurder bestuurder, Tankkaart tankkaart) {
-            throw new NotImplementedException();
+                repo.updateTankkaart(bestuurder, tankkaart);      
         }
 
         public void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig) {
-            throw new NotImplementedException();
+            repo.updateVoertuig(bestuurder, voertuig);
         }
 
         public void verwijderBestuurder(Bestuurder bestuurder) {
@@ -59,7 +60,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            throw new NotImplementedException();
+            repo.verwijderRijbewijs(bestuurder, rijbewijs);
         }
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
@@ -72,7 +73,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            throw new NotImplementedException();
+            repo.voegRijbewijsToe(bestuurder, rijbewijs);
         }
     }
 }
