@@ -21,6 +21,8 @@ namespace FleetMgmt_Business.Objects {
 
         public Voertuig Voertuig { get; private set; }
 
+        public List<Rijbewijs> rijbewijzen = new List<Rijbewijs>();
+
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) {
             zetRijksRegisternummer(rijksregisternummer, geboortedatum);
             zetNaam(naam);
@@ -66,8 +68,18 @@ namespace FleetMgmt_Business.Objects {
             this.Voertuig = voertuig;
         }
 
+        public void voegRijbewijsToe(Rijbewijs rijbewijs) {
+            if (rijbewijzen.Contains(rijbewijs)) throw new BestuurderException("Bestuurder: Rijbewijs al in lijst!");
+            rijbewijzen.Add(rijbewijs);
+        }
+
+        public void verwijderRijbewijs(Rijbewijs rijbewijs) {
+            if (!rijbewijzen.Contains(rijbewijs)) throw new BestuurderException("Bestuurder: Rijbewijs niet lijst!");
+            rijbewijzen.Remove(rijbewijs);
+        }
+
         public override string ToString() {
-            return $"Rijksregisternummer: {Rijksregisternummer}\nNaam: {Naam}\nVoornaam: {Voornaam}\nGeboortedatum: {GeboorteDatum}";
+            return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
 
     }

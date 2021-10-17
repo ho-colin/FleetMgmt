@@ -14,7 +14,7 @@ namespace FleetMgmt_Business.Validators {
             //Lengte belgische nummerplaat = 9 karakters, 1 indexcijfer + 3 letters + 3 cijfers en 2 koppeltekens
             //Voorbeeld geldige nummerplaat = 1-AAA-123
 
-            if (teValideren == null || teValideren.Length != nummerplaatLengte) throw new NummerplaatException("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123");
+            if (string.IsNullOrWhiteSpace(teValideren) || teValideren.Length != nummerplaatLengte) throw new NummerplaatException("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123");
 
             //Splitsen opgegeven string door koppelteken
             string[] gesplitstDoorKoppelteken = teValideren.Split('-');

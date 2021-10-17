@@ -13,8 +13,7 @@ namespace FleetMgmt_xUnit.Objects
     public class Test_Voertuig
     {
         [Fact]
-        public void Test_Ctor_Valid()
-        {
+        public void Test_Ctor_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
             Assert.Equal(Brandstof.Elektrisch,v.Brandstof);
             Assert.Equal("1HGBH41JXMN109186",v.Chassisnummer);
@@ -22,97 +21,85 @@ namespace FleetMgmt_xUnit.Objects
             Assert.Equal(5,v.AantalDeuren);
             Assert.Equal("Volkswagen",v.Merk);
             Assert.Equal("Golf",v.Model);
-            Assert.Equal("Hatchback", v.Model);
-            Assert.Equal("1-AAA-123", v.Model);
+            Assert.Equal("Hatchback", v.TypeVoertuig);
+            Assert.Equal("1-AAA-123", v.Nummerplaat);
         }
+
         [Fact]
-        public void Test_ZetKleur_Valid()
-        {
+        public void Test_ZetKleur_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.Equal("Rood", v.Kleur);
+            Assert.Equal("Blauw", v.Kleur);
         }
         [Fact]
-        public void Test_ZetKleur_Invalid()
-        {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123"));
-            Assert.Equal("Voertuig - kleur mag niet leeg zijn", ex.Message);
+        public void Test_ZetKleur_null_Valid(){
+            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", null, 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Assert.Null(v.Kleur);
         }
+
         [Fact]
-        public void Test_ZetAantalDeuren_Valid()
-        {
+        public void Test_ZetAantalDeuren_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.Equal(3, v.AantalDeuren);
+            Assert.Equal(5, v.AantalDeuren);
+        }
+
+        [Fact]
+        public void Test_ZetAantalDeuren_0_Valid(){
+            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 0, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Assert.Equal(0, v.AantalDeuren);
         }
         [Fact]
-        public void Test_ZetAantalDeuren_Invalid()
-        {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123"));
-            Assert.Equal("Voertuig - aantal deuren mag niet minder dan 1 zijn", ex.Message);
-        }
-        [Fact]
-        public void Test_ZetChassisnummer_Valid()
-        {
+        public void Test_ZetChassisnummer_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.Equal("2WVU52KCMN2182877", v.Chassisnummer);
+            Assert.Equal("1HGBH41JXMN109186", v.Chassisnummer);
         }
+
+        [Fact]
+        public void Test_ZetNummerplaat_Valid(){
+            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Assert.Equal("1-AAA-123", v.Nummerplaat);
+        }
+
         [Theory]
-        [InlineData("1IOQH41JXMN109186")]
+        [InlineData("")]
         [InlineData(null)]
-        [InlineData("1HGBH41JXMN10")]
-        [InlineData("1HGBH41JXMN109186WV5867")]
-        [InlineData("1hgBH41JXMN109186")]
-        public void Test_ZetChassisnummer_Invalid(string chassisnummer)
-        {
-            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.False(false);
+        [InlineData(" ")]
+        public void Test_zetNummerplaat_null_Invalid(string nummerplaat){
+            var ex = Assert.Throws<NummerplaatException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", nummerplaat));
+            Assert.Equal("Nummerplaat moet 9 karakters lang zijn, Voorbeeld: 1-AAA-123", ex.Message);
         }
+
         [Fact]
-        public void Test_ZetNummerplaat_Valid()
-        {
-            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.Equal("2 - BBB - 321", v.Nummerplaat);
-        }
-        [Theory]
-        [InlineData("A-ABC-123")]
-        [InlineData(null)]
-        [InlineData("0-ABC-123")]
-        [InlineData("1-123-123")]
-        [InlineData("1-ABC-ABC")]
-        public void Test_ZetNummerplaat_Invalid(string nummerplaat)
-        {
-            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
-            Assert.False(false);
-        }
-        [Fact]
-        public void Test_UpdateBestuurder()
-        {
+        public void Test_UpdateBestuurder(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Colpaert", "Pieter", new DateTime(1990, 02, 27));
+            v.updateBestuurder(b);
             Assert.Equal(b, v.Bestuurder);
         }
+
         [Fact]
-        public void Test_UpdateAantalDeuren_Valid()
-        {
+        public void Test_UpdateAantalDeuren_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            v.updateAantalDeuren(3);
             Assert.Equal(3, v.AantalDeuren);
         }
+
         [Fact]
-        public void Test_UpdateAantalDeuren_Invalid()
-        {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123"));
-            Assert.Equal("Voertuig - aantal deuren mag niet minder dan 1 zijn", ex.Message);
+        public void Test_UpdateAantalDeuren_0_Valid(){
+            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 0, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Assert.Equal(0, v.AantalDeuren);
         }
+
         [Fact]
-        public void Test_UpdateKleur_Valid()
-        {
+        public void Test_UpdateKleur_Valid(){
             Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            v.updateKleur("Rood");
             Assert.Equal("Rood", v.Kleur);
         }
+
         [Fact]
-        public void Test_UpdateKleur_Invalid()
-        {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123"));
-            Assert.Equal("Voertuig - kleur mag niet leeg zijn", ex.Message);
+        public void Test_UpdateKleur_null_Valid(){
+            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", null, 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Assert.Null(v.Kleur);
         }
 
     }

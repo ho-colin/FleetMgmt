@@ -59,6 +59,10 @@ namespace FleetMgmt_Business.Objects {
             } else throw new TankkaartException("Brandstof staat al in lijst!");
         }
 
+        public void updatePincode(string pincode) {
+            this.zetPincode(pincode);
+        }
+
 
         private void zetBrandstoffen(List<string> brandstoffen) {
             if(brandstoffen == null) return;
