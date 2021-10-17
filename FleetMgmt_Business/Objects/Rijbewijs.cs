@@ -13,16 +13,16 @@ namespace FleetMgmt_Business.Objects {
         public DateTime BehaaldOp { get; private set; }
 
         public Rijbewijs(string categorie, DateTime behaaldop) {
-            ZetCategorie(categorie);
-            ZetBehaaldOp(behaaldop);
+            zetCategorie(categorie);
+            zetBehaaldOp(behaaldop);
         }
 
-        public void ZetCategorie(string categorie) {
+        public void zetCategorie(string categorie) {
             if (string.IsNullOrWhiteSpace(categorie)) throw new RijbewijsException("Rijbewijs: Categorienaam mag niet leeg zijn!");
             this.Categorie = categorie;
         }
 
-        public void ZetBehaaldOp(DateTime behaaldop) {
+        public void zetBehaaldOp(DateTime behaaldop) {
             //Een ongeldige datum heeft altijd een hashcode 0, wanneer de datum dus de hashcode 0 heeft dan is hij ongeldig!
             if (behaaldop.GetHashCode() == 0) throw new RijbewijsException("Rijbewijs: Datum heeft geen geldige waarde!");
             if (behaaldop > DateTime.Now) throw new RijbewijsException("Rijbewijs: Datum mag niet in de toekomst zijn!");

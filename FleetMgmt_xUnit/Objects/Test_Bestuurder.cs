@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Exceptions;
+using FleetMgmt_Business.Objects;
 
 namespace FleetMgmt_xUnit.Objects
 {
@@ -23,7 +23,6 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetNaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            b.ZetNaam("Gheysens");
             Assert.Equal("Gheysens", b.Naam);
         }
 
@@ -36,7 +35,6 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetVoornaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            b.ZetVoornaam("Louis");
             Assert.Equal("Louis", b.Voornaam);
         }
 
@@ -49,7 +47,6 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetGeboorteDatum_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            b.ZetGeboorteDatum(new DateTime(1996, 06, 05));
             Assert.Equal(new DateTime(1996, 06, 05), b.GeboorteDatum);
 
         }
@@ -73,16 +70,6 @@ namespace FleetMgmt_xUnit.Objects
             Tankkaart tk = new Tankkaart("1234", new DateTime(2025, 10, 13), "1236", new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11)), null);
             b.updateTankkaart(tk);
             Assert.True(true);
-        }
-
-        [Fact]
-        public void Test_UpdateVoertuig_Valid() {
-
-        }
-
-        [Fact]
-        public void Test_UpdateVoertuig_InValid() {
-
         }
     }
 }

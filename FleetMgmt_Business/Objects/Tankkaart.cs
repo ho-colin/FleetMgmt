@@ -51,7 +51,7 @@ namespace FleetMgmt_Business.Objects {
             this.GeldigheidsDatum = geldigheidsdatum;
         }
 
-        public void VoegBrandstofToe(string brandstof) {
+        public void voegBrandstofToe(string brandstof) {
             if (this.Brandstoffen == null) {
                 zetBrandstoffen(new List<String>() { brandstof });
             } else if (!this.Brandstoffen.Contains(brandstof)) {

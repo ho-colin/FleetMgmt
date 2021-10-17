@@ -22,35 +22,35 @@ namespace FleetMgmt_Business.Objects {
         public Voertuig Voertuig { get; private set; }
 
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) {
-            ZetRijksRegisternummer(rijksregisternummer, geboortedatum);
-            ZetNaam(naam);
-            ZetVoornaam(voornaam);
-            ZetGeboorteDatum(geboortedatum);
+            zetRijksRegisternummer(rijksregisternummer, geboortedatum);
+            zetNaam(naam);
+            zetVoornaam(voornaam);
+            zetGeboorteDatum(geboortedatum);
         }
 
-        private  void ZetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {
+        private void zetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {
             RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum);
             this.Rijksregisternummer = rijksregisternummer;
         }
 
-        private  void ZetNaam(string naam) {
+        private void zetNaam(string naam) {
             if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("Bestuurder: naam mag niet leeg zijn!");
             this.Naam = naam;
         }
 
-        private void ZetVoornaam(string voornaam) {
+        private void zetVoornaam(string voornaam) {
             if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: voornaam mag niet leeg zijn!");
             this.Voornaam = voornaam;
         }
 
-        private void ZetGeboorteDatum(DateTime geboortedatum) {
+        private void zetGeboorteDatum(DateTime geboortedatum) {
             //Een ongeldige datum heeft altijd een hashcode 0, wanneer de datum dus de hashcode 0 heeft dan is hij ongeldig!
             if (geboortedatum.GetHashCode() == 0) throw new BestuurderException("Bestuurder: Datum heeft geen geldige waarde!");
             if(geboortedatum > DateTime.Today) throw new BestuurderException("Bestuurder: Datum mag niet in de toekomst zijn!");
             this.GeboorteDatum = geboortedatum;
         }
 
-        public void UpdateTankkaart(Tankkaart tankkaart) {
+        public void updateTankkaart(Tankkaart tankkaart) {
             if (tankkaart == null) {
                 this.Tankkaart = null;
                 return;
@@ -58,7 +58,7 @@ namespace FleetMgmt_Business.Objects {
             this.Tankkaart = tankkaart;
         }
 
-        public void UpdateVoertuig(Voertuig voertuig) {
+        public void updateVoertuig(Voertuig voertuig) {
             if (voertuig == null) {
                 this.Voertuig = null;
                 return;
