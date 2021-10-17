@@ -15,7 +15,7 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_Alles_Valid() {
             Rijbewijs rb = new Rijbewijs("B", new DateTime(2019, 03, 13));
-            Assert.Equal("B", rb.Categorie);
+            Assert.Equal("B", rb.Categorie.ToString());
             Assert.Equal(new DateTime(2019, 03, 13), rb.BehaaldOp);
         }
 
@@ -23,7 +23,7 @@ namespace FleetMgmt_xUnit.Objects
         public void Test_ZetCategorie_Valid() {
             Rijbewijs rb = new Rijbewijs("B", new DateTime(2019, 03, 13));
             rb.zetCategorie("B");
-            Assert.Equal("B", rb.Categorie);
+            Assert.Equal("B", rb.Categorie.ToString());
         }
 
         [Theory]

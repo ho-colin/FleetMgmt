@@ -10,7 +10,8 @@ using System.Collections;
 
 namespace FleetMgmt_Business.Managers {
     public class BestuurderManager : IBestuurderRepository {
-        public IBestuurderRepository repo;
+
+        private IBestuurderRepository repo;
 
         public BestuurderManager(IBestuurderRepository repo) {
             this.repo = repo;
@@ -22,23 +23,31 @@ namespace FleetMgmt_Business.Managers {
                 return true;
         }
 
-        public void bewerkBestuurder(Bestuurder bestuurder) {
-            if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder is null");
-            else if (!repo.bestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
-            else
-                repo.bewerkBestuurder(bestuurder);
-        }
+        //public void bewerkBestuurder(Bestuurder bestuurder) {
+        //    if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
+        //        throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder is null");
+        //    else if (!repo.bestaatBestuurder(bestuurder))
+        //        throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
+        //    else
+        //        repo.bewerkBestuurder(bestuurder);
+        //}
 
         public void geefBestuurder(int id) {
             if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
             else
-                geefBestuurder(id);
+                repo.geefBestuurder(id);
         }
 
         public IEnumerable<Bestuurder> toonBestuurders() {
-            return toonBestuurders();
+            return repo.toonBestuurders();
+        }
+
+        public void updateTankkaart(Bestuurder bestuurder, Tankkaart tankkaart) {
+                repo.updateTankkaart(bestuurder, tankkaart);      
+        }
+
+        public void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig) {
+            repo.updateVoertuig(bestuurder, voertuig);
         }
 
         public void verwijderBestuurder(Bestuurder bestuurder) {
@@ -50,6 +59,10 @@ namespace FleetMgmt_Business.Managers {
                 repo.verwijderBestuurder(bestuurder);
         }
 
+        public void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs) {
+            repo.verwijderRijbewijs(bestuurder, rijbewijs);
+        }
+
         public void voegBestuurderToe(Bestuurder bestuurder) {
             if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
                 throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder is null");
@@ -57,6 +70,10 @@ namespace FleetMgmt_Business.Managers {
                 throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat al");
             else
                 repo.voegBestuurderToe(bestuurder);
+        }
+
+        public void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs) {
+            repo.voegRijbewijsToe(bestuurder, rijbewijs);
         }
     }
 }
