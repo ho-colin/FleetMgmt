@@ -22,7 +22,7 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetCategorie_Valid() {
             Rijbewijs rb = new Rijbewijs("B", new DateTime(2019, 03, 13));
-            rb.ZetCategorie("B");
+            rb.zetCategorie("B");
             Assert.Equal("B", rb.Categorie);
         }
 
@@ -32,14 +32,14 @@ namespace FleetMgmt_xUnit.Objects
         [InlineData(null)]
         public void Test_ZetCategorie_InValid(string categorie) {
             Rijbewijs rb = new Rijbewijs("B", new DateTime(2019, 03, 13));
-            var exc = Assert.Throws<RijbewijsException>(() => rb.ZetCategorie(categorie));
+            var exc = Assert.Throws<RijbewijsException>(() => rb.zetCategorie(categorie));
             Assert.Equal("Rijbewijs: Categorienaam mag niet leeg zijn!", exc.Message);
         }
 
         [Fact]
         public void Test_ZetBehaaldOp_Valid() {
             Rijbewijs rb = new Rijbewijs("B", new DateTime(1996, 06, 05));
-            rb.ZetBehaaldOp(new DateTime(1996, 06, 05));
+            rb.zetBehaaldOp(new DateTime(1996, 06, 05));
             Assert.Equal(new DateTime(1996, 06, 05), rb.BehaaldOp);
         }
 

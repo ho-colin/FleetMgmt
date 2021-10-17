@@ -16,49 +16,47 @@ namespace FleetMgmt_Business.Managers {
             this.repo = repo;
         }
 
-        public bool BestaatBestuurder(Bestuurder bestuurder) {
-            if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - BestaatBestuurder - Bestuurder is null");
-            else if (!repo.BestaatBestuurder(bestuurder)) return false;
+        public bool bestaatBestuurder(Bestuurder bestuurder) {
+            if (!repo.bestaatBestuurder(bestuurder)) return false;
             else
                 return true;
         }
 
-        public void BewerkBestuurder(Bestuurder bestuurder) {
+        public void bewerkBestuurder(Bestuurder bestuurder) {
             if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - BewerkBestuurder - Bestuurder is null");
-            else if (!repo.BestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - BewerkBestuurder - Bestuurder bestaat niet");
+                throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder is null");
+            else if (!repo.bestaatBestuurder(bestuurder))
+                throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
             else
-                repo.BewerkBestuurder(bestuurder);
+                repo.bewerkBestuurder(bestuurder);
         }
 
-        public void GeefBestuurder(int id) {
-            if (id <= 0) throw new BestuurderException("Bestuurdermanager - GeefBestuurder - Bestuurder bestaat niet");
+        public void geefBestuurder(int id) {
+            if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
             else
-                GeefBestuurder(id);
+                geefBestuurder(id);
         }
 
-        public IEnumerable<Bestuurder> ToonBestuurders() {
-            return ToonBestuurders();
+        public IEnumerable<Bestuurder> toonBestuurders() {
+            return toonBestuurders();
         }
 
-        public void VerwijderBestuurder(Bestuurder bestuurder) {
+        public void verwijderBestuurder(Bestuurder bestuurder) {
             if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - VerwijderBestuurder - Bestuurder is null");
-            else if (!repo.BestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - VerwijderBestuurder - Bestuurder bestaat niet");
+                throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder is null");
+            else if (!repo.bestaatBestuurder(bestuurder))
+                throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
             else
-                repo.VerwijderBestuurder(bestuurder);
+                repo.verwijderBestuurder(bestuurder);
         }
 
-        public void VoegBestuurderToe(Bestuurder bestuurder) {
+        public void voegBestuurderToe(Bestuurder bestuurder) {
             if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - VoegBestuurderToe - Bestuurder is null");
-            else if (repo.BestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - VoegBestuurderToe - Bestuurder bestaat al");
+                throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder is null");
+            else if (repo.bestaatBestuurder(bestuurder))
+                throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat al");
             else
-                repo.VoegBestuurderToe(bestuurder);
+                repo.voegBestuurderToe(bestuurder);
         }
     }
 }
