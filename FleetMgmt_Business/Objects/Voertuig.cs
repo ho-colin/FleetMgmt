@@ -78,8 +78,6 @@ namespace FleetMgmt_Business.Objects {
             }
         }
 
-
-
         public void updateBestuurder(Bestuurder bestuurder){
             if (bestuurder == null) {
                 this.Bestuurder = null;
