@@ -23,14 +23,12 @@ namespace FleetMgmt_Business.Managers {
                 return true;
         }
 
-        //public void bewerkBestuurder(Bestuurder bestuurder) {
-        //    if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-        //        throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder is null");
-        //    else if (!repo.bestaatBestuurder(bestuurder))
-        //        throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
-        //    else
-        //        repo.bewerkBestuurder(bestuurder);
-        //}
+        public void bewerkBestuurder(Bestuurder bestuurder) {
+            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
+            else
+                repo.bewerkBestuurder(bestuurder);
+
+        }
 
         public void geefBestuurder(int id) {
             if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
@@ -51,10 +49,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void verwijderBestuurder(Bestuurder bestuurder) {
-            if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder is null");
-            else if (!repo.bestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
+            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
             else
                 repo.verwijderBestuurder(bestuurder);
         }
@@ -64,10 +59,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
-            if (string.IsNullOrEmpty(bestuurder.Voornaam) && string.IsNullOrEmpty(bestuurder.Naam))
-                throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder is null");
-            else if (repo.bestaatBestuurder(bestuurder))
-                throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat al");
+            if (repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat reeds");
             else
                 repo.voegBestuurderToe(bestuurder);
         }
