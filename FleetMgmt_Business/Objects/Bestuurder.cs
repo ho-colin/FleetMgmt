@@ -78,8 +78,6 @@ namespace FleetMgmt_Business.Objects {
             rijbewijzen.Remove(rijbewijs);
         }
 
-        //Override to string method 
-        //DIT IS EEN TEST, DIT STAAT LOS VAN EINDWERK!
         public override string ToString() {
             return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
