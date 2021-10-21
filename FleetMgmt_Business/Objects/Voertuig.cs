@@ -40,17 +40,17 @@ namespace FleetMgmt_Business.Objects {
         }
         
         private void zetModel(string model) {
-            if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException("Voertuig - Model mag niet leeg zijn");
+            if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException("Voertuig : zetModel - Model mag niet leeg zijn");
             this.Model = model;
         }
 
         private void zetMerk(string merk) {
-            if (string.IsNullOrWhiteSpace(merk)) throw new VoertuigException("Voertuig - Merk mag niet leeg zijn");
+            if (string.IsNullOrWhiteSpace(merk)) throw new VoertuigException("Voertuig : zetMerk -  Merk mag niet leeg zijn");
             this.Merk = merk;
         }
 
         private void zetTypeVoertuig(string type) {
-            if (string.IsNullOrWhiteSpace(type)) throw new VoertuigException("Voertuig - Type voertuig mag niet leeg zijn");
+            if (string.IsNullOrWhiteSpace(type)) throw new VoertuigException("Voertuig : zetTypeVoertuig - Type voertuig mag niet leeg zijn");
             this.TypeVoertuig = type;
         }
 
@@ -79,7 +79,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateBestuurder(Bestuurder bestuurder) {
-            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig - Geen verschil");
+            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig : updateBestuurder - Geen verschil");
             bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
         }

@@ -18,19 +18,19 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void zetCategorie(string categorie) {
-            if (string.IsNullOrWhiteSpace(categorie)) throw new RijbewijsException("Rijbewijs: Categorienaam mag niet leeg zijn!");
+            if (string.IsNullOrWhiteSpace(categorie)) throw new RijbewijsException("Rijbewijs : Categorienaam mag niet leeg zijn!");
             try {
                 this.Categorie = (Enums.Rijbewijs)Enum.Parse(typeof(Enums.Rijbewijs), categorie);
             } catch (Exception) {
-                throw new RijbewijsException("Rijbewijs: Rijbewijs niet gevonden!");
+                throw new RijbewijsException("Rijbewijs : Rijbewijs niet gevonden!");
             }
 
         }
 
         public void zetBehaaldOp(DateTime behaaldop) {
             //Een ongeldige datum heeft altijd een hashcode 0, wanneer de datum dus de hashcode 0 heeft dan is hij ongeldig!
-            if (behaaldop.GetHashCode() == 0) throw new RijbewijsException("Rijbewijs: Datum heeft geen geldige waarde!");
-            if (behaaldop > DateTime.Now) throw new RijbewijsException("Rijbewijs: Datum mag niet in de toekomst zijn!");
+            if (behaaldop.GetHashCode() == 0) throw new RijbewijsException("Rijbewijs : Datum heeft geen geldige waarde!");
+            if (behaaldop > DateTime.Now) throw new RijbewijsException("Rijbewijs : Datum mag niet in de toekomst zijn!");
             this.BehaaldOp = behaaldop;
         }
 

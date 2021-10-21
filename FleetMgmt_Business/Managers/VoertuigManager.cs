@@ -18,18 +18,18 @@ namespace FleetMgmt_Business.Managers {
 
         public bool bestaatVoertuig(Voertuig voertuig) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - bestaatVoertuig - Voertuig is null");
+                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager : bestaatVoertuig - Voertuig is null");
                 return repo.bestaatVoertuig(voertuig);
 
             } catch (Exception ex) {
 
-                throw new VoertuigManagerException("VoertuigManager - bestaatVoertuig", ex);
+                throw new VoertuigManagerException("VoertuigManager :  bestaatVoertuig" , ex);
             }
         }
 
         public Voertuig geefVoertuig(Voertuig voertuig) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - geefVoertuig - Voertuig is null");
+                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager : geefVoertuig - Voertuig is null");
                 return repo.geefVoertuig(voertuig);
 
             } catch (Exception ex) {
@@ -50,10 +50,10 @@ namespace FleetMgmt_Business.Managers {
 
         public void updateAantalDeuren(Voertuig voertuig, int aantal) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig bestaat niet");
+                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager : updateAantalDeuren - Voertuig is leeg");
+                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager : updateAantalDeuren - Voertuig bestaat niet");
                 Voertuig dbv = repo.geefVoertuig(voertuig);
-                if (voertuig == dbv) throw new VoertuigManagerException("Voertuigmanager - updateAantalDeuren - Geen verschillen werden toegepast!");
+                if (voertuig == dbv) throw new VoertuigManagerException("Voertuigmanager : updateAantalDeuren - Geen verschillen werden toegepast!");
                 repo.updateAantalDeuren(voertuig, aantal);
 
             } catch (Exception ex) {
@@ -64,10 +64,10 @@ namespace FleetMgmt_Business.Managers {
 
         public void updateBestuurder(Voertuig voertuig, Bestuurder bestuurder) {
             try {
-                if (voertuig == null || bestuurder == null) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig/Bestuurder is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig bestaat niet");
+                if (voertuig == null || bestuurder == null) throw new VoertuigManagerException("VoertuigManager :  updateBestuurder - Voertuig/Bestuurder is leeg");
+                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager :  updateBestuurder - Voertuig bestaat niet");
                 Voertuig dbvr = repo.geefVoertuig(voertuig);
-                if (voertuig == dbvr) throw new VoertuigManagerException("Voertuigmanager - updateBestuurder - Geen verschillen werden toegepast");
+                if (voertuig == dbvr) throw new VoertuigManagerException("Voertuigmanager : updateBestuurder - Geen verschillen werden toegepast");
                 repo.updateBestuurder(voertuig, bestuurder);
 
             } catch (Exception ex) {
@@ -78,10 +78,10 @@ namespace FleetMgmt_Business.Managers {
 
         public void updateKleur(Voertuig voertuig, string kleur) {
             try {
-                if (voertuig == null || kleur == null) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig/Kleur is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig bestaat niet");
+                if (voertuig == null || kleur == null) throw new VoertuigManagerException("VoertuigManager :  updateKleur - Voertuig/Kleur is leeg");
+                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager :  updateKleur - Voertuig bestaat niet");
                 Voertuig dbvrt = repo.geefVoertuig(voertuig);
-                if (voertuig == dbvrt) throw new VoertuigManagerException("Voertuigmanager - updateKleur - Geen verschillen werden toegepast!");
+                if (voertuig == dbvrt) throw new VoertuigManagerException("Voertuigmanager :  updateKleur - Geen verschillen werden toegepast!");
                 repo.updateKleur(voertuig, kleur);
 
             } catch (Exception ex) {
@@ -92,8 +92,8 @@ namespace FleetMgmt_Business.Managers {
 
         public void verwijderVoertuig(Voertuig voertuig) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - verwijderVoertuig - Voertuig is null");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - verwijderVoertuig - Voertuig bestaat niet");
+                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager :  verwijderVoertuig - Voertuig is null");
+                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager :  verwijderVoertuig - Voertuig bestaat niet");
                 repo.verwijderVoertuig(voertuig);
 
             } catch (Exception ex) {
@@ -104,8 +104,8 @@ namespace FleetMgmt_Business.Managers {
 
         public void voegVoertuigToe(Voertuig voertuig) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - voegVoertuigToe - Voertuig is null");
-                if (repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - voegVoertuigToe - Voertuig bestaat al");
+                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager :  voegVoertuigToe - Voertuig is null");
+                if (repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager :  voegVoertuigToe - Voertuig bestaat al");
                 repo.voegVoertuigToe(voertuig);
 
             } catch (Exception ex) {

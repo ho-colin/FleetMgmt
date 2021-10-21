@@ -46,7 +46,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void zetGeldigheidsDatum(DateTime geldigheidsdatum) {
-            if (geldigheidsdatum < DateTime.Now) throw new TankkaartException("Geldigheidsdatum moet groter zijn dan vandaag!");
+            if (geldigheidsdatum < DateTime.Now) throw new TankkaartException(" Tankkaart : zetGeldigheidsDatum - Geldigheidsdatum moet groter zijn dan vandaag!");
 
             this.GeldigheidsDatum = geldigheidsdatum;
         }
@@ -56,7 +56,7 @@ namespace FleetMgmt_Business.Objects {
                 zetBrandstoffen(new List<String>() { brandstof });
             } else if (!this.Brandstoffen.Contains(brandstof)) {
                 this.Brandstoffen.Add(brandstof);
-            } else throw new TankkaartException("Brandstof staat al in lijst!");
+            } else throw new TankkaartException("Tankkaart : voegBrandstofToe - Brandstof staat al in lijst!");
         }
 
         public void updatePincode(string pincode) {
@@ -69,7 +69,7 @@ namespace FleetMgmt_Business.Objects {
             if(this.Brandstoffen == null) {
                 this.Brandstoffen = brandstoffen;
             } else {
-                throw new TankkaartException("Brandstoffen lijst is al aanwezig!");
+                throw new TankkaartException("Tankkaart : zetBrandstoffen - Brandstoffen lijst is al aanwezig!");
             }
         }
 
@@ -80,15 +80,15 @@ namespace FleetMgmt_Business.Objects {
                 return;
             }
 
-            if (pincode.Any(char.IsLetter)) throw new TankkaartException("Pincode mag alleen bestaan uit cijfers!");
+            if (pincode.Any(char.IsLetter)) throw new TankkaartException("Tankkaart : zetPincode - Pincode mag alleen bestaan uit cijfers!");
 
             this.Pincode = pincode;
         }
 
         private void zetKaartnummer(string kaartnummer) {
-            if (string.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Kaartnummer mag niet leeg zijn!");
-            if (kaartnummer.Any(char.IsLetter)) throw new TankkaartException("Kaartnummer mogen alleen getallen zijn!");
-            if (int.Parse(kaartnummer) < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
+            if (string.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Tankkaart : zetKaartNummer - Kaartnummer mag niet leeg zijn!");
+            if (kaartnummer.Any(char.IsLetter)) throw new TankkaartException("Tankkaart : zetKaartNummer - Kaartnummer mogen alleen getallen zijn!");
+            if (int.Parse(kaartnummer) < 1) throw new TankkaartException("Tannkaart : zetKaartNummer - Kaartnummer moet hoger zijn dan 1!");
 
             this.KaartNummer = kaartnummer;
         }

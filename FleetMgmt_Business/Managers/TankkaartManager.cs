@@ -33,13 +33,13 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void updatePincode(Tankkaart tankkaart, string pincode) {
+            if (!repo.bestaatTankkaart(tankkaart)) throw new TankkaartException("TankkaartManager : updatePincode - Tankkaart bestaat niet!");
             repo.updatePincode(tankkaart, pincode);
         }
 
         public void verwijderTankkaart(Tankkaart tankkaart) {
-            if (repo.bestaatTankkaart(tankkaart)) {
-                repo.verwijderTankkaart(tankkaart);
-            } else throw new TankkaartException("TankkaartManager : verwijderTankkaart - Tankkaart bestaat niet!");           
+            if (!repo.bestaatTankkaart(tankkaart)) throw new TankkaartException("TankkaartManager : verwijderTankkaart - Tankkaart bestaat niet!");
+            repo.bestaatTankkaart((tankkaart));
         }
 
         public void voegBrandstofToe(Tankkaart tankkaart, string brandstof) {

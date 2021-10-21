@@ -13,12 +13,11 @@ namespace FleetMgmt_Business.Repos {
         void geefBestuurder(int id);
         void bewerkBestuurder(Bestuurder bestuurder);
         bool bestaatBestuurder(Bestuurder bestuurder);
-
         void updateTankkaart(Bestuurder bestuurder,Tankkaart tankkaart);
         void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig);
-
         void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs);
         void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs);
+        bool heeftRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs);
 
 
     }
