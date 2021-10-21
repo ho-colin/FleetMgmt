@@ -78,11 +78,12 @@ namespace FleetMgmt_Business.Objects {
             }
         }
 
-        public void updateBestuurder(Bestuurder bestuurder){
-            if (bestuurder == null) {
-                this.Bestuurder = null;
-            } else this.Bestuurder = bestuurder;            
+        public void updateBestuurder(Bestuurder bestuurder) {
+            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig - Geen verschil");
+            bestuurder.updateVoertuig(this);
+            this.Bestuurder = bestuurder;
         }
+
 
         public void updateAantalDeuren(int aantal){
             if(aantal < 1) {
@@ -96,5 +97,11 @@ namespace FleetMgmt_Business.Objects {
             }else this.Kleur = kleur;
 
         }
+
+        public override string ToString() {
+            return $"Merk {Merk}\nModel: {Model}\nChassisnummer: {Chassisnummer}\nNummerplaat: {Nummerplaat}\n" +
+                $"Brandstof: {Brandstof}\nType wagen: {TypeVoertuig}\nKleur: {Kleur}\nAantal deuren: {AantalDeuren}";
+        }
+
     }
 }

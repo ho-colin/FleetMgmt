@@ -25,14 +25,12 @@ namespace FleetMgmt_xUnit.Objects {
 
 
         [Theory]
-        [InlineData("1IOQH41JXMN109186", "Volkswagen", "Golf", "Hatchback", "1-AAA-123")]
-        [InlineData("1HGBH41JXMN109186", null, "Golf", "Hatchback", "1-AAA-123")]
-        [InlineData("1HGBH41JXMN109186", "Volkswagen", null, "Hatchback", "1-AAA-123")]
-        [InlineData("1HGBH41JXMN109186", "Volkswagen", "Golf", null, "1-AAA-123")]
-        [InlineData("1HGBH41JXMN109186", "Volkswagen", "Golf", "Hatchback", "B-AAA-123")]
-        public void Test_Ctor_Invalid(string chassisnummer, string merk, string model, string typevoertuig, string nummerplaat) {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, chassisnummer,
-                "Blauw", 5, merk, model, typevoertuig, nummerplaat));
+        [InlineData(null, "Golf", "Hatchback")]
+        [InlineData("Volkswagen", null, "Hatchback")]
+        [InlineData("Volkswagen", "Golf", null)]
+        public void Test_Ctor_Invalid(string merk, string model, string typevoertuig) {
+            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186",
+                "Blauw", 5, merk, model, typevoertuig, "1-AAA-123"));
         }
 
         [Fact]

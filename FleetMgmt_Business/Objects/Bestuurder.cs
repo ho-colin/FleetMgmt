@@ -71,12 +71,11 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateVoertuig(Voertuig voertuig) {
-            if (voertuig == null) {
-                this.Voertuig = null;
-                return;
-            }
+            if (voertuig == Voertuig) throw new BestuurderException("Bestuurder: Geen verschil");
+            voertuig.updateBestuurder(this);
             this.Voertuig = voertuig;
         }
+
 
         public void voegRijbewijsToe(Rijbewijs rijbewijs) {
             if (rijbewijzen.Contains(rijbewijs)) throw new BestuurderException("Bestuurder: Rijbewijs al in lijst!");
