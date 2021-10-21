@@ -52,6 +52,8 @@ namespace FleetMgmt_Business.Managers {
             try {
                 if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig is leeg");
                 if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig bestaat niet");
+                Voertuig dbv = repo.geefVoertuig(voertuig);
+                if (voertuig == dbv) throw new VoertuigManagerException("Voertuigmanager - updateAantalDeuren - Geen verschillen werden toegepast!");
                 repo.updateAantalDeuren(voertuig, aantal);
 
             } catch (Exception ex) {
@@ -64,6 +66,8 @@ namespace FleetMgmt_Business.Managers {
             try {
                 if (voertuig == null || bestuurder == null) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig/Bestuurder is leeg");
                 if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig bestaat niet");
+                Voertuig dbvr = repo.geefVoertuig(voertuig);
+                if (voertuig == dbvr) throw new VoertuigManagerException("Voertuigmanager - updateBestuurder - Geen verschillen werden toegepast");
                 repo.updateBestuurder(voertuig, bestuurder);
 
             } catch (Exception ex) {
@@ -76,6 +80,8 @@ namespace FleetMgmt_Business.Managers {
             try {
                 if (voertuig == null || kleur == null) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig/Kleur is leeg");
                 if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig bestaat niet");
+                Voertuig dbvrt = repo.geefVoertuig(voertuig);
+                if (voertuig == dbvrt) throw new VoertuigManagerException("Voertuigmanager - updateKleur - Geen verschillen werden toegepast!");
                 repo.updateKleur(voertuig, kleur);
 
             } catch (Exception ex) {

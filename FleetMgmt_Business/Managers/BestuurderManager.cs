@@ -41,7 +41,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void updateTankkaart(Bestuurder bestuurder, Tankkaart tankkaart) {
-                repo.updateTankkaart(bestuurder, tankkaart);      
+            repo.updateTankkaart(bestuurder, tankkaart);      
         }
 
         public void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig) {
