@@ -20,7 +20,7 @@ namespace FleetMgmg_Data.Repositories {
         public bool bestaatVoertuig(Voertuig voertuig) {
             SqlConnection conn = getConnection();
 
-            StringBuilder query = new StringBuilder("SELECT * FROM voertuig WHERE " +
+            StringBuilder query = new StringBuilder("SELECT Count(*) FROM voertuig WHERE " +
                 "Chassisnummer=@chassisnummer AND " +
                 "Model=@model "+
                 "Merk=@merk "+
@@ -69,18 +69,7 @@ namespace FleetMgmg_Data.Repositories {
                 try {
                     SqlDataReader reader = cmd.ExecuteReader();
                     reader.Read();
-
-                    Voertuig v = new Voertuig(
-                        (Brandstof) Enum.Parse(typeof(Brandstof), (string) reader["brandstof"]),
-                        (string)reader["chassisnummer"],
-                        (string)reader["kleur"],
-                        (int)reader["AantalDeuren"],
-                        (string)reader["merk"],
-                        (string)reader["model"],
-                        (string)reader["TypeVoertuig"],
-                        (string)reader["nummerplaat"]);
-
-                    return v != null;
+                    return (int)reader[0] > 0;
                 } catch (Exception ex) {
                     throw new VoertuigRepositoryException("Er heeft zich een fout voorgedaan!",ex);
                 }
