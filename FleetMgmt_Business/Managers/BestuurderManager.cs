@@ -18,36 +18,53 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public bool bestaatBestuurder(int id) {
-            if (!repo.bestaatBestuurder(id)) return false;
-            else
-                return true;
+            try {
+                if (!repo.bestaatBestuurder(id)) return false;
+                else
+                    return true;
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: bestaatBestuurder -", ex);
+            }
         }
 
         public void bewerkBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
-            else
-                repo.bewerkBestuurder(bestuurder);
+            try {
+                if (!repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: bewerkBestuurder - Bestuurder bestaat niet");
+                else
+                    repo.bewerkBestuurder(bestuurder);
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: bewerkBestuurder -", ex);
+            }
 
         }
 
         public void geefBestuurder(int id) {
-            if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
-            else
-                repo.geefBestuurder(id);
+            try {
+                if (id <= 0) throw new BestuurderException("BestuurderManager: geefBestuurder - Bestuurder bestaat niet");
+                else
+                    repo.geefBestuurder(id);
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: geefBestuurder -", ex);
+            }
         }
 
-        public IEnumerable<Bestuurder> toonBestuurders() {
-            return repo.toonBestuurders();
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum) {
+            try {
+                return repo.toonBestuurders(rijksregisternummer, naam, voornamam, geboortedatum);
+            }
+            catch (Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: toonBestuurders -", ex);
+            }
         }
 
         public void verwijderBestuurder(int id) {
-            if (!repo.bestaatBestuurder(id)) throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
+            if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
             else
                 repo.verwijderBestuurder(id);
         }
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
-            if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat reeds");
+            if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             else
                 repo.voegBestuurderToe(bestuurder);
         }

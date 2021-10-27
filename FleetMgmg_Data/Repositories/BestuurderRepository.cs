@@ -34,16 +34,107 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public void bewerkBestuurder(Bestuurder bestuurder) {  //NULLABLE, NIETS INVULLEN IS ALLEMAAL!!! VOORBEELD? = LIJN 28!
-            throw new NotImplementedException();
+        public void bewerkBestuurder(Bestuurder bestuurder) {
+            SqlConnection conn = ConnectionClass.getConnection();
+            string query = "UPDATE Bestuurder SET Rijksregisternummer=@Rijksregisternummer, Naam=@Naam, Voornaam=@Voornaam, Geboortedatum=@Geboortedatum WHERE Id=Id";
+            using(SqlCommand comm = conn.CreateCommand()) {
+                conn.Open();
+                try {
+                    comm.Parameters.Add(new SqlParameter("@Rijksregisternummer", System.Data.SqlDbType.NVarChar));
+                    comm.Parameters.Add(new SqlParameter("@Naam", System.Data.SqlDbType.NVarChar));
+                    comm.Parameters.Add(new SqlParameter("@Voornaam", System.Data.SqlDbType.NVarChar));
+                    comm.Parameters.Add(new SqlParameter("@Geboortedatum", System.Data.SqlDbType.Date));
+                    comm.CommandText = query;
+                    comm.Parameters["@Naam"].Value = bestuurder.Voornaam;
+                    comm.Parameters["@Achternaam"].Value = bestuurder.Naam;
+                    comm.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
+                    comm.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
+                }catch(Exception ex) {
+                    throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - Bestuurder werd niet bewerkt!");
+                }
+                finally {
+                    conn.Close();
+                }
+            }
+
         }
 
-        public void geefBestuurder(int id) { // LEFT JOIN 2 maal
-            throw new NotImplementedException();
+        public void geefBestuurder(int id) {
+            SqlConnection conn = ConnectionClass.getConnection();
+            string query = "SELECT b.id,b.naam,b.achternaamb.rijksregisternummer FROM Bestuurder b LEFT JOIN BestuurderRijbewijs br ON b.id = br.Id WHERE Id=@Id";
+            using(SqlCommand cmd = conn.CreateCommand()) {
+                conn.Open();
+                try {
+                    cmd.Parameters.Add(new SqlParameter("@Id", System.Data.SqlDbType.NVarChar));
+                    cmd.CommandText = query;
+                    cmd.Parameters["@Id"].Value = id;
+                }
+                catch(Exception ex) {
+                    throw new BestuurderRepositoryException("BestuurderRepository: geefBestuurder - Bestuurder werd niet gevonden!");
+                }
+                finally {
+                    conn.Close();
+                }
+            }
         }
 
-        public IEnumerable<Bestuurder> toonBestuurders() { //NULLABLE, NIETS INVULLEN IS ALLEMAAL!!! VOORBEELD? = LIJN 28!
-            throw new NotImplementedException();
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum) {
+            List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
+            SqlConnection conn = ConnectionClass.getConnection();
+            StringBuilder query = new StringBuilder("SELECT * FROM Bestuurder");
+
+            bool and = false;
+            bool where = false;
+
+            if (!string.IsNullOrWhiteSpace(rijksregisternummer)) {
+                if (!where) query.Append(" WHERE "); where = true;
+                query.Append(" rijksregisternummer=@Rijksregisternummer");
+                and = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(naam)) {
+                if (!where) query.Append(" WHERE "); where = true;
+                query.Append(" naam=@Naam");
+                and = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(voornamam)) {
+                if (!where) query.Append(" WHERE "); where = true;
+                query.Append(" voornaam=@Voornaam");
+                and = true;
+            }
+
+            if (geboortedatum.GetHashCode() == 0) {
+                if (!where) query.Append(" WHERE "); where = true;
+                query.Append(" geboortedatum=@Geboortedatum");
+                and = true;
+            }
+
+
+            conn.Open();
+
+            using (SqlCommand cmd = conn.CreateCommand()) {
+                cmd.CommandText = query.ToString();
+
+                if (query.ToString().Contains("@Rijksregisternummer")) cmd.Parameters.AddWithValue("@Rijksregisternummer", rijksregisternummer);
+                if (query.ToString().Contains("@Naam")) cmd.Parameters.AddWithValue("@Naam", naam);
+                if (query.ToString().Contains("@Voornaam")) cmd.Parameters.AddWithValue("@Voornaam", voornamam);
+                if (query.ToString().Contains("@Geboortedatum")) cmd.Parameters.AddWithValue("@Geboortedatum", geboortedatum);
+
+                using (SqlDataReader reader = cmd.ExecuteReader()) {
+
+                    if (reader.HasRows) {
+                        while (reader.Read()) {
+                            lijstbestuurder.Add(new Bestuurder((string)reader["Rijksregisternummer"], (string)reader["Naam"], (string)reader["Voornaam"], Convert.ToDateTime(reader["Geboortedatum"])));
+                        }
+                        conn.Close();
+                    }
+                    else throw new BestuurderRepositoryException("BestuurderRepository : toonBestuurder - Geen bestuurders gevonden!");
+                }
+            }
+
+            return lijstbestuurder;
+
         }
 
         public void verwijderBestuurder(int id) {

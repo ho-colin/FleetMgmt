@@ -9,10 +9,12 @@ namespace FleetMgmt_Business.Repos {
     public interface IBestuurderRepository {
         void voegBestuurderToe(Bestuurder bestuurder);
         void verwijderBestuurder(int id);
-        IEnumerable<Bestuurder> toonBestuurders(); //NULLABLE, NIETS INVULLEN IS ALLEMAAL!!! VOORBEELD? = LIJN 28!
-        void geefBestuurder(int id);
-        void bewerkBestuurder(Bestuurder bestuurder);  //NULLABLE, NIETS INVULLEN IS ALLEMAAL!!! VOORBEELD? = LIJN 28!
+        IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum);
+        void geefBestuurder(int id); 
+        void bewerkBestuurder(Bestuurder bestuurder);
         bool bestaatBestuurder(int id);
+
+
 
 
     }
