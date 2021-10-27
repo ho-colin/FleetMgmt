@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 namespace FleetMgmt_Business.Repos {
     public interface ITankkaartRepository {
         void voegTankkaartToe(Tankkaart tankkaart);
-        void verwijderTankkaart(Tankkaart tankkaart);
-        IEnumerable<Tankkaart> geefTankkaarten();
+        void verwijderTankkaart(int id);
+        IEnumerable<Tankkaart> geefTankkaarten(int id, DateTime geldigheidsDatum, string bestuurderId, bool geblokkeerd);
         Tankkaart geefTankkaart(int id);
-        //void bewerkTankkaart(Tankkaart tankkaart);
-        bool bestaatTankkaart(Tankkaart tankkaart);
-
-        void updateInBezitVan(Tankkaart tankkaart, Bestuurder bestuurder);
-        void zetGeblokkeerd(Tankkaart tankkaart, bool geblokkeerd);
-        void zetGeldigheidsDatum(Tankkaart tankkaart, DateTime geldigheidsdatum);
-        void voegBrandstofToe(Tankkaart tankkaart, string brandstof);
-        void updatePincode(Tankkaart tankkaart, string pincode);
+        void bewerkTankkaart(Tankkaart tankkaart);
+        bool bestaatTankkaart(int id);
     }
 }
