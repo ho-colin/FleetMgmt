@@ -79,7 +79,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateBestuurder(Bestuurder bestuurder) {
-            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig - Geen verschil");
+            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
             bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
         }
