@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data {
-    public static class SqlConnString {
+    public static class ConnectionClass {
 
         private static string connectionString = @"HIERKOMT-CONNECTIONSTRING";
 
@@ -16,7 +16,7 @@ namespace FleetMgmg_Data {
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
                 return sqlConnection;
             } catch (Exception ex) {
-                throw new ConnectionException("SqlConnectionClass : ConnectionException - Kon geen verbinding initialiseren!", ex);
+                throw new ConnectionException("ConnectionClass : ConnectionException - Kon geen verbinding initialiseren!", ex);
             }
         }
     }
