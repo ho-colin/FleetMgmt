@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FleetMgmg_Data {
     public static class ConnectionClass {
 
-        private static string connectionString = @"HIERKOMT-CONNECTIONSTRING";
+        public static string connectionString = @"HIERKOMT-CONNECTIONSTRING";
 
         public static SqlConnection getConnection() {
             try {
