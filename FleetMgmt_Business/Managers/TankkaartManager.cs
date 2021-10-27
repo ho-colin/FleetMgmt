@@ -34,7 +34,7 @@ namespace FleetMgmt_Business.Managers {
 
         public Tankkaart geefTankkaart(int id) {
             try {
-                repo.geefTankkaart(id);
+                return repo.geefTankkaart(id);
             } catch (Exception ex) {
                 throw new TankkaartException("TankkaartManager - geefTankkaart",ex);
             }
