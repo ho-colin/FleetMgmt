@@ -17,14 +17,14 @@ namespace FleetMgmt_Business.Managers {
             this.repo = repo;
         }
 
-        public bool bestaatBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) return false;
+        public bool bestaatBestuurder(int id) {
+            if (!repo.bestaatBestuurder(id)) return false;
             else
                 return true;
         }
 
         public void bewerkBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
+            if (!repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
             else
                 repo.bewerkBestuurder(bestuurder);
 
@@ -40,32 +40,16 @@ namespace FleetMgmt_Business.Managers {
             return repo.toonBestuurders();
         }
 
-        public void updateTankkaart(Bestuurder bestuurder, Tankkaart tankkaart) {
-            repo.updateTankkaart(bestuurder, tankkaart);      
-        }
-
-        public void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig) {
-            repo.updateVoertuig(bestuurder, voertuig);
-        }
-
-        public void verwijderBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
+        public void verwijderBestuurder(int id) {
+            if (!repo.bestaatBestuurder(id)) throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
             else
-                repo.verwijderBestuurder(bestuurder);
-        }
-
-        public void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            repo.verwijderRijbewijs(bestuurder, rijbewijs);
+                repo.verwijderBestuurder(id);
         }
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
-            if (repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat reeds");
+            if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat reeds");
             else
                 repo.voegBestuurderToe(bestuurder);
-        }
-
-        public void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            repo.voegRijbewijsToe(bestuurder, rijbewijs);
         }
     }
 }
