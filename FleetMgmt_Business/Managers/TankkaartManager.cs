@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FleetMgmt_Business.Enums;
 
 namespace FleetMgmt_Business.Managers {
     public class TankkaartManager : ITankkaartRepository {
@@ -40,9 +41,9 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten(int id, DateTime geldigheidsDatum, string bestuurderId, bool geblokkeerd) {
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurderId, bool? geblokkeerd, Brandstof? brandstof) {
             try {
-                return repo.geefTankkaarten(id, geldigheidsDatum, bestuurderId, geblokkeerd);
+                return repo.geefTankkaarten(id, geldigheidsDatum, bestuurderId, geblokkeerd, brandstof);
             } catch (Exception ex) {
                 throw new TankkaartException("TankkaartManager - geefTankkaarten",ex);
             }

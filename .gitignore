@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /FleetMgmg_Data/ConnectionClass.cs
 /FleetMgmg_Data/Exceptions/ConnectionException.cs
+/FleetMgmt_Con
