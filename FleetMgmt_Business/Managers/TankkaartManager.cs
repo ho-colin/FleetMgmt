@@ -33,14 +33,6 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public Tankkaart geefTankkaart(int id) {
-            try {
-                return repo.geefTankkaart(id);
-            } catch (Exception ex) {
-                throw new TankkaartException("TankkaartManager - geefTankkaart",ex);
-            }
-        }
-
         public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurderId, bool? geblokkeerd, Brandstof? brandstof) {
             try {
                 return repo.geefTankkaarten(id, geldigheidsDatum, bestuurderId, geblokkeerd, brandstof);

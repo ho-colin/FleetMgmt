@@ -20,9 +20,11 @@ namespace FleetMgmt_Business.Objects {
 
         public List<string> Brandstoffen { get; private set; }
 
-
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
             zetKaartnummer(kaartnummer);
+        }
+
+        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
@@ -59,6 +61,13 @@ namespace FleetMgmt_Business.Objects {
             } else throw new TankkaartException("Brandstof staat al in lijst!");
         }
 
+        public void verwijderBrandstof(string brandstof) {
+            if (this.Brandstoffen == null) throw new TankkaartException("Brandstof lijst is leeg!");
+            if (Brandstoffen.Contains(brandstof)) {
+                Brandstoffen.Remove(brandstof);
+            } else throw new TankkaartException("Brandstof niet gevonden in lijst!");
+        }
+
         public void updatePincode(string pincode) {
             this.zetPincode(pincode);
         }
@@ -93,5 +102,38 @@ namespace FleetMgmt_Business.Objects {
             this.KaartNummer = kaartnummer;
         }
 
+        public override string ToString() {
+
+            StringBuilder print = new StringBuilder($"Id: {this.KaartNummer}, GeldigheidsDatum: {this.GeldigheidsDatum.ToShortDateString()}, Geblokkeerd: {this.Geblokkeerd}");
+
+            if (!string.IsNullOrWhiteSpace(Pincode)) print.Append($", PinCode: {this.Pincode}");
+
+            if (Brandstoffen.Count > 0) {
+                print.Append(", Brandstoffen: ");
+                for (int i = 0; i < this.Brandstoffen.Count; i++) {
+                    if (i > 0 && i < this.Brandstoffen.Count) print.Append(", ");
+                    print.Append(this.Brandstoffen.ElementAt(i));
+                }
+            }
+
+            if (this.InBezitVan != null) print.Append($", Eigenaar: {this.InBezitVan.Id}, {this.InBezitVan.Voornaam} {this.InBezitVan.Naam}");
+            
+
+            return print.ToString();
+        }
+
+        public override bool Equals(object obj) {
+            return obj is Tankkaart tankkaart &&
+                   KaartNummer == tankkaart.KaartNummer &&
+                   GeldigheidsDatum == tankkaart.GeldigheidsDatum &&
+                   Pincode == tankkaart.Pincode &&
+                   EqualityComparer<Bestuurder>.Default.Equals(InBezitVan, tankkaart.InBezitVan) &&
+                   Geblokkeerd == tankkaart.Geblokkeerd &&
+                   EqualityComparer<List<string>>.Default.Equals(Brandstoffen, tankkaart.Brandstoffen);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(KaartNummer, GeldigheidsDatum, Pincode, InBezitVan, Geblokkeerd, Brandstoffen);
+        }
     }
 }
