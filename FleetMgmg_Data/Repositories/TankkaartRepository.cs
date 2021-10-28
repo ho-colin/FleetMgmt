@@ -54,11 +54,6 @@ namespace FleetMgmg_Data.Repositories {
                 }
             }
 
-            //if(tankkaart.InBezitVan != huidigeKaart.InBezitVan) {
-            //    ietsVerandert = true;
-            //    query.Append(" BestuurderId=@bestuurderId ");
-            //}
-
             if(tankkaart.Geblokkeerd != huidigeKaart.Geblokkeerd) {
                 ietsVerandert = true;
                 query.Append(" Geblokkeerd=@geblokkeerd ");
@@ -302,7 +297,7 @@ namespace FleetMgmg_Data.Repositories {
             }
 
             //Als er brandstoffen zijn toegevoegd bij het aanmaken van de tankkaart!
-            if(tankkaart.Brandstoffen.Count > 0) {
+            if(tankkaart.Brandstoffen != null) {
 
                 string tankkaartBrandstofQuery = "INSERT INTO TankkaartBrandstof (TankkaartId,Brandstof) VALUES (@tankkaartid,@brandstof)";
 
@@ -329,5 +324,8 @@ namespace FleetMgmg_Data.Repositories {
 
 
         }
+
+        //TODO
+        //public void bewerkTankkaartBrandstof(List<string> brandstof){}
     }
 }
