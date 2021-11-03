@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace FleetMgmt_Business.Objects {
     public class Voertuig {
 
-        public Brandstof Brandstof { get; private set; }
+        public BrandstofEnum Brandstof { get; private set; }
 
         public string Chassisnummer { get; private set; }
 
@@ -22,13 +22,13 @@ namespace FleetMgmt_Business.Objects {
 
         public string Model { get; private set; }
 
-        public string TypeVoertuig { get; private set; }
+        public TypeVoertuig TypeVoertuig { get; private set; }
 
         public string Nummerplaat { get; private set; }
 
         public Bestuurder Bestuurder { get; private set; }
 
-        public Voertuig(Brandstof brandstof, string chassisnummer, string kleur, int aantaldeuren, string merk, string model, string typevoertuig, string nummerplaat) {
+        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int aantaldeuren, string merk, string model, TypeVoertuig typevoertuig, string nummerplaat) {
             this.Brandstof = brandstof;
             zetChassisnummer(chassisnummer);
             zetKleur(kleur);
@@ -49,8 +49,8 @@ namespace FleetMgmt_Business.Objects {
             this.Merk = merk;
         }
 
-        private void zetTypeVoertuig(string type) {
-            if (string.IsNullOrWhiteSpace(type)) throw new VoertuigException("Voertuig - Type voertuig mag niet leeg zijn");
+        private void zetTypeVoertuig(TypeVoertuig type) {
+            if (type == null) throw new VoertuigException("Voertuig - Type voertuig mag niet null zijn");
             this.TypeVoertuig = type;
         }
 
@@ -79,9 +79,15 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateBestuurder(Bestuurder bestuurder) {
-            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
+            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig - Geen verschil");
+            if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
             bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
+        }
+
+        public void updateTypeVoertuig(TypeVoertuig type) {
+            if (this.TypeVoertuig == type) throw new VoertuigException("Voertuig : updateTypeVoertuig - Niks verandert!");
+            this.TypeVoertuig = type;
         }
 
 

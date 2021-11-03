@@ -18,6 +18,7 @@ namespace FleetMgmt_Business.Repos {
         void zetGeblokkeerd(Tankkaart tankkaart, bool geblokkeerd);
         void zetGeldigheidsDatum(Tankkaart tankkaart, DateTime geldigheidsdatum);
         void voegBrandstofToe(Tankkaart tankkaart, string brandstof);
+        void verwijderBrandstof(Tankkaart tankkaart, string brandstof);
         void updatePincode(Tankkaart tankkaart, string pincode);
     }
 }
