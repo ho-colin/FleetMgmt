@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Enums {
-    public enum BrandstofEnum{
-        Bio_Diesel, Hybride_Diesel, Hybride_Benzine, Elektrisch, Waterstof, LPG, CNG, Diesel, Benzine
+    public enum TankkaartBrandstof {
+        Benzine, Diesel, LPG, CNG, Elektrisch, Waterstof, Bio_Diesel
     }
 }
