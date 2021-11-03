@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FleetMgmt_Business.Enums;
 
 namespace FleetMgmt_Business.Objects {
     public class Tankkaart {
@@ -20,15 +21,16 @@ namespace FleetMgmt_Business.Objects {
 
         public List<string> Brandstoffen { get; private set; }
 
+        public Enums.TankkaartBrandstof TankkaartBrandstof { get; private set; }
 
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen, TankkaartBrandstof tankkaardbrandstof) {
             zetKaartnummer(kaartnummer);
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
             updateInBezitVan(inbezitvan);
-
             zetGeblokkeerd(false);
+            this.TankkaartBrandstof = tankkaardbrandstof;
         }
 
 
