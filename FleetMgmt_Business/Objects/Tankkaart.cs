@@ -19,20 +19,16 @@ namespace FleetMgmt_Business.Objects {
 
         public bool Geblokkeerd { get; private set; }
 
-        public List<string> Brandstoffen { get; private set; }
+        public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
-        public Enums.TankkaartBrandstof TankkaartBrandstof { get; private set; }
-
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen, TankkaartBrandstof tankkaardbrandstof) {
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) {
             zetKaartnummer(kaartnummer);
-            zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
             updateInBezitVan(inbezitvan);
             zetGeblokkeerd(false);
-            this.TankkaartBrandstof = tankkaardbrandstof;
+            zetBrandstoffen(brandstoffen);
         }
-
 
         public void updateInBezitVan(Bestuurder bestuurder) {
             if (bestuurder == null) {
@@ -53,9 +49,9 @@ namespace FleetMgmt_Business.Objects {
             this.GeldigheidsDatum = geldigheidsdatum;
         }
 
-        public void voegBrandstofToe(string brandstof) {
+        public void voegBrandstofToe(TankkaartBrandstof brandstof) {
             if (this.Brandstoffen == null) {
-                zetBrandstoffen(new List<String>() { brandstof });
+                zetBrandstoffen(new List<TankkaartBrandstof>() { brandstof });
             } else if (!this.Brandstoffen.Contains(brandstof)) {
                 this.Brandstoffen.Add(brandstof);
             } else throw new TankkaartException("Brandstof staat al in lijst!");
@@ -66,7 +62,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
 
-        private void zetBrandstoffen(List<string> brandstoffen) {
+        private void zetBrandstoffen(List<TankkaartBrandstof> brandstoffen) {
             if(brandstoffen == null) return;
             if(this.Brandstoffen == null) {
                 this.Brandstoffen = brandstoffen;
