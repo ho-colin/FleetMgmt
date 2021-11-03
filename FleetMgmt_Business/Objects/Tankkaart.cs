@@ -57,6 +57,13 @@ namespace FleetMgmt_Business.Objects {
             } else throw new TankkaartException("Brandstof staat al in lijst!");
         }
 
+        public void verwijderBrandstof(TankkaartBrandstof brandstof) {
+            if (this.Brandstoffen == null) throw new TankkaartException("Brandstof is null");
+            else if (!this.Brandstoffen.Contains(brandstof)) throw new TankkaartException("Brandstof werd niet gevonden!");
+            else
+                Brandstoffen.Remove(brandstof);
+        }
+
         public void updatePincode(string pincode) {
             this.zetPincode(pincode);
         }
