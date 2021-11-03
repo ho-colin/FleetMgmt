@@ -38,7 +38,7 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<Voertuig> toonVoertuigen(string chassinummer, string merk, string model, string typeVoertuig, string brandstof,
+        public IEnumerable<(Voertuig, Bestuurder, Tankkaart)> toonVoertuigen(string chassinummer, string merk, string model, string typeVoertuig, string brandstof,
             string kleur, int? aantalDeuren, bool strikt = true) {
             try {
                 return repo.toonVoertuigen(chassinummer, merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, strikt);

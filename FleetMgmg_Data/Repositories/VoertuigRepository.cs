@@ -102,11 +102,16 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public IEnumerable<Voertuig> toonVoertuigen(string chassisnummer, string merk, string model, string typeVoertuig, string brandstof,
+        public IEnumerable<(Voertuig,Bestuurder,Tankkaart)> toonVoertuigen(string chassisnummer, string merk, string model, string typeVoertuig, string brandstof,
             string kleur, int? aantalDeuren, bool strikt = true) {
-            List<Voertuig> voertuigen = new List<Voertuig>();
+            List<(Voertuig, Bestuurder, Tankkaart)> voertuigen = new List<(Voertuig, Bestuurder, Tankkaart)>();
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM Voertuig ";
+            string query = "SELECT v.Chassisnummer, v.Merk, v.model, v.TypeVoertuig, v.Brandstof, v.Kleur, v.AantalDeuren, " +
+                "b.Naam, b.Voornaam, b.Adres, b.Geboortedatum, b.Rijksregisternummer, " +
+                "t.Id, t.Pincode, t.GeldigheidDatum, t.Geblokkkeerd " +
+                "FROM Voertuig v " +
+                "LEFT JOIN Bestuurder b ON v.BestuurderId = b.Id " +
+                "LEFT JOIN Tankkaart t ON b.TankkaartId = t.Id ";
             bool AND = false;
             bool WHERE = false;
             if (!string.IsNullOrWhiteSpace(chassisnummer)) {
@@ -162,6 +167,7 @@ namespace FleetMgmg_Data.Repositories {
                 if (AND) query += " AND "; else AND = true;
                 query += " AantalDeuren=@aantalDeuren";
             }
+
             using (SqlCommand command = connection.CreateCommand()) {
                 if (!string.IsNullOrWhiteSpace(chassisnummer)) {
                     command.Parameters.Add(new SqlParameter("@chassisnummer", SqlDbType.NVarChar));
@@ -205,9 +211,21 @@ namespace FleetMgmg_Data.Repositories {
                         string typeVoertuigDB = (string)reader["TypeVoertuig"];
                         string kleurDB = (string)reader["Kleur"];
                         int aantalDeurenDB = (int)reader["AantalDeuren"];
+
+                        string rijksregisternummerDB = (string)reader["Rijksregisternummer"];
+                        string naamDB = (string)reader["Naam"];
+                        string achternaamDB = (string)reader["Achternaam"];
+                        DateTime geboortedatumDB = (DateTime)reader["Geboortedatum"];
+
+                        string kaartnummerDB = ((int)reader["Id"]).ToString();
+                        DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
+                        string pincodeDB = (string)reader["Pincode"];
+
+                        Bestuurder bestuurder = new Bestuurder(rijksregisternummerDB, naamDB, achternaamDB, geboortedatumDB);
+                        Tankkaart tankkaart = new Tankkaart(kaartnummerDB, geldigDatumDB, pincodeDB);
                         Voertuig voertuig = new Voertuig((Brandstof)Enum.Parse(typeof(Enum), brandstofDB), chassisnummerDB, kleurDB, aantalDeurenDB,
                             merkDB, modelDB, typeVoertuigDB, nummerplaatDB);
-                        voertuigen.Add(voertuig);
+                        voertuigen.Add((voertuig,bestuurder, tankkaart));
                     }
                     reader.Close();
 
