@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Program.cs~RF563aa46.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FleetMgmg_Data\FleetMgmg_Data.csproj" />
+    <ProjectReference Include="..\FleetMgmt_Business\FleetMgmt_Business.csproj" />
+  </ItemGroup>
+
+</Project>

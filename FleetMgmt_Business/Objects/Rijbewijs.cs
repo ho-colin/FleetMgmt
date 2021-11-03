@@ -8,7 +8,7 @@ using FleetMgmt_Business.Exceptions;
 namespace FleetMgmt_Business.Objects {
     public class Rijbewijs {
 
-        public Enums.Rijbewijs Categorie { get; private set; }
+        public Enums.RijbewijsEnum Categorie { get; private set; }
 
         public DateTime BehaaldOp { get; private set; }
 
@@ -20,7 +20,7 @@ namespace FleetMgmt_Business.Objects {
         public void zetCategorie(string categorie) {
             if (string.IsNullOrWhiteSpace(categorie)) throw new RijbewijsException("Rijbewijs: Categorienaam mag niet leeg zijn!");
             try {
-                this.Categorie = (Enums.Rijbewijs)Enum.Parse(typeof(Enums.Rijbewijs), categorie);
+                this.Categorie = (Enums.RijbewijsEnum)Enum.Parse(typeof(Enums.RijbewijsEnum), categorie);
             } catch (Exception) {
                 throw new RijbewijsException("Rijbewijs: Rijbewijs niet gevonden!");
             }

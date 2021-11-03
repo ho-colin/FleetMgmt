@@ -24,8 +24,12 @@ namespace FleetMgmt_Business.Objects {
 
         public List<Rijbewijs> rijbewijzen = new List<Rijbewijs>();
 
-        public Bestuurder(int id, string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) : this(rijksregisternummer, naam, voornaam, geboortedatum) {
+        public Bestuurder(int id, string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) : this(rijksregisternummer, naam, voornaam, geboortedatum, rijbewijzen) {
             zetId(id);
+        }
+
+        public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) :this(rijksregisternummer,naam,voornaam,geboortedatum) {
+            this.rijbewijzen = rijbewijzen;
         }
 
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) {
