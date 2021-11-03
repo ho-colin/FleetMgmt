@@ -17,55 +17,46 @@ namespace FleetMgmt_Business.Managers {
             this.repo = repo;
         }
 
-        public bool bestaatBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) return false;
-            else
-                return true;
+        public bool bestaatBestuurder(int id) {
+            try {
+                if (!repo.bestaatBestuurder(id)) return false;
+                else
+                    return true;
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: bestaatBestuurder -", ex);
+            }
         }
 
         public void bewerkBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - bewerkBestuurder - Bestuurder bestaat niet");
+            try {
+                if (!repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: bewerkBestuurder - Bestuurder bestaat niet");
+                else
+                    repo.bewerkBestuurder(bestuurder);
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: bewerkBestuurder -", ex);
+            }
+
+        }
+
+        public IEnumerable<(Bestuurder, Tankkaart, Voertuig)> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum, bool strikt = true) {
+            try {
+                return repo.toonBestuurders(rijksregisternummer, naam, voornamam, geboortedatum);
+            }
+            catch (Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: toonBestuurders -", ex);
+            }
+        }
+
+        public void verwijderBestuurder(int id) {
+            if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
             else
-                repo.bewerkBestuurder(bestuurder);
-
-        }
-
-        public void geefBestuurder(int id) {
-            if (id <= 0) throw new BestuurderException("Bestuurdermanager - geefBestuurder - Bestuurder bestaat niet");
-            else
-                repo.geefBestuurder(id);
-        }
-
-        public IEnumerable<Bestuurder> toonBestuurders() {
-            return repo.toonBestuurders();
-        }
-
-        public void updateTankkaart(Bestuurder bestuurder, Tankkaart tankkaart) {
-            repo.updateTankkaart(bestuurder, tankkaart);      
-        }
-
-        public void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig) {
-            repo.updateVoertuig(bestuurder, voertuig);
-        }
-
-        public void verwijderBestuurder(Bestuurder bestuurder) {
-            if (!repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - verwijderBestuurder - Bestuurder bestaat niet");
-            else
-                repo.verwijderBestuurder(bestuurder);
-        }
-
-        public void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            repo.verwijderRijbewijs(bestuurder, rijbewijs);
+                repo.verwijderBestuurder(id);
         }
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
-            if (repo.bestaatBestuurder(bestuurder)) throw new BestuurderException("Bestuurdermanager - voegBestuurderToe - Bestuurder bestaat reeds");
+            if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             else
                 repo.voegBestuurderToe(bestuurder);
-        }
-
-        public void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs) {
-            repo.voegRijbewijsToe(bestuurder, rijbewijs);
         }
     }
 }

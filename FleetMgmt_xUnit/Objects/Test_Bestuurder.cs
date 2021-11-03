@@ -71,5 +71,16 @@ namespace FleetMgmt_xUnit.Objects
             b.updateTankkaart(tk);
             Assert.True(true);
         }
+
+        [Fact]
+        public void Test_VoegRijbewijsToe_Valid() {
+            Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
+            Rijbewijs r = new Rijbewijs("B", new DateTime(1998, 12, 13));
+            b.voegRijbewijsToe(r);
+            Assert.Contains(r, b.rijbewijzen);
+            Rijbewijs rb = new Rijbewijs("G", new DateTime(1998, 06, 28));
+            b.voegRijbewijsToe(rb);
+            Assert.Equal(2, b.rijbewijzen.Count);
+        }
     }
 }
