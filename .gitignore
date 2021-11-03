@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/FleetMgmg_Data/Repositories/TankkaartRepository.cs
+/FleetMgmg_Data/Exceptions/TankkaartRepositoryException.cs
