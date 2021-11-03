@@ -31,6 +31,12 @@ namespace FleetMgmt_Business.Objects {
             zetGeblokkeerd(false);
         }
 
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode) {
+            zetKaartnummer(kaartnummer);
+            zetGeldigheidsDatum(geldigheidsdatum);
+            zetPincode(pincode);
+        }
+
 
         public void updateInBezitVan(Bestuurder bestuurder) {
             if (bestuurder == null) {

@@ -38,17 +38,7 @@ namespace FleetMgmt_Business.Managers {
 
         }
 
-        public void geefBestuurder(int id) {
-            try {
-                if (id <= 0) throw new BestuurderException("BestuurderManager: geefBestuurder - Bestuurder bestaat niet");
-                else
-                    repo.geefBestuurder(id);
-            }catch(Exception ex) {
-                throw new BestuurderManagerException("BestuurderManager: geefBestuurder -", ex);
-            }
-        }
-
-        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum) {
+        public IEnumerable<(Bestuurder, Tankkaart, Voertuig)> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum, bool strikt = true) {
             try {
                 return repo.toonBestuurders(rijksregisternummer, naam, voornamam, geboortedatum);
             }

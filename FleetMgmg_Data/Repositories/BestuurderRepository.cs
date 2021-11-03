@@ -1,4 +1,5 @@
 ﻿using FleetMgmg_Data.Exceptions;
+using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Repos;
 using System;
@@ -59,57 +60,52 @@ namespace FleetMgmg_Data.Repositories {
 
         }
 
-        public void geefBestuurder(int id) {
-            SqlConnection conn = ConnectionClass.getConnection();
-            string query = "SELECT b.id,b.naam,b.achternaamb.rijksregisternummer FROM Bestuurder b LEFT JOIN BestuurderRijbewijs br ON b.id = br.Id WHERE Id=@Id";
-            using(SqlCommand cmd = conn.CreateCommand()) {
-                conn.Open();
-                try {
-                    cmd.Parameters.Add(new SqlParameter("@Id", System.Data.SqlDbType.NVarChar));
-                    cmd.CommandText = query;
-                    cmd.Parameters["@Id"].Value = id;
-                }
-                catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: geefBestuurder - Bestuurder werd niet gevonden!", ex);
-                }
-                finally {
-                    conn.Close();
-                }
-            }
-        }
 
-        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum) {
-            List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
+        public IEnumerable<(Bestuurder, Tankkaart, Voertuig)> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum, bool strikt = true) {
+            List<(Bestuurder, Tankkaart, Voertuig)> lijstbestuurder = new List<(Bestuurder, Tankkaart, Voertuig)>();
             SqlConnection conn = ConnectionClass.getConnection();
-            StringBuilder query = new StringBuilder("SELECT * FROM Bestuurder");
+            string query = "SELECT b.Rijksregisternummer, b.Naam, b.Voornaam, b.Geboortedatum FROM BESTUURDER b " +
+                            "LEFT JOIN Voertuig v on b.id = v.BestuurderId " +
+                            "LEFT JOIN Tankkaart t ON b.TankkaartId = t.Id ";
 
-            bool and = false;
-            bool where = false;
+            bool AND = false;
+            bool WHERE = false;
 
             if (!string.IsNullOrWhiteSpace(rijksregisternummer)) {
-                if (!where) query.Append(" WHERE "); where = true;
-                query.Append(" rijksregisternummer=@Rijksregisternummer");
-                and = true;
+                if (!WHERE) query += "WHERE "; WHERE = true;
+                AND = true;
+                if (strikt)
+                    query += "Rijksregisternummer=@rijksregisternummer";
+                else
+                    query += " UPPER(Rijksregisternummer)=UPPER(rijksregisternummer)";
             }
 
             if (!string.IsNullOrWhiteSpace(naam)) {
-                if (!where) query.Append(" WHERE "); where = true;
-                query.Append(" naam=@Naam");
-                and = true;
+                if (!WHERE) query += "WHERE "; WHERE = true;
+                if (AND) query += " AND "; else AND = true;
+                if (strikt)
+                    query += "Naam=@naam";
+                else
+                    query += " UPPER(Naam)=UPPER(@naam)";
             }
 
             if (!string.IsNullOrWhiteSpace(voornamam)) {
-                if (!where) query.Append(" WHERE "); where = true;
-                query.Append(" voornaam=@Voornaam");
-                and = true;
+                if (!WHERE) query += "WHERE "; WHERE = true;
+                if (AND) query += " AND "; else AND = true;
+                if (strikt)
+                    query += "Voornaam=@voornamam";
+                else
+                    query += " UPPER(voornamam)=UPPER(@voornamam)";
             }
 
-            if (geboortedatum.GetHashCode() == 0) {
-                if (!where) query.Append(" WHERE "); where = true;
-                query.Append(" geboortedatum=@Geboortedatum");
-                and = true;
+            if (geboortedatum.GetHashCode() != 0) {
+                if (!WHERE) query += "WHERE "; WHERE = true;
+                if (AND) query += " AND "; else AND = true;
+                if (strikt)
+                    query += "geboortedatum=@geboortedatum";
+                else
+                    query += " UPPER(geboortedatum)=UPPER(@geboortedatum)";
             }
-
 
             conn.Open();
 
@@ -125,7 +121,30 @@ namespace FleetMgmg_Data.Repositories {
 
                     if (reader.HasRows) {
                         while (reader.Read()) {
-                            lijstbestuurder.Add(new Bestuurder((string)reader["Rijksregisternummer"], (string)reader["Naam"], (string)reader["Voornaam"], Convert.ToDateTime(reader["Geboortedatum"])));
+                            string rijksregisternummerdb = (string)reader["Rijksregisternummer"];
+                            string naamdb = (string)reader["Naam"];
+                            string voornaamdb = (string)reader["Voornaam"];
+                            DateTime geboortedatumdb = (DateTime)reader["Geboortedatum"];
+                            string kaartnummerdb = ((int)reader["Id"]).ToString();
+                            DateTime geldigheidsdatumdb = (DateTime)reader["Geldigheidsdatum"];
+                            string pincodedb = (string)reader["Pincode"];
+                            List<string> _brandstoffen = new List<string>();
+                            string chassisnummerdb = (string)reader["Chassisnummer"];
+                            string merkDb = (string)reader["Merk"];
+                            string modeldb = (string)reader["Model"];
+                            string nummerplaatdb = (string)reader["Nummerplaat"];
+                            string brandstofdb = (string)reader["TypeVoertuig"];
+                            string typeVoertuigdb = (string)reader["TypeVoertuig"];
+                            string kleurdb = (string)reader["Kleur"];
+                            int aantalDeurendb = (int)reader["AantalDeuren"];
+
+                            Bestuurder bestuurder = new Bestuurder(rijksregisternummerdb, naamdb, voornaamdb, geboortedatumdb);
+
+                            Tankkaart tankkaart = new Tankkaart(kaartnummerdb, geldigheidsdatumdb, pincodedb);
+
+                            Voertuig voertuig = new Voertuig((Brandstof)Enum.Parse(typeof(Enum), brandstofdb), chassisnummerdb, kleurdb, aantalDeurendb,merkDb, modeldb, typeVoertuigdb, nummerplaatdb);
+
+                            lijstbestuurder.Add((bestuurder, tankkaart, voertuig));
                         }
                         conn.Close();
                     }
