@@ -26,7 +26,7 @@ namespace FleetMgmg_Data.Repositories {
                     return result;
                 }
                 catch (Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: bestaatBestuurder - Er werd geen bestuurder gevonden!");
+                    throw new BestuurderRepositoryException("BestuurderRepository: bestaatBestuurder - Er werd geen bestuurder gevonden!", ex);
                 }
                 finally {
                     conn.Close();
@@ -50,7 +50,7 @@ namespace FleetMgmg_Data.Repositories {
                     comm.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
                     comm.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
                 }catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - Bestuurder werd niet bewerkt!");
+                    throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - Bestuurder werd niet bewerkt!", ex);
                 }
                 finally {
                     conn.Close();
@@ -70,7 +70,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.Parameters["@Id"].Value = id;
                 }
                 catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: geefBestuurder - Bestuurder werd niet gevonden!");
+                    throw new BestuurderRepositoryException("BestuurderRepository: geefBestuurder - Bestuurder werd niet gevonden!", ex);
                 }
                 finally {
                     conn.Close();
@@ -145,8 +145,8 @@ namespace FleetMgmg_Data.Repositories {
                 var updateCommand = new SqlCommand(sql, conn);
                 updateCommand.ExecuteNonQuery();
             }
-            catch (Exception e) {
-                throw new BestuurderRepositoryException("BestuurdersRepository: verwijderBestuurder - Er werd geen bestuurder verwijderd!");
+            catch (Exception ex) {
+                throw new BestuurderRepositoryException("BestuurdersRepository: verwijderBestuurder - Er werd geen bestuurder verwijderd!", ex);
             }
             finally {
                 conn.Close();
@@ -156,7 +156,8 @@ namespace FleetMgmg_Data.Repositories {
 
         public void voegBestuurderToe(Bestuurder bestuurder) {
             SqlConnection conn = ConnectionClass.getConnection();
-            string query = "INSERT INTO Bestuurder(Naam, Achternaam, Geboortedatum, Rijksregisternummer) VALUES(@Naam, @Achternaam, @Geboortedatum, @Rijksregisternummer, " +
+            string query = "INSERT INTO Bestuurder(Naam, Achternaam, Geboortedatum, Rijksregisternummer) VALUES(@Naam, @Achternaam, @Geboortedatum, " +
+                "@Rijksregisternummer, " +
                 ")";
             using(SqlCommand cmd = conn.CreateCommand()) {
                 try {
@@ -171,7 +172,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
                     cmd.ExecuteNonQuery();
                 }catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: voegBestuurderToe - Geen bestuurder werd toegevoegd!");
+                    throw new BestuurderRepositoryException("BestuurderRepository: voegBestuurderToe - Geen bestuurder werd toegevoegd!", ex);
                 }
                 finally {
                     conn.Close();
