@@ -30,6 +30,12 @@ namespace FleetMgmt_Business.Objects {
             zetBrandstoffen(brandstoffen);
         }
 
+        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode) {
+            zetKaartnummer(kaartnummer);
+            zetGeldigheidsDatum(geldigheidsdatum);
+            zetPincode(pincode);
+        }
+
         public void updateInBezitVan(Bestuurder bestuurder) {
             if (bestuurder == null) {
                 this.InBezitVan = null;

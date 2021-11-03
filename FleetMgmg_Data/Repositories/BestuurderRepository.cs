@@ -65,6 +65,8 @@ namespace FleetMgmg_Data.Repositories {
             List<(Bestuurder, Tankkaart, Voertuig)> lijstbestuurder = new List<(Bestuurder, Tankkaart, Voertuig)>();
             SqlConnection conn = ConnectionClass.getConnection();
             string query = "SELECT b.Rijksregisternummer, b.Naam, b.Voornaam, b.Geboortedatum FROM BESTUURDER b " +
+                           "v.Brandstof, v.Chassisnummer, v.Kleur, v.AantalDeuren, v.Merk, v.Model, v.TypeVoertuig, v.Nummerplaat " +
+                           "t.KaartNummer, t.GeldigheidsDatum, t.Pincode, t.Geblokkeerd " +
                             "LEFT JOIN Voertuig v on b.id = v.BestuurderId " +
                             "LEFT JOIN Tankkaart t ON b.TankkaartId = t.Id ";
 
@@ -134,7 +136,7 @@ namespace FleetMgmg_Data.Repositories {
                             string modeldb = (string)reader["Model"];
                             string nummerplaatdb = (string)reader["Nummerplaat"];
                             string brandstofdb = (string)reader["TypeVoertuig"];
-                            string typeVoertuigdb = (string)reader["TypeVoertuig"];
+                            string typeVoertuigdb = (TypeVoertuig)reader["TypeVoertuig"];
                             string kleurdb = (string)reader["Kleur"];
                             int aantalDeurendb = (int)reader["AantalDeuren"];
 
@@ -142,7 +144,7 @@ namespace FleetMgmg_Data.Repositories {
 
                             Tankkaart tankkaart = new Tankkaart(kaartnummerdb, geldigheidsdatumdb, pincodedb);
 
-                            Voertuig voertuig = new Voertuig((Brandstof)Enum.Parse(typeof(Enum), brandstofdb), chassisnummerdb, kleurdb, aantalDeurendb,merkDb, modeldb, typeVoertuigdb, nummerplaatdb);
+                            Voertuig voertuig = new Voertuig((BrandstofEnum)Enum.Parse(typeof(Enum), brandstofdb), chassisnummerdb, kleurdb, aantalDeurendb,merkDb, modeldb, typeVoertuigdb, nummerplaatdb);
 
                             lijstbestuurder.Add((bestuurder, tankkaart, voertuig));
                         }
