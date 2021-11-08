@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FleetMgmt_Business.Objects {
     public class Tankkaart {
 
-        public string KaartNummer { get; private set; }
+        public int KaartNummer { get; private set; }
 
         public DateTime GeldigheidsDatum { get; private set; }
 
@@ -20,7 +20,7 @@ namespace FleetMgmt_Business.Objects {
 
         public List<string> Brandstoffen { get; private set; }
 
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
             zetKaartnummer(kaartnummer);
         }
 
@@ -36,10 +36,14 @@ namespace FleetMgmt_Business.Objects {
 
         public void updateInBezitVan(Bestuurder bestuurder) {
             if (bestuurder == null) {
+                if(this.InBezitVan != null) {
+                    this.InBezitVan.updateTankkaart(null);
+                }
                 this.InBezitVan = null;
                 return;
             }
             this.InBezitVan = bestuurder;
+            if (bestuurder.Tankkaart != this) { bestuurder.updateTankkaart(this); }          
         }      
 
         //True is geblokkeerd, False is niet geblokkeerd
@@ -73,7 +77,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
 
-        private void zetBrandstoffen(List<string> brandstoffen) {
+        public void zetBrandstoffen(List<string> brandstoffen) {
             if(brandstoffen == null) return;
             if(this.Brandstoffen == null) {
                 this.Brandstoffen = brandstoffen;
@@ -94,10 +98,8 @@ namespace FleetMgmt_Business.Objects {
             this.Pincode = pincode;
         }
 
-        private void zetKaartnummer(string kaartnummer) {
-            if (string.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Kaartnummer mag niet leeg zijn!");
-            if (kaartnummer.Any(char.IsLetter)) throw new TankkaartException("Kaartnummer mogen alleen getallen zijn!");
-            if (int.Parse(kaartnummer) < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
+        private void zetKaartnummer(int kaartnummer) {
+            if (kaartnummer < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
 
             this.KaartNummer = kaartnummer;
         }

@@ -41,6 +41,11 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
+        public Tankkaart selecteerTankkaart(int id) {
+            if (!bestaatTankkaart(id)) throw new TankkaartException("TankkaarManager : selecteerTankkaart - Tankkaart bestaat niet!");
+            return repo.selecteerTankkaart(id);
+        }
+
         public void verwijderTankkaart(int id) {
             try {
                 repo.verwijderTankkaart(id);

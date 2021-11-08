@@ -64,16 +64,23 @@ namespace FleetMgmt_Business.Objects {
 
         public void updateTankkaart(Tankkaart tankkaart) {
             if (tankkaart == null) {
+                if(this.Tankkaart != null) {
+                    this.Tankkaart.updateInBezitVan(null);
+                }
                 this.Tankkaart = null;
                 return;
             }
             this.Tankkaart = tankkaart;
+            if (tankkaart.InBezitVan != this) { tankkaart.updateInBezitVan(this); }
         }
 
         public void updateVoertuig(Voertuig voertuig) {
             if (voertuig == Voertuig) throw new BestuurderException("Bestuurder: Geen verschil");
-            voertuig.updateBestuurder(this);
             this.Voertuig = voertuig;
+            if (voertuig.Bestuurder != this) {
+                voertuig.updateBestuurder(this);
+            }           
+            
         }
 
 
