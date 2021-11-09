@@ -34,44 +34,36 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public void bewerkTankkaart(Tankkaart tankkaart) {
-            Tankkaart huidigeKaart = geefTankkaarten(tankkaart.KaartNummer, null, null, null, null).ElementAt(0);
-
-            bool ietsVerandert = false;
-
+            Tankkaart huidigeKaart = this.selecteerTankkaart(tankkaart.KaartNummer);
+            if(tankkaart.Equals(huidigeKaart)) throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart - Er is niks verandert!");
+            #region tankkaart tabel
             StringBuilder query = new StringBuilder("UPDATE Tankkaart SET ");
 
 
             if(tankkaart.InBezitVan == null) {
                 if(huidigeKaart.InBezitVan != null) {
-                    ietsVerandert = true;
                     query.Append(" BestuurderId=@BestuurderIdLEEG ");
                 }
             } else { // tankkaart.inbezitvan WEL een value heeft
                 if(huidigeKaart.InBezitVan == null) {
-                    ietsVerandert = true;
                     query.Append(" BestuurderId=@bestuurderId ");
                 }
             }
 
             if(tankkaart.Geblokkeerd != huidigeKaart.Geblokkeerd) {
-                ietsVerandert = true;
                 query.Append(" Geblokkeerd=@geblokkeerd ");
             }
 
             if(tankkaart.Pincode != huidigeKaart.Pincode) {
-                ietsVerandert = true;
                 query.Append(" Pincode=@pincode ");
             }
 
             if(tankkaart.GeldigheidsDatum != huidigeKaart.GeldigheidsDatum) {
-                ietsVerandert = true;
                 query.Append(" GeldigDatum=@geldigdatum ");
             }
 
             query.Append(" WHERE id=@id");
-
-            if (!ietsVerandert) throw new TankkaartRepositoryException("Er is niks verandert!");
-
+            #endregion
             SqlConnection conn = ConnectionClass.getConnection();
 
             using(SqlCommand cmd = conn.CreateCommand()) {
@@ -172,25 +164,25 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurderId, bool? geblokkeerd, Brandstof? brandstof) {
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, Brandstof? brandstof) {
             List<Tankkaart> kaarten = new List<Tankkaart>();
             SqlConnection conn = ConnectionClass.getConnection();
 
             #region TANKKAART AANMAKEN
-            StringBuilder query = new StringBuilder("SELECT t.Id Id,t.Pincode Pincode,t.GeldigDatum GeldigDatum,t.BestuurderId BestuurderId,t.Geblokkeerd Geblokkeerd,tb.Brandstof Brandstof, b.Id BestuurderTabelId, b.Naam Naam, b.Achternaam Achternaam, b.Geboortedatum Geboortedatum, b.Rijksregisternummer Rijksregisternummer " +
-                "FROM Tankkaart t " +
-                "LEFT JOIN TankkaartBrandstof tb " +
-                "ON t.Id = tb.TankkaartId " +
-                "LEFT JOIN Bestuurder b "+
-                "ON t.BestuurderId = b.Id");
-
+            StringBuilder query = new StringBuilder("SELECT t.*,tb.Brandstof,b.Naam,b.Achternaam,b.Geboortedatum,b.VoertuigChassisnummer,br.Id BehaaldId,br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof,v.TypeVoertuig,v.Kleur,v.AantalDeuren,tv.Rijbewijs FROM tankkaart t " +
+                "LEFT JOIN TankkaartBrandstof tb ON t.Id=tb.TankkaartId " +
+                "LEFT JOIN Bestuurder b ON t.Bestuurder=b.Rijksregisternummer " +
+                "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer=br.Bestuurder " +
+                "LEFT JOIN Voertuig v ON b.VoertuigChassisnummer=v.Chassisnummer " +
+                "LEFT JOIN TypeVoertuig tv ON v.TypeVoertuig=tv.TypeVoertuig ");
+            #region QUERY OPBOUWEN ADHV INGEVULDE WAARDES
             bool where = false;
             bool and = false;
 
             if(id != null) {
                 if (!where) query.Append(" WHERE "); where = true;
                 if (and) query.Append(" AND "); else and = true;
-                query.Append(" t.id=@id ");              
+                query.Append(" t.Id=@id ");              
             }
 
             if(geldigheidsDatum != null) {
@@ -199,10 +191,10 @@ namespace FleetMgmg_Data.Repositories {
                 query.Append(" t.GeldigDatum=@geldigheidsDatum");
             }
 
-            if (!string.IsNullOrWhiteSpace(bestuurderId)) {
+            if (!string.IsNullOrWhiteSpace(bestuurder)) {
                 if (!where) query.Append(" WHERE "); where = true;
                 if (and) query.Append(" AND "); else and = true;
-                query.Append(" t.BestuurderId=@bestuurderId");
+                query.Append(" t.Bestuurder=@bestuurder");
             }
 
             if(geblokkeerd != null) {
@@ -217,71 +209,84 @@ namespace FleetMgmg_Data.Repositories {
                 //WAARDE VAN GEJOINDE TABEL
                 query.Append(" tb.Brandstof=@brandstof");
             }
-        
+            #endregion
             using (SqlCommand cmd = conn.CreateCommand()) {
                 cmd.CommandText = query.ToString();
 
                 if (query.ToString().Contains("@id")) cmd.Parameters.AddWithValue("@id", id.Value);
                 if (query.ToString().Contains("@geldigheidsDatum")) cmd.Parameters.AddWithValue("@geldigheidsDatum", geldigheidsDatum.Value.ToString("yyyy-MM-dd"));
-                if (query.ToString().Contains("@bestuurderId")) cmd.Parameters.AddWithValue("@bestuurderId", bestuurderId);
+                if (query.ToString().Contains("@bestuurderId")) cmd.Parameters.AddWithValue("@bestuurder", bestuurder);
                 if (query.ToString().Contains("@geblokkeerd")) cmd.Parameters.AddWithValue("@geblokkeerd", geblokkeerd.Value ? "1" : "0");
                 if (query.ToString().Contains("@brandstof")) cmd.Parameters.AddWithValue("@brandstof", brandstof.ToString());
 
                 conn.Open();
                 try {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
-                            int laatsGebruiktId = 0;
-                            Tankkaart dbObject = null;
-                            Bestuurder bestuurder = null;
-                            while (reader.Read()) {
+                        int laatsGebruiktId = 0;
 
-                                #region Als ID NIET hetzelfde is als vorige row
-                                if ((int)reader["Id"] != laatsGebruiktId) {
+                        List<string> brandstoffen = null;
+                        Tankkaart dbTankkaart = null;
 
-                                    #region object waardes resetten
-                                    //Checken of dbObject al een waarde heeft
-                                    //Zoja die dan toevoegen aan list en terug op null plaatsen
-                                    if (dbObject != null) {
-                                        kaarten.Add(dbObject); //Toevoegen aan de te returnen list
-                                        dbObject = null; //Terug op null zetten
-                                        bestuurder = null;
-                                    }
-                                #endregion
+                        Bestuurder dbBestuurder = null;
+                        List<FleetMgmt_Business.Objects.Rijbewijs> dbRijbewijzen = null;
 
-                                if (reader["rijksregisternummer"] != DBNull.Value) {
-                                    bestuurder = new Bestuurder(
-                                   (int)reader["BestuurderTabelId"],
-                                   (string)reader["rijksregisternummer"],
-                                   (string)reader["naam"],
-                                   (string)reader["achternaam"],
-                                   (DateTime)reader["geboortedatum"]);
-                                }
+                        Voertuig dbVoertuig = null;
+                        while (reader.Read()) {
+                            #region Tankkaart
+                            if (reader.IsDBNull(reader.GetOrdinal("Id"))) throw new TankkaartRepositoryException("TankkaartRepository : geefTankkaarten - Geen Tankkaart ID gevonden!");
+                            if(laatsGebruiktId != (int)reader["Id"]) {
+                                laatsGebruiktId = (int)reader["Id"];
 
-                                    laatsGebruiktId = (int)reader["Id"];
-                                    dbObject = new Tankkaart(
-                                        ((int)reader["Id"]),
-                                        (DateTime)reader["GeldigDatum"],
-                                        (string)reader["Pincode"],
-                                        bestuurder,
-                                        new List<string>());
-                                }
-                                #endregion
-
-                                #region Als ID hetzelfde is als vorige row
-                                if ((int)reader["Id"] == laatsGebruiktId) {
-                                if (reader.IsDBNull(reader.GetOrdinal("Brandstof"))) break;
-                                    try {
-                                        dbObject.Brandstoffen.Add((string)reader["Brandstof"]);
-                                    } catch (Exception ex) {
-                                        throw new TankkaartRepositoryException("TankkaartRepository: geefTankkaarten, Brandstoffen.Add : Er heeft zich een fout voorgedaan!", ex);
-                                    }
-                                }
-                                #endregion
+                                dbTankkaart = new Tankkaart(
+                                    (int) reader["Id"],
+                                    (DateTime)reader["GeldigDatum"],
+                                    reader.IsDBNull(reader.GetOrdinal("Pincode")) ? null : (string)reader["Pincode"],
+                                    null,
+                                    null);
                             }
-                            reader.Close();
+                            #endregion
+                            #region TankkaartBrandstoffen
+                            if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
+
+                                if (brandstoffen == null) brandstoffen = new List<string>();
+                                if (!brandstoffen.Contains((string)reader["Brandstof"])) brandstoffen.Add((string)reader["Brandstof"]);
+                            }
+                            #endregion
+                            #region Bestuurder
+                            if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
+                                if(dbBestuurder == null) {
+                                    dbBestuurder = new Bestuurder(
+                                        (string)reader["Bestuurder"],
+                                        (string)reader["Achternaam"],
+                                        (string)reader["Naam"],
+                                        (DateTime)reader["Geboortedatum"]);
+                                }
+                            }
+                            #endregion
+                            #region BestuurderRijbewijs
+                            if (dbBestuurder != null && !reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
+                                if (dbRijbewijzen == null) dbRijbewijzen = new List<FleetMgmt_Business.Objects.Rijbewijs>();
+                                FleetMgmt_Business.Objects.Rijbewijs gelezenRijbewijs = new FleetMgmt_Business.Objects.Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
+                                if (!dbRijbewijzen.Contains(gelezenRijbewijs)) { dbRijbewijzen.Add(gelezenRijbewijs); }
+                            }
+                            #endregion
+                            #region Voertuig
+                            if(dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))){
+                                Brandstof voertuigBrandstof = (Brandstof)Enum.Parse(typeof(Brandstof), (string)reader["voertuigBrandstof"]);
+                                string kleur = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
+
+                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], (string)reader["TypeVoertuig"], (string)reader["Nummerplaat"]);
+                            }
+                            #endregion
+                        }
+                        if(brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
+                        if(dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x));}
+                        if(dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                        if(dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
+                        reader.Close();
 
                         #region Laatste ook nog toevoegen
-                        if (dbObject != null) kaarten.Add(dbObject);
+                        if (dbTankkaart != null) kaarten.Add(dbTankkaart);
                         #endregion
                     }
                 } catch (Exception ex) {
@@ -313,11 +318,11 @@ namespace FleetMgmg_Data.Repositories {
         public void voegTankkaartToe(Tankkaart tankkaart) {
             int insertedId = 0;
 
-            string inbezitvanId = null;
+            string inbezitvan = null;
             if(tankkaart.InBezitVan != null) {
-                inbezitvanId = tankkaart.InBezitVan.Id.ToString();
+                inbezitvan = tankkaart.InBezitVan.Rijksregisternummer;
 
-                IEnumerable<Tankkaart> listje = geefTankkaarten(null, tankkaart.GeldigheidsDatum, inbezitvanId, tankkaart.Geblokkeerd, null);
+                IEnumerable<Tankkaart> listje = geefTankkaarten(null, null, inbezitvan, null, null);
 
                 if (listje.Count() > 0) throw new TankkaartRepositoryException("TankkaartRepositoryException : voegTankkaartToe - Opgegeven bestuurder heeft al een tankkaart!");
             }
@@ -330,7 +335,7 @@ namespace FleetMgmg_Data.Repositories {
                 query.Append(", Pincode ");
             }
 
-            if (!string.IsNullOrWhiteSpace(inbezitvanId)) {
+            if (!string.IsNullOrWhiteSpace(inbezitvan)) {
                 query.Append(", BestuurderId ");
             }
             #endregion
@@ -341,8 +346,8 @@ namespace FleetMgmg_Data.Repositories {
                 query.Append(",@pincode");
             }
 
-            if (!string.IsNullOrWhiteSpace(inbezitvanId)) {
-                query.Append("@bestuurderid");
+            if (!string.IsNullOrWhiteSpace(inbezitvan)) {
+                query.Append(",@bestuurderid");
             }
             #endregion
             query.Append(")");
@@ -359,7 +364,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd);
 
                     if (query.ToString().Contains("@pincode")) cmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
-                    if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", tankkaart.InBezitVan.Id);
+                    if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", tankkaart.InBezitVan.Rijksregisternummer);
 
                    insertedId = (int)cmd.ExecuteScalar();
                 } catch (Exception ex) {

@@ -33,9 +33,9 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurderId, bool? geblokkeerd, Brandstof? brandstof) {
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, Brandstof? brandstof) {
             try {
-                return repo.geefTankkaarten(id, geldigheidsDatum, bestuurderId, geblokkeerd, brandstof);
+                return repo.geefTankkaarten(id, geldigheidsDatum, bestuurder, geblokkeerd, brandstof);
             } catch (Exception ex) {
                 throw new TankkaartException("TankkaartManager - geefTankkaarten",ex);
             }
