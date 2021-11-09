@@ -123,7 +123,7 @@ namespace FleetMgmg_Data.Repositories {
                         #endregion
                     }
                     #endregion
-
+                    transaction.Commit();
                 } catch (Exception ex) {
                     try {
                         transaction.Rollback();
