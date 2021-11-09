@@ -36,59 +36,103 @@ namespace FleetMgmg_Data.Repositories {
         public void bewerkTankkaart(Tankkaart tankkaart) {
             Tankkaart huidigeKaart = this.selecteerTankkaart(tankkaart.KaartNummer);
             if(tankkaart.Equals(huidigeKaart)) throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart - Er is niks verandert!");
-            #region tankkaart tabel
-            StringBuilder query = new StringBuilder("UPDATE Tankkaart SET ");
 
-
-            if(tankkaart.InBezitVan == null) {
-                if(huidigeKaart.InBezitVan != null) {
-                    query.Append(" BestuurderId=@BestuurderIdLEEG ");
-                }
-            } else { // tankkaart.inbezitvan WEL een value heeft
-                if(huidigeKaart.InBezitVan == null) {
-                    query.Append(" BestuurderId=@bestuurderId ");
-                }
-            }
-
-            if(tankkaart.Geblokkeerd != huidigeKaart.Geblokkeerd) {
-                query.Append(" Geblokkeerd=@geblokkeerd ");
-            }
-
-            if(tankkaart.Pincode != huidigeKaart.Pincode) {
-                query.Append(" Pincode=@pincode ");
-            }
-
-            if(tankkaart.GeldigheidsDatum != huidigeKaart.GeldigheidsDatum) {
-                query.Append(" GeldigDatum=@geldigdatum ");
-            }
-
-            query.Append(" WHERE id=@id");
-            #endregion
-            SqlConnection conn = ConnectionClass.getConnection();
-
-            using(SqlCommand cmd = conn.CreateCommand()) {
-                conn.Open();
+            using (SqlConnection conn = ConnectionClass.getConnection()) {
+                SqlTransaction transaction = null;
                 try {
-                    cmd.CommandText = query.ToString();
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
 
-                    if (query.ToString().Contains("@bestuurderIdLEEG")) cmd.Parameters.AddWithValue("@bestuurderIdLEEG", DBNull.Value);
-                    if (query.ToString().Contains("@bestuurderId")) cmd.Parameters.AddWithValue("@bestuurderId", tankkaart.InBezitVan.Id);
-                    if (query.ToString().Contains("@geblokkeerd")) cmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd ? "1" : "0");
-                    if (query.ToString().Contains("@pincode")) cmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
-                    if (query.ToString().Contains("@geldigdatum")) cmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("yyyy-MM-dd"));
-                    if (query.ToString().Contains("@id")) cmd.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
+                    #region TankkaartBrandstofUpdate
+                    if (huidigeKaart.Brandstoffen != tankkaart.Brandstoffen) {
+                        #region DataTable aanmaken en populaten
+                        DataTable table = new DataTable();
+                        table.TableName = "TankkaartBrandstof";
 
+                        table.Columns.Add("TankkaartId", typeof(int));
+                        table.Columns.Add("Brandstof", typeof(string));
 
-                    cmd.ExecuteNonQuery();
+                        foreach(string brandstof in tankkaart.Brandstoffen) {
+                            var row = table.NewRow();
+                            row["TankkaartId"] = tankkaart.KaartNummer;
+                            row["Brandstof"] = brandstof;
+                            table.Rows.Add(row);
+                        }
+                        #endregion
+                        if(huidigeKaart.Brandstoffen != null) {
+                            string tkDelQuery = "DELETE FROM TankkaartBrandstof WHERE TankkaartId=@id";
+                            using (SqlCommand deleteCmd = new SqlCommand(tkDelQuery, conn, transaction)) {
+                                deleteCmd.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
+                                deleteCmd.ExecuteNonQuery();
+                            }
+                        }
+                        using(SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conn, SqlBulkCopyOptions.Default, transaction)) {
+                            sqlBulkCopy.DestinationTableName = table.TableName;
+                            sqlBulkCopy.WriteToServer(table);
+
+                        }
+                    }
+                    #endregion
+                    #region TankkaartUpdate
+                    StringBuilder updateQuery = new StringBuilder("UPDATE TankKaart SET ");
+                    bool kommaZetten = false;
+
+                    if(huidigeKaart.Pincode != tankkaart.Pincode) {
+                        updateQuery.Append(" Pincode=@pincode ");
+                        kommaZetten = true;
+                    }
+
+                    if(huidigeKaart.GeldigheidsDatum != tankkaart.GeldigheidsDatum) {
+                        if (kommaZetten) { updateQuery.Append(","); } else kommaZetten = true;
+                        updateQuery.Append(" GeldigDatun=@geldigdatum ");
+                    }
+
+                    if(huidigeKaart.Geblokkeerd != tankkaart.Geblokkeerd) {
+                        if (kommaZetten) { updateQuery.Append(","); } else kommaZetten = true;
+                        updateQuery.Append(" Geblokkeerd=@geblokkeerd");
+                    }
+
+                    if(huidigeKaart.InBezitVan != tankkaart.InBezitVan) {
+                        if (kommaZetten) { updateQuery.Append(","); } else kommaZetten = true;
+                        updateQuery.Append(" Bestuurder=@bestuurder ");
+                    }
+
+                    updateQuery.Append(" WHERE Id=@id");
+
+                    using(SqlCommand updateCmd = new SqlCommand(updateQuery.ToString(), conn, transaction)) {
+                        #region Nullchecks for DB + toekennen waardes
+                        if (updateQuery.ToString().Contains("@pincode")) {
+                            updateCmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode == null ? DBNull.Value : tankkaart.Pincode);
+                        }
+
+                        if (updateQuery.ToString().Contains("@geldigdatum")) {
+                            updateCmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("dd-MM-yyyy"));
+                        }
+
+                        if (updateQuery.ToString().Contains("@geblokkeerd")) {
+                            updateCmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd ? "1" : "0");
+                        }
+
+                        if (updateQuery.ToString().Contains("@bestuurder")) {
+                            updateCmd.Parameters.AddWithValue("@bestuurder", tankkaart.InBezitVan == null ? DBNull.Value : tankkaart.InBezitVan.Rijksregisternummer);
+                        }
+
+                        updateCmd.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
+
+                        updateCmd.ExecuteNonQuery();
+                        #endregion
+                    }
+                    #endregion
+
                 } catch (Exception ex) {
-                    throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart - Er heeft zich een fout voorgedaan!",ex);
-                } finally { conn.Close(); }
+                    try {
+                        transaction.Rollback();
+                    } catch (Exception ex2) {
+                        throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart - Rollback failed!!!",ex2);
+                    }
+                    throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart", ex);
+                } finally { conn.Close(); transaction.Dispose(); }
             }
-
-
-
-
-
         }
 
         public Tankkaart selecteerTankkaart(int id) {

@@ -98,5 +98,19 @@ namespace FleetMgmt_Business.Objects {
             return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
 
+        public override bool Equals(object obj) {
+            return obj is Bestuurder bestuurder &&
+                   Rijksregisternummer == bestuurder.Rijksregisternummer &&
+                   Naam == bestuurder.Naam &&
+                   Voornaam == bestuurder.Voornaam &&
+                   GeboorteDatum == bestuurder.GeboorteDatum &&
+                   EqualityComparer<Tankkaart>.Default.Equals(Tankkaart, bestuurder.Tankkaart) &&
+                   EqualityComparer<Voertuig>.Default.Equals(Voertuig, bestuurder.Voertuig) &&
+                   EqualityComparer<List<Rijbewijs>>.Default.Equals(rijbewijzen, bestuurder.rijbewijzen);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Rijksregisternummer, Naam, Voornaam, GeboorteDatum, Tankkaart, Voertuig, rijbewijzen);
+        }
     }
 }
