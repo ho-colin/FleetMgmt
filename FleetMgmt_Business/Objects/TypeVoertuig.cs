@@ -25,7 +25,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         private void zetRijbewijs(RijbewijsEnum rijbewijs) {
-            this.vereistRijbewijs = vereistRijbewijs;
+            this.vereistRijbewijs = rijbewijs;
         }
 
         public void updateRijbewijs(RijbewijsEnum rijbewijs) {

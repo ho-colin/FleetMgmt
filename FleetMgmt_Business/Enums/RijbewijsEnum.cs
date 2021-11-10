@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Enums {
     public enum RijbewijsEnum {
-        AM,A,A1,A2,B,BE,C,CE,C1,C1E,D,DE,D1E,G
+        AM,
+        A,
+        A1,
+        A2,
+        B,
+        BE,
+        C,
+        CE,
+        C1,
+        C1E,
+        D,
+        DE,
+        D1E,
+        G
     }
 }

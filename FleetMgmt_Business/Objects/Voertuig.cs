@@ -79,9 +79,9 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateBestuurder(Bestuurder bestuurder) {
-            if (bestuurder == Bestuurder) throw new VoertuigException("Voertuig - Geen verschil");
+            if (bestuurder == this.Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
             if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
-            bestuurder.updateVoertuig(this);
+            //bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
             if (bestuurder.Voertuig != this) { bestuurder.updateVoertuig(this); }           
         }
