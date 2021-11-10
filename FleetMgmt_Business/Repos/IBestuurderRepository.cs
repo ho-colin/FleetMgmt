@@ -8,17 +8,12 @@ using FleetMgmt_Business.Objects;
 namespace FleetMgmt_Business.Repos {
     public interface IBestuurderRepository {
         void voegBestuurderToe(Bestuurder bestuurder);
-        void verwijderBestuurder(Bestuurder bestuurder);
-        IEnumerable<Bestuurder> toonBestuurders();
-        void geefBestuurder(int id);
+        void verwijderBestuurder(int id);
+        IEnumerable<(Bestuurder, Tankkaart, Voertuig)> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum, bool strikt = true);
         void bewerkBestuurder(Bestuurder bestuurder);
-        bool bestaatBestuurder(Bestuurder bestuurder);
+        bool bestaatBestuurder(int id);
 
-        void updateTankkaart(Bestuurder bestuurder,Tankkaart tankkaart);
-        void updateVoertuig(Bestuurder bestuurder, Voertuig voertuig);
 
-        void voegRijbewijsToe(Bestuurder bestuurder, Rijbewijs rijbewijs);
-        void verwijderRijbewijs(Bestuurder bestuurder, Rijbewijs rijbewijs);
 
 
     }

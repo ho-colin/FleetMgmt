@@ -358,10 +358,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-# Fody - auto-generated XML schema
-FodyWeavers.xsd
-/FleetMgmg_Data/ConnectionClass.cs
-/FleetMgmg_Data/Exceptions/ConnectionException.cs
-/FleetMgmt_Con
-/FleetMgmg_Con
