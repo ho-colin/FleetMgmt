@@ -14,7 +14,7 @@ namespace FleetMgmg_Data.Repositories {
     public class VoertuigRepository : IVoertuigRepository {
 
         private SqlConnection getConnection() {
-            SqlConnection conn = new SqlConnection(ConnectionClass.connectionString);
+            SqlConnection conn = ConnectionClass.getConnection();
             return conn;
         }
 

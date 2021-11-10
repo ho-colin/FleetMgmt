@@ -9,7 +9,7 @@ using FleetMgmt_Business.Enums;
 namespace FleetMgmt_Business.Objects {
     public class Tankkaart {
 
-        public string KaartNummer { get; private set; }
+        public int KaartNummer { get; private set; }
 
         public DateTime GeldigheidsDatum { get; private set; }
 
@@ -21,8 +21,12 @@ namespace FleetMgmt_Business.Objects {
 
         public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
             zetKaartnummer(kaartnummer);
+        }
+
+        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
+            zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
             updateInBezitVan(inbezitvan);
@@ -38,10 +42,14 @@ namespace FleetMgmt_Business.Objects {
 
         public void updateInBezitVan(Bestuurder bestuurder) {
             if (bestuurder == null) {
+                if(this.InBezitVan != null) {
+                    this.InBezitVan.updateTankkaart(null);
+                }
                 this.InBezitVan = null;
                 return;
             }
             this.InBezitVan = bestuurder;
+            if (bestuurder.Tankkaart != this) { bestuurder.updateTankkaart(this); }          
         }      
 
         //True is geblokkeerd, False is niet geblokkeerd
@@ -62,7 +70,7 @@ namespace FleetMgmt_Business.Objects {
                 this.Brandstoffen.Add(brandstof);
             } else throw new TankkaartException("Brandstof staat al in lijst!");
         }
-
+      
         public void verwijderBrandstof(TankkaartBrandstof brandstof) {
             if (this.Brandstoffen == null) throw new TankkaartException("Brandstof is null");
             else if (!this.Brandstoffen.Contains(brandstof)) throw new TankkaartException("Brandstof werd niet gevonden!");
@@ -73,8 +81,7 @@ namespace FleetMgmt_Business.Objects {
         public void updatePincode(string pincode) {
             this.zetPincode(pincode);
         }
-
-
+      
         private void zetBrandstoffen(List<TankkaartBrandstof> brandstoffen) {
             if(brandstoffen == null) return;
             if(this.Brandstoffen == null) {
@@ -96,13 +103,44 @@ namespace FleetMgmt_Business.Objects {
             this.Pincode = pincode;
         }
 
-        private void zetKaartnummer(string kaartnummer) {
-            if (string.IsNullOrWhiteSpace(kaartnummer)) throw new TankkaartException("Kaartnummer mag niet leeg zijn!");
-            if (kaartnummer.Any(char.IsLetter)) throw new TankkaartException("Kaartnummer mogen alleen getallen zijn!");
-            if (int.Parse(kaartnummer) < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
+        private void zetKaartnummer(int kaartnummer) {
+            if (kaartnummer < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
 
             this.KaartNummer = kaartnummer;
         }
 
+        public override string ToString() {
+
+            StringBuilder print = new StringBuilder($"Id: {this.KaartNummer}, GeldigheidsDatum: {this.GeldigheidsDatum.ToShortDateString()}, Geblokkeerd: {this.Geblokkeerd}");
+
+            if (!string.IsNullOrWhiteSpace(Pincode)) print.Append($", PinCode: {this.Pincode}");
+
+            if (Brandstoffen.Count > 0) {
+                print.Append(", Brandstoffen: ");
+                for (int i = 0; i < this.Brandstoffen.Count; i++) {
+                    if (i > 0 && i < this.Brandstoffen.Count) print.Append(", ");
+                    print.Append(this.Brandstoffen.ElementAt(i));
+                }
+            }
+
+            if (this.InBezitVan != null) print.Append($", Eigenaar: {this.InBezitVan.Id}, {this.InBezitVan.Voornaam} {this.InBezitVan.Naam}");
+            
+
+            return print.ToString();
+        }
+
+        public override bool Equals(object obj) {
+            return obj is Tankkaart tankkaart &&
+                   KaartNummer == tankkaart.KaartNummer &&
+                   GeldigheidsDatum == tankkaart.GeldigheidsDatum &&
+                   Pincode == tankkaart.Pincode &&
+                   EqualityComparer<Bestuurder>.Default.Equals(InBezitVan, tankkaart.InBezitVan) &&
+                   Geblokkeerd == tankkaart.Geblokkeerd &&
+                   EqualityComparer<List<string>>.Default.Equals(Brandstoffen, tankkaart.Brandstoffen);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(KaartNummer, GeldigheidsDatum, Pincode, InBezitVan, Geblokkeerd, Brandstoffen);
+        }
     }
 }

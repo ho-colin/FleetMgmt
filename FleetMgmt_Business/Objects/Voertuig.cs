@@ -83,6 +83,7 @@ namespace FleetMgmt_Business.Objects {
             if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
             bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
+            if (bestuurder.Voertuig != this) { bestuurder.updateVoertuig(this); }           
         }
 
         public void updateTypeVoertuig(TypeVoertuig type) {

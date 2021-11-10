@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmt_xUnit", "FleetMgm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmg_Data", "FleetMgmg_Data\FleetMgmg_Data.csproj", "{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetMgmt_WPF", "FleetMgmt_WPF\FleetMgmt_WPF.csproj", "{97C3DE2C-E7DB-4B75-91DA-0B004CB42AEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +28,6 @@ Global
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97C3DE2C-E7DB-4B75-91DA-0B004CB42AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97C3DE2C-E7DB-4B75-91DA-0B004CB42AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97C3DE2C-E7DB-4B75-91DA-0B004CB42AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97C3DE2C-E7DB-4B75-91DA-0B004CB42AEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
