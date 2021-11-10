@@ -12,30 +12,20 @@ namespace FleetMgmt_xUnit.Objects {
     public class Test_Voertuig {
         [Fact]
         public void Test_Ctor_Valid() {
-            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             Assert.Equal(BrandstofEnum.Elektrisch, v.Brandstof);
             Assert.Equal("1HGBH41JXMN109186", v.Chassisnummer);
             Assert.Equal("Blauw", v.Kleur);
             Assert.Equal(5, v.AantalDeuren);
             Assert.Equal("Volkswagen", v.Merk);
             Assert.Equal("Golf", v.Model);
-            Assert.Equal("Hatchback", v.TypeVoertuig);
+            Assert.Equal("Hatchback", v.TypeVoertuig.Type);
             Assert.Equal("1-AAA-123", v.Nummerplaat);
-        }
-
-
-        [Theory]
-        [InlineData(null, "Golf", "Hatchback")]
-        [InlineData("Volkswagen", null, "Hatchback")]
-        [InlineData("Volkswagen", "Golf", null)]
-        public void Test_Ctor_Invalid(string merk, string model, string typevoertuig) {
-            var ex = Assert.Throws<VoertuigException>(() => new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186",
-                "Blauw", 5, merk, model, typevoertuig, "1-AAA-123"));
         }
 
         [Fact]
         public void Test_UpdateBestuurder() {
-            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Colpaert", "Pieter", new DateTime(1990, 02, 27));
             Bestuurder b1 = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
             v.updateBestuurder(b);
@@ -43,9 +33,10 @@ namespace FleetMgmt_xUnit.Objects {
             v.updateBestuurder(b1);
             Assert.Equal(b1, v.Bestuurder);
         }
+
         [Fact]
         public void Test_UpdateBestuurder_Invalid() {
-            Voertuig v = new Voertuig(Brandstof.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Colpaert", "Pieter", new DateTime(1990, 02, 27));
             v.updateBestuurder(b);
             var ex = Assert.Throws<VoertuigException>(() => v.updateBestuurder(b));
@@ -54,7 +45,7 @@ namespace FleetMgmt_xUnit.Objects {
         }
         [Fact]
         public void Test_UpdateAantalDeuren_Valid() {
-            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             v.updateAantalDeuren(3);
             Assert.Equal(3, v.AantalDeuren);
             v.updateAantalDeuren(5);
@@ -62,7 +53,7 @@ namespace FleetMgmt_xUnit.Objects {
         }
         [Fact]
         public void Test_UpdateKleur_Valid() {
-            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", "Hatchback", "1-AAA-123");
+            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             v.updateKleur("Rood");
             Assert.Equal("Rood", v.Kleur);
             v.updateKleur("Zwart");

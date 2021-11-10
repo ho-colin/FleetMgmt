@@ -9,6 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmt_xUnit", "FleetMgm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmg_Data", "FleetMgmg_Data\FleetMgmg_Data.csproj", "{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmt_WPF", "FleetMgmt_WPF\FleetMgmt_WPF.csproj", "{C72A8E4E-22DF-47E1-8C98-F54132F85D81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FleetMgmt_Con", "FleetMgmt_Con\FleetMgmt_Con.csproj", "{88F862A9-C5B2-4226-BE5E-ABF3610DEE3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +31,14 @@ Global
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABDEDFD9-4EC8-468B-AF01-BE28EB4165F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C72A8E4E-22DF-47E1-8C98-F54132F85D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C72A8E4E-22DF-47E1-8C98-F54132F85D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C72A8E4E-22DF-47E1-8C98-F54132F85D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C72A8E4E-22DF-47E1-8C98-F54132F85D81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F862A9-C5B2-4226-BE5E-ABF3610DEE3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F862A9-C5B2-4226-BE5E-ABF3610DEE3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F862A9-C5B2-4226-BE5E-ABF3610DEE3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F862A9-C5B2-4226-BE5E-ABF3610DEE3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

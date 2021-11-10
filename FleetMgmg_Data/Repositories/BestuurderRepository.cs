@@ -127,7 +127,7 @@ namespace FleetMgmg_Data.Repositories {
                             string naamdb = (string)reader["Naam"];
                             string voornaamdb = (string)reader["Voornaam"];
                             DateTime geboortedatumdb = (DateTime)reader["Geboortedatum"];
-                            string kaartnummerdb = ((int)reader["Id"]).ToString();
+                            int kaartnummerdb = (int)reader["Id"];
                             DateTime geldigheidsdatumdb = (DateTime)reader["Geldigheidsdatum"];
                             string pincodedb = (string)reader["Pincode"];
                             List<string> _brandstoffen = new List<string>();
@@ -136,7 +136,7 @@ namespace FleetMgmg_Data.Repositories {
                             string modeldb = (string)reader["Model"];
                             string nummerplaatdb = (string)reader["Nummerplaat"];
                             string brandstofdb = (string)reader["TypeVoertuig"];
-                            string typeVoertuigdb = (TypeVoertuig)reader["TypeVoertuig"];
+                            TypeVoertuig typeVoertuigdb = new TypeVoertuig((string) reader["TypeRijbewijs"], RijbewijsEnum.B); //HIER NOG FIXEN DAT ER EEN RIJBEWIJS ENUM WORDT INGELEZEN
                             string kleurdb = (string)reader["Kleur"];
                             int aantalDeurendb = (int)reader["AantalDeuren"];
 

@@ -52,10 +52,10 @@ namespace FleetMgmg_Data.Repositories {
                         table.Columns.Add("TankkaartId", typeof(int));
                         table.Columns.Add("Brandstof", typeof(string));
 
-                        foreach(string brandstof in tankkaart.Brandstoffen) {
+                        foreach(TankkaartBrandstof brandstof in tankkaart.Brandstoffen) {
                             var row = table.NewRow();
                             row["TankkaartId"] = tankkaart.KaartNummer;
-                            row["Brandstof"] = brandstof;
+                            row["Brandstof"] = brandstof.ToString();
                             table.Rows.Add(row);
                         }
                         #endregion
@@ -145,7 +145,7 @@ namespace FleetMgmg_Data.Repositories {
                 "WHERE t.Id=@id";
 
             Tankkaart tk = null;
-            List<string> tankkaartBrandstof = null;
+            List<TankkaartBrandstof> tankkaartBrandstof = null;
             Bestuurder b = null;
             List<FleetMgmt_Business.Objects.Rijbewijs> bestuurderRijbewijs = null;
 
@@ -165,9 +165,10 @@ namespace FleetMgmg_Data.Repositories {
                                 tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], (string)reader["pincode"], null, null);
                             }
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
-                                if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<string>(); }
-                                if (!tankkaartBrandstof.Contains((string)reader["Brandstof"])) {
-                                    tankkaartBrandstof.Add((string)reader["Brandstof"]);
+                                if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<TankkaartBrandstof>(); }
+                                TankkaartBrandstof tb = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
+                                if (!tankkaartBrandstof.Contains(tb)) {
+                                    tankkaartBrandstof.Add(tb);
                                 }
                             }
                             if (b == null && !reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
@@ -186,8 +187,17 @@ namespace FleetMgmg_Data.Repositories {
 
                                     string kleur = null;
                                     if (!reader.IsDBNull(reader.GetOrdinal("kleur"))) kleur = (string)reader["kleur"];
+                                    RijbewijsEnum re = (RijbewijsEnum) Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
 
-                                    v = new Voertuig((Brandstof)Enum.Parse(typeof(Brandstof), (string)reader["voertuigBrandstof"]), (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["merk"], (string)reader["model"], (string)reader["TypeVoertuig"], (string)reader["Nummerplaat"]);
+                                    v = new Voertuig(
+                                        (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]), 
+                                        (string)reader["VoertuigChassisnummer"], 
+                                        kleur, 
+                                        (int)reader["AantalDeuren"], 
+                                        (string)reader["merk"], 
+                                        (string)reader["model"], 
+                                        new TypeVoertuig((string)reader["TypeVoertuig"], re), 
+                                        (string)reader["Nummerplaat"]);
                                 }
                             }
                         }
@@ -208,7 +218,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, Brandstof? brandstof) {
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, TankkaartBrandstof? brandstof) {
             List<Tankkaart> kaarten = new List<Tankkaart>();
             SqlConnection conn = ConnectionClass.getConnection();
 
@@ -268,7 +278,7 @@ namespace FleetMgmg_Data.Repositories {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         int laatsGebruiktId = 0;
 
-                        List<string> brandstoffen = null;
+                        List<TankkaartBrandstof> brandstoffen = null;
                         Tankkaart dbTankkaart = null;
 
                         Bestuurder dbBestuurder = null;
@@ -292,8 +302,9 @@ namespace FleetMgmg_Data.Repositories {
                             #region TankkaartBrandstoffen
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
 
-                                if (brandstoffen == null) brandstoffen = new List<string>();
-                                if (!brandstoffen.Contains((string)reader["Brandstof"])) brandstoffen.Add((string)reader["Brandstof"]);
+                                if (brandstoffen == null) brandstoffen = new List<TankkaartBrandstof>();
+                                TankkaartBrandstof inGelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
+                                if (!brandstoffen.Contains(inGelezenData)){ brandstoffen.Add(inGelezenData); }
                             }
                             #endregion
                             #region Bestuurder
@@ -316,10 +327,11 @@ namespace FleetMgmg_Data.Repositories {
                             #endregion
                             #region Voertuig
                             if(dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))){
-                                Brandstof voertuigBrandstof = (Brandstof)Enum.Parse(typeof(Brandstof), (string)reader["voertuigBrandstof"]);
+                                BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);
+                                RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
                                 string kleur = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
 
-                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], (string)reader["TypeVoertuig"], (string)reader["Nummerplaat"]);
+                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
                             }
                             #endregion
                         }
@@ -430,8 +442,8 @@ namespace FleetMgmg_Data.Repositories {
                         cmd2.Parameters.Add(new SqlParameter("@tankkaartId", SqlDbType.Int));
                         cmd2.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
                         cmd2.Parameters["@tankkaartId"].Value = insertedId;
-                        foreach (string brandstof in tankkaart.Brandstoffen) {
-                            cmd2.Parameters["@brandstof"].Value = brandstof;
+                        foreach (TankkaartBrandstof brandstof in tankkaart.Brandstoffen) {
+                            cmd2.Parameters["@brandstof"].Value = brandstof.ToString();
                             cmd2.ExecuteNonQuery();
                         }
                     } catch (Exception ex) {

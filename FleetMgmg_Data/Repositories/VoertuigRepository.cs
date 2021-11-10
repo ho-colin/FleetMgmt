@@ -79,6 +79,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
+        //Gelieve te joinen met alle ander tabellen zodat we een volledig compleet object hebben adhv wat er ingevuld is
         public Voertuig geefVoertuig(string chassisnummer) {
             SqlConnection connection = getConnection();
             string query = "SELECT * FROM Voertuig WHERE Chassisnummer=@chassisnummer";
@@ -90,9 +91,17 @@ namespace FleetMgmg_Data.Repositories {
                 try {
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
-                    Voertuig voertuig = new Voertuig((Brandstof)Enum.Parse(typeof(Enum), (string)reader["Brandstof"]),
-                        (string)reader["Chassisnummer"], (string)reader["Kleur"], (int)reader["AantalDeuren"], (string)reader["Merk"],
-                       (string)reader["Model"], (string)reader["TypeVoertuig"], (string)reader["Nummerplaat"]);
+                    RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), "B"); //HIER NOG AANPASSEN NAAR READER
+                    Voertuig voertuig = new Voertuig(
+                        (BrandstofEnum)Enum.Parse(typeof(Enum), 
+                        (string)reader["Brandstof"]),
+                        (string)reader["Chassisnummer"], 
+                        (string)reader["Kleur"], 
+                        (int)reader["AantalDeuren"], 
+                        (string)reader["Merk"],
+                       (string)reader["Model"], 
+                       new TypeVoertuig((string)reader["TypeVoertuig"], re), 
+                       (string)reader["Nummerplaat"]);
                     return voertuig;
                 } catch (Exception ex) {
                     throw new VoertuigRepositoryException("VoertuigRepository : GeefVoertuig", ex);
@@ -208,7 +217,7 @@ namespace FleetMgmg_Data.Repositories {
                         string modelDB = (string)reader["Model"];
                         string nummerplaatDB = (string)reader["Nummerplaat"];
                         string brandstofDB = (string)reader["Brandstof"];
-                        string typeVoertuigDB = (string)reader["TypeVoertuig"];
+                        TypeVoertuig typeVoertuigDB = new TypeVoertuig((string)reader["TypeVoertuig"], RijbewijsEnum.B); //HIER NOG FIXEN DAT ER EEN RIJBEWIJS ENUM WORDT INGELEZEN
                         string kleurDB = (string)reader["Kleur"];
                         int aantalDeurenDB = (int)reader["AantalDeuren"];
 
@@ -217,13 +226,13 @@ namespace FleetMgmg_Data.Repositories {
                         string achternaamDB = (string)reader["Achternaam"];
                         DateTime geboortedatumDB = (DateTime)reader["Geboortedatum"];
 
-                        string kaartnummerDB = ((int)reader["Id"]).ToString();
+                        int kaartnummerDB = ((int)reader["Id"]);
                         DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
                         string pincodeDB = (string)reader["Pincode"];
 
                         Bestuurder bestuurder = new Bestuurder(rijksregisternummerDB, naamDB, achternaamDB, geboortedatumDB);
                         Tankkaart tankkaart = new Tankkaart(kaartnummerDB, geldigDatumDB, pincodeDB);
-                        Voertuig voertuig = new Voertuig((Brandstof)Enum.Parse(typeof(Enum), brandstofDB), chassisnummerDB, kleurDB, aantalDeurenDB,
+                        Voertuig voertuig = new Voertuig((BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), brandstofDB), chassisnummerDB, kleurDB, aantalDeurenDB,
                             merkDB, modelDB, typeVoertuigDB, nummerplaatDB);
                         voertuigen.Add((voertuig,bestuurder, tankkaart));
                     }
@@ -311,6 +320,7 @@ namespace FleetMgmg_Data.Repositories {
             using (SqlCommand command = connection.CreateCommand()) {
                 connection.Open();
                 try {
+                    command.CommandText = query;
                     command.Parameters.Add(new SqlParameter("@chassisnummer", SqlDbType.NVarChar));
                     command.Parameters["@chassisnummer"].Value = voertuig.Chassisnummer;
                     command.ExecuteNonQuery();

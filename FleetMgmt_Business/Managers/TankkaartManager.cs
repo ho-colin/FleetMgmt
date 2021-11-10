@@ -33,7 +33,7 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, Brandstof? brandstof) {
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, TankkaartBrandstof? brandstof) {
             try {
                 return repo.geefTankkaarten(id, geldigheidsDatum, bestuurder, geblokkeerd, brandstof);
             } catch (Exception ex) {

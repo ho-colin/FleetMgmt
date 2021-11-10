@@ -21,20 +21,19 @@ namespace FleetMgmt_Business.Objects {
 
         public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
-        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
             zetKaartnummer(kaartnummer);
         }
 
-        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<string> brandstoffen) {
+        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) {
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
             updateInBezitVan(inbezitvan);
             zetGeblokkeerd(false);
-            zetBrandstoffen(brandstoffen);
         }
 
-        public Tankkaart(string kaartnummer, DateTime geldigheidsdatum, string pincode) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode) {
             zetKaartnummer(kaartnummer);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
@@ -82,7 +81,7 @@ namespace FleetMgmt_Business.Objects {
             this.zetPincode(pincode);
         }
       
-        private void zetBrandstoffen(List<TankkaartBrandstof> brandstoffen) {
+        public void zetBrandstoffen(List<TankkaartBrandstof> brandstoffen) {
             if(brandstoffen == null) return;
             if(this.Brandstoffen == null) {
                 this.Brandstoffen = brandstoffen;
@@ -136,7 +135,7 @@ namespace FleetMgmt_Business.Objects {
                    Pincode == tankkaart.Pincode &&
                    EqualityComparer<Bestuurder>.Default.Equals(InBezitVan, tankkaart.InBezitVan) &&
                    Geblokkeerd == tankkaart.Geblokkeerd &&
-                   EqualityComparer<List<string>>.Default.Equals(Brandstoffen, tankkaart.Brandstoffen);
+                   EqualityComparer<List<TankkaartBrandstof>>.Default.Equals(Brandstoffen, tankkaart.Brandstoffen);
         }
 
         public override int GetHashCode() {
