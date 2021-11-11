@@ -21,5 +21,11 @@ namespace FleetMgmt_WPF {
             InitializeComponent();
             this.ResizeMode = ResizeMode.NoResize;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            BestuurderWindow bw = new BestuurderWindow();
+            bw.Show();
+            this.Close();
+        }
     }
 }
