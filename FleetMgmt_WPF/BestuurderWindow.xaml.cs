@@ -55,5 +55,18 @@ namespace FleetMgmt_WPF {
             vw.Show();
             this.Close();
         }
+
+        private void btn_TypeVoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
+            TypeVoertuigWindow tvw = new TypeVoertuigWindow();
+            tvw.Show();
+            this.Close();
+        }
+
+        private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
+            this.txtbx_RijksregisterInput = null;
+            this.txtbx_VoornaamInput = null;
+            this.txtbx_NaamInput = null;
+            this.txtbx_GeboorteDatumInput = null;
+        }
     }
 }

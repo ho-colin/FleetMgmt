@@ -81,42 +81,42 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!-- Button links-->
-        <Button Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click"/>
-        <Button Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click"/>
+        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click_1"/>
 
         <!--Labels-->
         <Label Grid.Column="1" Content="Voertuig" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="134"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Chassisnummer" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Nummerplaat" Grid.Column="1" HorizontalAlignment="Left" Margin="34,99,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Merk" Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Model" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="TypeVoertuig" Grid.Column="1" HorizontalAlignment="Left" Margin="34,166,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Brandstof" Grid.Column="1" HorizontalAlignment="Center" Margin="0,79,0,0" VerticalAlignment="Top" Height="20" Width="106"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Aantal deuren" Grid.Column="1" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Height="20" Width="106" RenderTransformOrigin="0.499,1.055"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Kleur" Grid.Column="1" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label Style="{StaticResource HeaderStyle}"  Content="Bestuurder" Grid.Column="1" HorizontalAlignment="Center" Margin="0,149,0,0" VerticalAlignment="Top" Height="20" Width="106"/>
+        <Label x:Name="lbl_Chassisnummer" Style="{StaticResource HeaderStyle}"  Content="Chassisnummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Nummerplaat" Style="{StaticResource HeaderStyle}"  Content="Nummerplaat:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,99,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Merk" Style="{StaticResource HeaderStyle}"  Content="Merk:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Model" Style="{StaticResource HeaderStyle}"  Content="Model:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_TypeVoertuig" Style="{StaticResource HeaderStyle}"  Content="TypeVoertuig:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,166,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
+        <Label x:Name="lbl_Brandstof" Style="{StaticResource HeaderStyle}"  Content="Brandstof:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,79,0,0" VerticalAlignment="Top" Height="20" Width="106"/>
+        <Label x:Name="lbl_AantalDeuren" Style="{StaticResource HeaderStyle}"  Content="Aantal deuren:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Height="20" Width="106" RenderTransformOrigin="0.499,1.055"/>
+        <Label x:Name="lbl_Kleur" Style="{StaticResource HeaderStyle}"  Content="Kleur:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}"  Content="Bestuurder:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,149,0,0" VerticalAlignment="Top" Height="20" Width="106"/>
         <!--Button selecteer bestuurder-->
-        <Button Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" HorizontalAlignment="Left" Margin="358,148,0,0" VerticalAlignment="Top" Height="20" Width="140" Grid.Column="1"/>
+        <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" HorizontalAlignment="Left" Margin="358,148,0,0" VerticalAlignment="Top" Height="20" Width="140" Grid.Column="1"/>
 
 
 
         <!--Button rechts-->
-        <Button Content="Voertuig toevoegen" HorizontalAlignment="Left" Margin="523,77,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
-        <Button Content="Voertuig zoeken" HorizontalAlignment="Left" Margin="523,116,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
-        <Button Content="Reset velden" HorizontalAlignment="Left" Margin="523,156,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1"/>
+        <Button x:Name="btn_VoertuigToevoegen" Content="Voertuig toevoegen" HorizontalAlignment="Left" Margin="523,77,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
+        <Button x:Name="btn_VoertuigZoeken" Content="Voertuig zoeken" HorizontalAlignment="Left" Margin="523,116,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
+        <Button x:Name="btn_Reset" Content="Reset velden" HorizontalAlignment="Left" Margin="523,156,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1" Click="btn_Reset_Click" />
 
 
         <!--Input + combox velden-->
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,125,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,148,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,105,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <TextBox Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,128,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <ComboBox Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,172,0,0" VerticalAlignment="Top" Width="140"/>
-        <ComboBox Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,77,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
+        <TextBox x:Name="txtbw_ChassisNummer" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_Nummerplaat" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_Merk" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,125,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <TextBox x:Name="txtbx_Model" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,148,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <TextBox x:Name="txtbx_Kleur" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,105,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <TextBox x:Name="txtbx_AantalDeuren" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,128,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <ComboBox x:Name="combobx_TypeVoertuig" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,172,0,0" VerticalAlignment="Top" Width="140"/>
+        <ComboBox x:Name="combobx_Brandstof" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,77,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
         <DataGrid HeadersVisibility="None" GridLinesVisibility="None" SelectionMode="Single" SelectionUnit="Cell" IsReadOnly="true"
       RowStyle="{StaticResource rowStyle}" CellStyle="{StaticResource cellStyle}" 
       Background="White" BorderThickness="5" Foreground="White" Grid.Column="1" Margin="10,207,10,21"/>

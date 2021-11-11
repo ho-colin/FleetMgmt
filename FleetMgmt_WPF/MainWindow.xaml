@@ -34,7 +34,7 @@
         <Button Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click"/>
         <Button Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click_1"/>
         <Button Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click_2"/>
         <Label Grid.Column="1" Content="Fleet Management" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="268"/>
     </Grid>
 </Window>

@@ -33,5 +33,11 @@ namespace FleetMgmt_WPF {
             bw.Show();
             this.Close();
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e) {
+            TypeVoertuigWindow tvw = new TypeVoertuigWindow();
+            tvw.Show();
+            this.Close();
+        }
     }
 }
