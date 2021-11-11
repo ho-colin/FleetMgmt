@@ -27,5 +27,11 @@ namespace FleetMgmt_WPF {
             vw.Show();
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e) {
+            BestuurderWindow bw = new BestuurderWindow();
+            bw.Show();
+            this.Close();
+        }
     }
 }
