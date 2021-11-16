@@ -457,9 +457,5 @@ namespace FleetMgmg_Data.Repositories {
 
 
         }
-
-        public void bewerkTankkaartBrandstof(int id,List<string> brandstof){
-
-        }
     }
 }
