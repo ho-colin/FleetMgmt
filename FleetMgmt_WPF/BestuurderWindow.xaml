@@ -1,0 +1,110 @@
+﻿<Window x:Class="FleetMgmt_WPF.BestuurderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FleetMgmt_WPF"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="BestuurderWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Styling BestuurderWindow-->
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <Style x:Key="HeaderStyle" TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+        <Style x:Key="BestuurderStyle" TargetType="Button">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Width" Value="135" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="cellStyle" TargetType="DataGridCell">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="Black" BorderThickness="0">
+                            <Border x:Name="border"
+                              BorderBrush="White"
+                              BorderThickness="2"
+                              Background="White"
+                              CornerRadius="5">
+                                <ContentPresenter />
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="Orange"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="rowStyle" TargetType="DataGridRow">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Black" />
+        </Style>
+    </Window.Resources>
+    <Grid RenderTransformOrigin="0.176,0.995">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Button links-->
+        <Button  x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click"/>
+        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click"/>
+        <!--Labels-->
+        <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="180"/>
+        <Label x:Name="lbl_rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,89,0,0" VerticalAlignment="Top" Height="27" Width="105"/>
+        <Label  x:Name="lbl_voornaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,117,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label  x:Name="lbl_naam" Style="{StaticResource HeaderStyle}"  Content="Naam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,150,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label  x:Name="lbl_geboortedatum" Style="{StaticResource HeaderStyle}"  Content="Geboortedatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,184,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <!--Button rechts-->
+        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="485,88,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1"/>
+        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="485,136,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" RenderTransformOrigin="0.455,0.601"/>
+        <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="485,186,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_ResetVelden_Click"/>
+
+        <!--Input + combox velden-->
+        <TextBox x:Name="txtbx_RijksregisterInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,88,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
+        <TextBox x:Name="txtbx_VoornaamInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_NaamInput"  Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_GeboorteDatumInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
+
+
+        <!--Datagrid-->
+        <DataGrid x:Name="dataGrid" Grid.Column="1" Margin="0,234,0,0"/>
+
+    </Grid>
+</Window>

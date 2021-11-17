@@ -62,22 +62,28 @@ namespace FleetMgmt_Business.Objects {
         private void zetGeboorteDatum(DateTime geboortedatum) {
             //Een ongeldige datum heeft altijd een hashcode 0, wanneer de datum dus de hashcode 0 heeft dan is hij ongeldig!
             if (geboortedatum.GetHashCode() == 0) throw new BestuurderException("Bestuurder: Datum heeft geen geldige waarde!");
-            if(geboortedatum > DateTime.Today) throw new BestuurderException("Bestuurder: Datum mag niet in de toekomst zijn!");
+            if(geboortedatum >= DateTime.Today) throw new BestuurderException("Bestuurder: Datum mag niet in de toekomst zijn!");
             this.GeboorteDatum = geboortedatum;
         }
 
         public void updateTankkaart(Tankkaart tankkaart) {
             if (tankkaart == null) {
+                if(this.Tankkaart != null) {
+                    this.Tankkaart.updateInBezitVan(null);
+                }
                 this.Tankkaart = null;
                 return;
             }
             this.Tankkaart = tankkaart;
+            if (tankkaart.InBezitVan != this) { tankkaart.updateInBezitVan(this); }
         }
 
         public void updateVoertuig(Voertuig voertuig) {
-            if (voertuig == Voertuig) throw new BestuurderException("Bestuurder: Geen verschil");
-            voertuig.updateBestuurder(this);
+            if (voertuig == this.Voertuig) throw new BestuurderException("Bestuurder: Geen verschil");
             this.Voertuig = voertuig;
+            if (voertuig.Bestuurder != this) {
+                voertuig.updateBestuurder(this);
+            }           
         }
 
 
@@ -94,6 +100,5 @@ namespace FleetMgmt_Business.Objects {
         public override string ToString() {
             return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
-
     }
 }

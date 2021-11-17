@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Exceptions;
 
 namespace FleetMgmt_Business.Objects {
     public class Rijbewijs {
 
-        public Enums.RijbewijsEnum Categorie { get; private set; }
+        public RijbewijsEnum Categorie { get; private set; }
 
         public DateTime BehaaldOp { get; private set; }
 

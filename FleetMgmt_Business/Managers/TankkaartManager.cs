@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FleetMgmt_Business.Enums;
 
 namespace FleetMgmt_Business.Managers {
     public class TankkaartManager : ITankkaartRepository {
@@ -16,46 +17,49 @@ namespace FleetMgmt_Business.Managers {
             this.repo = repo;
         }
 
-        public bool bestaatTankkaart(Tankkaart tankkaart) {
-            return repo.bestaatTankkaart(tankkaart);
+        public bool bestaatTankkaart(int id) {
+            try {
+                return repo.bestaatTankkaart(id);
+            } catch (Exception ex) {
+                throw new TankkaartException("TankkaartManager - bestaatTankkaart",ex);
+            }
         }
 
-        public Tankkaart geefTankkaart(int id) {
-            return repo.geefTankkaart(id);
+        public void bewerkTankkaart(Tankkaart tankkaart) {
+            try {
+                repo.bewerkTankkaart(tankkaart);
+            } catch (Exception ex) {
+                throw new TankkaartException("TankkaartManager - bewerkTankkaart",ex);
+            }
         }
 
-        public IEnumerable<Tankkaart> geefTankkaarten() {
-            return repo.geefTankkaarten();
+        public IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, TankkaartBrandstof? brandstof) {
+            try {
+                return repo.geefTankkaarten(id, geldigheidsDatum, bestuurder, geblokkeerd, brandstof);
+            } catch (Exception ex) {
+                throw new TankkaartException("TankkaartManager - geefTankkaarten",ex);
+            }
         }
 
-        public void updateInBezitVan(Tankkaart tankkaart, Bestuurder bestuurder) {
-            repo.updateInBezitVan(tankkaart, bestuurder);
+        public Tankkaart selecteerTankkaart(int id) {
+            if (!bestaatTankkaart(id)) throw new TankkaartException("TankkaarManager : selecteerTankkaart - Tankkaart bestaat niet!");
+            return repo.selecteerTankkaart(id);
         }
 
-        public void updatePincode(Tankkaart tankkaart, string pincode) {
-            repo.updatePincode(tankkaart, pincode);
-        }
-
-        public void verwijderTankkaart(Tankkaart tankkaart) {
-            if (repo.bestaatTankkaart(tankkaart)) {
-                repo.verwijderTankkaart(tankkaart);
-            } else throw new TankkaartException("TankkaartManager : verwijderTankkaart - Tankkaart bestaat niet!");           
-        }
-
-        public void voegBrandstofToe(Tankkaart tankkaart, string brandstof) {
-            repo.voegBrandstofToe(tankkaart, brandstof);
+        public void verwijderTankkaart(int id) {
+            try {
+                repo.verwijderTankkaart(id);
+            } catch (Exception ex) {
+                throw new TankkaartException("TankkaartManager - verwijderTankkaart",ex);
+            }
         }
 
         public void voegTankkaartToe(Tankkaart tankkaart) {
-            repo.voegTankkaartToe(tankkaart);
-        }
-
-        public void zetGeblokkeerd(Tankkaart tankkaart, bool geblokkeerd) {
-            repo.zetGeblokkeerd(tankkaart, geblokkeerd);
-        }
-
-        public void zetGeldigheidsDatum(Tankkaart tankkaart, DateTime geldigheidsdatum) {
-            repo.zetGeldigheidsDatum(tankkaart, geldigheidsdatum);
+            try {
+                repo.voegTankkaartToe(tankkaart);
+            } catch (Exception ex) {
+                throw new TankkaartException("TankkaartManager - voegTankkaartToe",ex);
+            }
         }
     }
 }
