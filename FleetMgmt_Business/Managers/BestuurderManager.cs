@@ -38,12 +38,22 @@ namespace FleetMgmt_Business.Managers {
 
         }
 
-        public IEnumerable<(Bestuurder, Tankkaart, Voertuig)> toonBestuurders(string rijksregisternummer, string naam, string voornamam, DateTime geboortedatum, bool strikt = true) {
+        public IEnumerable<Bestuurder> toonBestuurders(int? id, string rijksregisternummer, string naam, string voornamam, DateTime? geboortedatum, Rijbewijs r) {
             try {
-                return repo.toonBestuurders(rijksregisternummer, naam, voornamam, geboortedatum);
+                return repo.toonBestuurders(id, rijksregisternummer, naam, voornamam, geboortedatum, r);
             }
             catch (Exception ex) {
-                throw new BestuurderManagerException("BestuurderManager: toonBestuurders -", ex);
+                throw new BestuurderManagerException("BestuurderManager: toonBestuurders - gefaald", ex);
+            }
+        }
+
+        public Bestuurder selecteerBestuurder(int id) {
+            try {
+                if (id <= 0) throw new BestuurderException("selecteerBestuurder: selecteerBestuurder - id is 0");
+                if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: selecteerBestuurder - bestuurder bestaat niet!");
+                return repo.selecteerBestuurder(id);
+            }catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: SelecteerBestuurder - gefaald", ex);
             }
         }
 
