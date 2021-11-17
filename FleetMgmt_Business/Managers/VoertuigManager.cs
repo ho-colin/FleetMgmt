@@ -27,10 +27,10 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public Voertuig geefVoertuig(Voertuig voertuig) {
+        public Voertuig geefVoertuig(string chassisnummer) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - geefVoertuig - Voertuig is null");
-                return repo.geefVoertuig(voertuig.Chassisnummer);
+                if (chassisnummer == null) throw new VoertuigManagerException("VoertuigManager - geefVoertuig - Voertuig is null");
+                return repo.geefVoertuig(chassisnummer);
 
             } catch (Exception ex) {
 
@@ -38,59 +38,42 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<(Voertuig, Bestuurder, Tankkaart)> toonVoertuigen(string chassinummer, string merk, string model, string typeVoertuig, string brandstof,
-            string kleur, int? aantalDeuren, bool strikt = true) {
+        public IEnumerable<Voertuig> zoekVoertuigen(string chassisnummer, string merk, string model, string typeVoertuig, string brandstof,
+            string kleur, int? aantalDeuren) {
+            List<Voertuig> voertuigen = new List<Voertuig>();
             try {
-                return repo.toonVoertuigen(chassinummer, merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, strikt);
+                if(chassisnummer != null) {
+                    if (repo.bestaatVoertuig(chassisnummer)) voertuigen.Add(repo.geefVoertuig(chassisnummer));
+                } else {
+                    if (!string.IsNullOrWhiteSpace(merk) || !string.IsNullOrWhiteSpace(model)
+                        || !string.IsNullOrWhiteSpace(typeVoertuig) || !string.IsNullOrWhiteSpace(brandstof)
+                        || !string.IsNullOrWhiteSpace(kleur) || aantalDeuren.HasValue) {
+                        voertuigen.AddRange(repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, false));
+                    } else throw new VoertuigManagerException("ZoekVoertuigen, geen zoekcriteria");
+                }
+                return voertuigen;
 
             } catch (Exception ex) {
 
                 throw new VoertuigManagerException("VoertuigManager - toonVoertuigen", ex);
             }
         }
-
-        public void updateAantalDeuren(Voertuig voertuig, int aantal) {
+        public void updateVoertuig(Voertuig voertuig) {
             try {
-                if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren - Voertuig bestaat niet");
-                Voertuig dbv = repo.geefVoertuig(voertuig.Chassisnummer);
-                if (voertuig == dbv) throw new VoertuigManagerException("Voertuigmanager - updateAantalDeuren - Geen verschillen werden toegepast!");
-                repo.updateAantalDeuren(voertuig, aantal);
-
+                if (repo.bestaatVoertuig(voertuig.Chassisnummer)) {
+                    Voertuig voertuigDB = repo.geefVoertuig(voertuig.Chassisnummer);
+                    if(voertuigDB == voertuig) {
+                        throw new VoertuigManagerException("VoertuigManager: updateVoertuig - Voertuigen verschillen niet!");
+                    } else {
+                        repo.bestaatVoertuig(voertuig);
+                    }
+                }
             } catch (Exception ex) {
 
-                throw new VoertuigManagerException("VoertuigManager - updateAantalDeuren", ex);
+                throw new VoertuigManagerException("VoertuigManager: updateVoertuig",ex);
             }
         }
-
-        public void updateBestuurder(Voertuig voertuig, Bestuurder bestuurder) {
-            try {
-                if (voertuig == null || bestuurder == null) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig/Bestuurder is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateBestuurder - Voertuig bestaat niet");
-                Voertuig dbvr = repo.geefVoertuig(voertuig.Chassisnummer);
-                if (voertuig == dbvr) throw new VoertuigManagerException("Voertuigmanager - updateBestuurder - Geen verschillen werden toegepast");
-                repo.updateBestuurder(voertuig, bestuurder);
-
-            } catch (Exception ex) {
-
-                throw new VoertuigManagerException("VoertuigManager - updateBestuurder", ex);
-            }
-        }
-
-        public void updateKleur(Voertuig voertuig, string kleur) {
-            try {
-                if (voertuig == null || kleur == null) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig/Kleur is leeg");
-                if (!repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - updateKleur - Voertuig bestaat niet");
-                Voertuig dbvrt = repo.geefVoertuig(voertuig.Chassisnummer);
-                if (voertuig == dbvrt) throw new VoertuigManagerException("Voertuigmanager - updateKleur - Geen verschillen werden toegepast!");
-                repo.updateKleur(voertuig, kleur);
-
-            } catch (Exception ex) {
-
-                throw new VoertuigManagerException("VoertuigManager - updateKleur", ex);
-            }
-        }
-
+                
         public void verwijderVoertuig(Voertuig voertuig) {
             try {
                 if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - verwijderVoertuig - Voertuig is null");

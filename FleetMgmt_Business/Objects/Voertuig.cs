@@ -38,7 +38,12 @@ namespace FleetMgmt_Business.Objects {
             zetTypeVoertuig(typevoertuig);
             zetNummerplaat(nummerplaat);
         }
-        
+
+        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int aantalDeuren, string merk, string model, TypeVoertuig typeVoertuig, string nummerplaat, Bestuurder bestuurder) 
+            : this(brandstof, chassisnummer, kleur, aantalDeuren, merk, model, typeVoertuig, nummerplaat) {
+            this.Bestuurder = bestuurder;
+        }
+
         private void zetModel(string model) {
             if (string.IsNullOrWhiteSpace(model)) throw new VoertuigException("Voertuig - Model mag niet leeg zijn");
             this.Model = model;
