@@ -1,4 +1,5 @@
 ﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
             List<string> combobxgeblokkeerd = new List<String>() { "<Leeg>", "Ja", "Nee" };
             combobx_Geblokkeerd.ItemsSource = combobxgeblokkeerd;
+
+            combobx_Brandstof.ItemsSource = Enum.GetValues(typeof(TankkaartBrandstof));
         }
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
@@ -69,6 +72,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             lbl_BestuurderNaam.Content = "";
             gevondenTankkaarten.Clear();
             lstVw_Tankkaarten.ItemsSource = gevondenTankkaarten;
+            combobx_Brandstof.SelectedItem = null;
         }
 
         private void btn_BestuurderNavigatie_Click(object sender, RoutedEventArgs e) {
