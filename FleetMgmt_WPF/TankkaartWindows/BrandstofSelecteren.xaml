@@ -1,4 +1,4 @@
-﻿<Window x:Class="FleetMgmt_WPF.TankkaartWindows.TankkaartToevoegen"
+﻿<Window x:Class="FleetMgmt_WPF.TankkaartWindows.BrandstofSelecteren"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="TankkaartToevoegen" Height="300" Width="400">
+        Title="BrandstofSelecteren" Height="400" Width="200">
     <Window.Resources>
         <!-- Styling voertuigwindow-->
         <Style TargetType="Button">
@@ -77,64 +77,14 @@
             <Setter Property="Background" Value="Black" />
         </Style>
     </Window.Resources>
-    <Grid RenderTransformOrigin="0.176,0.995">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <!--Labels-->
-        <Label x:Name="lbl_Geldigheidsdatum" Style="{StaticResource HeaderStyle}"  Content="Geldigheidsdatum:*" Grid.Column="0" HorizontalAlignment="Left" Margin="5" Height="20"/>
-        <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}"  Content="Geblokkeerd:*" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="5" Height="20"/>
-        <Label x:Name="lbl_Brandstoffen" Style="{StaticResource HeaderStyle}"  Content="Brandstoffen:*" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="5" Height="20"/>
-        <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}"  Content="Bestuurder:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" Margin="5" Height="20"/>
-        <Label x:Name="lbl_Pincode" Style="{StaticResource HeaderStyle}"  Content="Pincode:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="5" Height="20"/>
-
-        <!--Input + combox velden-->
-        <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Column="1" Grid.Row="0"  Margin="5" VerticalAlignment="Top"/>
-        <CheckBox x:Name="chekbx_Geblokkeerd" Content="" Grid.Column="1" Grid.Row="1" Margin="5" VerticalAlignment="Top"/>
-        <Grid Grid.Row="2" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btn_Brandstof" Content="Selecteer Brandstof" Grid.Column="0" Margin="5" Height="20" Click="btn_Brandstof_Click"/>
-            <Label x:Name="lbl_BrandstofAantal" Style="{StaticResource HeaderStyle}" Content="" Grid.Column="1" Foreground="LightGray"/>
-        </Grid>
-        <TextBox x:Name="txtbw_Pincode" Style="{StaticResource InputStyle}" Grid.Column="1" Grid.Row="3" Margin="5" Text="" TextWrapping="Wrap" PreviewTextInput="txtbw_Pincode_PreviewTextInput" MaxLength="4"/>
-
-
-        <Grid Grid.Row="4" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Click="btn_SelecteerBestuurder_Click" x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5" VerticalAlignment="Center" Height="20" Grid.Column="0"/>
-            <Label x:Name="lbl_GeselecteerdeBestuurder" Style="{StaticResource HeaderStyle}" Foreground="LightGray" Content="" Grid.Column="1"  HorizontalAlignment="Left" Margin="5" Height="20"/>
-        </Grid>
-
-        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Click="btn_TankkaartToevoegen_Click" x:Name="btn_TankkaartToevoegen" Content="Tankkaart Toevoegen" Margin="5"/>
-            <Button Click="btn_ResetVelden_Click" x:Name="btn_ResetVelden" Content="Reset Velden" Margin="5" Grid.Column="1" Grid.Row="1"/>
-        </Grid>
-
-        <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" x:Name="lstVw_Tankkaarten" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" IsEnabled="False"/>
-
-
-
+        <Label x:Name="lbl_Brandstof" Content="Brandstof" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox x:Name="lstbx_Brandstoffen" Grid.Row="1" Margin="5" SelectionMode="Multiple"/>
+        <Button x:Name="btn_Selecteer" Grid.Row="2" Content="Selecteer" Margin="5" Click="btn_Selecteer_Click"/>
     </Grid>
 </Window>

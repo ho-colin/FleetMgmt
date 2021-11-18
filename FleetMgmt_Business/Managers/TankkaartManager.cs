@@ -54,9 +54,9 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public void voegTankkaartToe(Tankkaart tankkaart) {
+        public Tankkaart voegTankkaartToe(Tankkaart tankkaart) {
             try {
-                repo.voegTankkaartToe(tankkaart);
+               return repo.voegTankkaartToe(tankkaart);
             } catch (Exception ex) {
                 throw new TankkaartException("TankkaartManager - voegTankkaartToe",ex);
             }

@@ -23,12 +23,15 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
         TankkaartManager tm = new TankkaartManager(new TankkaartRepository());
 
-        private FleetMgmt_Business.Objects.Bestuurder b { get; set; }
+        private FleetMgmt_Business.Objects.Bestuurder b = null;
 
-        private ObservableCollection<FleetMgmt_Business.Objects.Bestuurder> gevondenBestuurders = new ObservableCollection<FleetMgmt_Business.Objects.Bestuurder>();
+        private ObservableCollection<FleetMgmt_Business.Objects.Tankkaart> gevondenTankkaarten = new ObservableCollection<FleetMgmt_Business.Objects.Tankkaart>();
 
         public TankkaartWindow() {
             InitializeComponent();
+
+            List<string> combobxgeblokkeerd = new List<String>() { "<Leeg>", "Ja", "Nee" };
+            combobx_Geblokkeerd.ItemsSource = combobxgeblokkeerd;
         }
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
@@ -36,17 +39,22 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         }
 
         private void btn_TankkaartToevoegen_Click(object sender, RoutedEventArgs e) {
-
+            TankkaartToevoegen w = new TankkaartToevoegen();
+            w.Show();
         }
 
         private void btn_TankkaartZoeken_Click(object sender, RoutedEventArgs e) {
             int? gevondenId = string.IsNullOrWhiteSpace(txtbw_Id.Text) ? null : int.Parse(txtbw_Id.Text);
             DateTime? gevondenDatum = txtbx_Geldigheidsdatum.SelectedDate.HasValue ? txtbx_Geldigheidsdatum.SelectedDate.Value : null;
-            bool gevondenGeblokkeerd = chekbx_Geblokkeerd.IsEnabled;
             FleetMgmt_Business.Enums.TankkaartBrandstof? gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : (FleetMgmt_Business.Enums.TankkaartBrandstof) combobx_Brandstof.SelectedItem;
-            FleetMgmt_Business.Objects.Bestuurder gevondenBestuurder = this.b == null ? null : this.b;
+            string gevondenBestuurder = (this.b != null) ? this.b.Rijksregisternummer : null;
 
-
+            try {
+                gevondenTankkaarten = new ObservableCollection<FleetMgmt_Business.Objects.Tankkaart>(tm.geefTankkaarten(gevondenId, gevondenDatum, gevondenBestuurder, checkDisabled(), gevondenBrandstof).ToList());
+                lstVw_Tankkaarten.ItemsSource = gevondenTankkaarten;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -55,12 +63,38 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
         private void resetVelden() {
             txtbw_Id.Text = "";
-            txtbx_Geldigheidsdatum.SelectedDate = DateTime.Today;
-            chekbx_Geblokkeerd.IsChecked = false;
+            txtbx_Geldigheidsdatum.SelectedDate = null;
+            combobx_Geblokkeerd.SelectedIndex = 0;
             b = null;
             lbl_BestuurderNaam.Content = "";
-            gevondenBestuurders.Clear();
-            lstVw_Bestuurders.ItemsSource = gevondenBestuurders;
+            gevondenTankkaarten.Clear();
+            lstVw_Tankkaarten.ItemsSource = gevondenTankkaarten;
+        }
+
+        private void btn_BestuurderNavigatie_Click(object sender, RoutedEventArgs e) {
+            //IMPLEMENTEREN NAAR BESTUURDER
+            Close();
+        }
+
+        private void btn_TypeVoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
+            //IMPLEMENTEREN NAAR TYPEVOERTUIG
+            Close();
+        }
+
+        private void btn_TankkaartNavigatie_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show("U begeeft zich momenteel in dit venster!","Error",MessageBoxButton.OK,MessageBoxImage.Error);
+
+        }
+
+        private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
+            //IMPLEMENTEREN NAAR VOERTUIG
+            Close();
+        }
+
+        private bool? checkDisabled() {
+            if(combobx_Geblokkeerd.SelectedIndex == 1) { return true; }
+            if (combobx_Geblokkeerd.SelectedIndex == 2) { return false; } 
+            else return null;
         }
     }
 }

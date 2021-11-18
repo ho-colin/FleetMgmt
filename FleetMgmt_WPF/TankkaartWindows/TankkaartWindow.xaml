@@ -82,37 +82,58 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
         <!-- Button links-->
-        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click"/>
-        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="Button_Click_1"/>
+        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click"/>
+        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_BestuurderNavigatie_Click"/>
+        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TankkaartNavigatie_Click"/>
+        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click"/>
 
-        <!--Labels-->
-        <Label Grid.Column="1" Content="Tankkaart" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="145"/>
-        <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,81,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Geldigheidsdatum" Style="{StaticResource HeaderStyle}"  Content="Geldigheidsdatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,107,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}"  Content="Geblokkeerd:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,133,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Brandstof" Style="{StaticResource HeaderStyle}"  Content="Brandstof:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,154,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}"  Content="Bestuurder:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,174,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
-        <Label x:Name="lbl_BestuurderNaam" Style="{StaticResource HeaderStyle}" Foreground="LightGray" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="268,178,0,0" VerticalAlignment="Top" Height="26" Width="106"/>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,145">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <!--Button selecteer bestuurder-->
-        <Button Click="btn_SelecteerBestuurder_Click" x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" HorizontalAlignment="Left" Margin="127,177,0,0" VerticalAlignment="Top" Height="20" Width="140" Grid.Column="1"/>
+            <!--Labels-->
+            <Label  Content="Tankkaart" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="25"/>
+            <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+            <Label x:Name="lbl_Geldigheidsdatum" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" Content="Geldigheidsdatum:" Grid.Column="0" Grid.Row="2"/>
+            <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" Content="Geblokkeerd:" Grid.Column="0" Grid.Row="3"/>
+            <Label x:Name="lbl_Brandstof" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" Content="Brandstof:" Grid.Column="0" Grid.Row="4"/>
+            <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" Content="Bestuurder:" Grid.Column="0" Grid.Row="5"/>
+            <Label x:Name="lbl_BestuurderNaam" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" Foreground="LightGray" Content="" Grid.Column="2" Grid.Row="5"/>
 
-        <!--Button rechts-->
-        <Button Click="btn_TankkaartToevoegen_Click" x:Name="btn_TankkaartToevoegen" Content="Tankkaart toevoegen" HorizontalAlignment="Left" Margin="523,77,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
-        <Button Click="btn_TankkaartZoeken_Click" x:Name="btn_TankkaartZoeken" Content="Tankkaart zoeken" HorizontalAlignment="Left" Margin="523,116,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"/>
-        <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset velden" HorizontalAlignment="Left" Margin="523,156,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1" />
+            <!--Button selecteer bestuurder-->
+            <Button Click="btn_SelecteerBestuurder_Click" x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Grid.Row="5" Grid.Column="1"/>
 
-        <!--Input + combox velden-->
-        <TextBox x:Name="txtbw_Id" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,103,0,0" VerticalAlignment="Top" Width="140"/>
-        <CheckBox x:Name="chekbx_Geblokkeerd" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="127,134,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="combobx_Brandstof" Grid.Column="1" HorizontalAlignment="Left" Margin="127,152,0,0" VerticalAlignment="Top" Height="20" Width="140"/>
+            <!--Button rechts-->
+            <Button Click="btn_TankkaartToevoegen_Click" x:Name="btn_TankkaartToevoegen" Content="Tankkaart toevoegen" Grid.Column="3" Grid.Row="2" Margin="5"/>
+            <Button Click="btn_TankkaartZoeken_Click" x:Name="btn_TankkaartZoeken" Content="Tankkaart zoeken" Grid.Column="3" Grid.Row="3" Margin="5"/>
+            <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset velden" Grid.Column="3" Grid.Row="4" Margin="5"/>
 
-        <ListView x:Name="lstVw_Bestuurders" SelectionMode="Single" Background="White" BorderBrush="LightGray" BorderThickness="5" Foreground="White" Grid.Column="1" Margin="10,207,10,21"/>
+            <!--Input + combox velden-->
+            <TextBox x:Name="txtbw_Id" Style="{StaticResource InputStyle}" Grid.Column="1" Grid.Row="1" Margin="5"/>
+            <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Column="1" Grid.Row="2" Margin="5"/>
+            <ComboBox x:Name="combobx_Geblokkeerd" Grid.Column="1" Grid.Row="3" Margin="5" SelectedIndex="0"/>
+            <ComboBox x:Name="combobx_Brandstof" Grid.Column="1" Grid.Row="4" Margin="5"/>
+        </Grid>
+
+        <ListView x:Name="lstVw_Tankkaarten" Background="White" BorderBrush="LightGray" BorderThickness="5" Grid.Column="1" Margin="0,259,0,0" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
