@@ -100,5 +100,18 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             if (combobx_Geblokkeerd.SelectedIndex == 2) { return false; } 
             else return null;
         }
+
+        private void btn_Update_Click(object sender, RoutedEventArgs e) {
+        }
+
+        private void btn_Delete_Click(object sender, RoutedEventArgs e) {
+            try {
+                FleetMgmt_Business.Objects.Tankkaart tk = (FleetMgmt_Business.Objects.Tankkaart)lstVw_Tankkaarten.SelectedItem;
+                tm.verwijderTankkaart(tk.KaartNummer);
+                btn_TankkaartZoeken_Click(sender, e);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
+        }
     }
 }

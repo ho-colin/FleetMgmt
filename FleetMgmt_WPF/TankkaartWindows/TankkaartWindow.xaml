@@ -133,7 +133,14 @@
             <ComboBox x:Name="combobx_Brandstof" Grid.Column="1" Grid.Row="4" Margin="5"/>
         </Grid>
 
-        <ListView x:Name="lstVw_Tankkaarten" Background="White" BorderBrush="LightGray" BorderThickness="5" Grid.Column="1" Margin="0,259,0,0" Grid.RowSpan="2"/>
+        <ListView x:Name="lstVw_Tankkaarten" Background="White" BorderBrush="LightGray" BorderThickness="5" Grid.Column="1" Margin="0,259,0,0" Grid.RowSpan="2">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="btn_Update" Header="Update" Click="btn_Update_Click"/>
+                    <MenuItem x:Name="btn_Delete" Header="Delete" Click="btn_Delete_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
 
     </Grid>
 </Window>
