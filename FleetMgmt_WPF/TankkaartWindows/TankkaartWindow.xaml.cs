@@ -106,7 +106,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 FleetMgmt_Business.Objects.Tankkaart tk = (FleetMgmt_Business.Objects.Tankkaart)lstVw_Tankkaarten.SelectedItem;
                 TankkaartUpdaten w = new TankkaartUpdaten(tk);
                 if(w.ShowDialog() == true) {
-
+                    btn_TankkaartZoeken_Click(sender, e);
                 }
             } catch (Exception) {
 
@@ -121,6 +121,12 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 btn_TankkaartZoeken_Click(sender, e);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
+        }
+
+        private void txtbw_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^\d+$")) {
+                e.Handled = true;
             }
         }
     }

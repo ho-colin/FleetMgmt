@@ -127,7 +127,7 @@
             <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset velden" Grid.Column="3" Grid.Row="4" Margin="5"/>
 
             <!--Input + combox velden-->
-            <TextBox x:Name="txtbw_Id" Style="{StaticResource InputStyle}" Grid.Column="1" Grid.Row="1" Margin="5"/>
+            <TextBox x:Name="txtbw_Id" Style="{StaticResource InputStyle}" Grid.Column="1" Grid.Row="1" Margin="5" PreviewTextInput="txtbw_Id_PreviewTextInput"/>
             <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Column="1" Grid.Row="2" Margin="5"/>
             <ComboBox x:Name="combobx_Geblokkeerd" Grid.Column="1" Grid.Row="3" Margin="5" SelectedIndex="0"/>
             <ComboBox x:Name="combobx_Brandstof" Grid.Column="1" Grid.Row="4" Margin="5"/>

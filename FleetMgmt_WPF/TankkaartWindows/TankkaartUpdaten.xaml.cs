@@ -52,6 +52,8 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             try {
                 Tankkaart newTankkaart = new Tankkaart(Tankkaart.KaartNummer, txtbx_Geldigheidsdatum.SelectedDate.Value, txtbx_NieuwPincode.Text, this.Bestuurder, Brandstoffen, chekbx_Geblokkeerd.IsChecked.Value);
                 tm.bewerkTankkaart(newTankkaart);
+                DialogResult = true;
+                Close();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
@@ -80,6 +82,10 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                     lbl_Bestuurder.Content = this.Bestuurder.Naam;
                 }
 
+                if (string.IsNullOrWhiteSpace(Tankkaart.Pincode)) {
+                    txtbx_NieuwPincode.Text = null;
+                } else txtbx_NieuwPincode.Text = Tankkaart.Pincode;
+
                 //Huidige waarden kollom//
                 txtbx_HuidigId.Text = Tankkaart.KaartNummer.ToString();
 
@@ -88,6 +94,8 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 txtbx_HuidigGeblokkeerd.Text = Tankkaart.Geblokkeerd ? "Ja" : "Nee";
 
                 textbx_HuidigBrandstoffen.Text = Tankkaart.Brandstoffen.Count.ToString();
+
+                textbx_HuidigPincode.Text = string.IsNullOrWhiteSpace(Tankkaart.Pincode) ? "Geen Pincode" : Tankkaart.Pincode;
 
                 if (this.Bestuurder == null) {
                     textbx_HuidigBestuurder.Text = "Geen Bestuurder";
@@ -98,6 +106,12 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
 
+        }
+
+        private void txtbx_NieuwPincode_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^\d+$")) {
+                e.Handled = true;
+            }
         }
     }
 }

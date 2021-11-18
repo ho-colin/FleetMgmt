@@ -44,7 +44,7 @@ namespace FleetMgmg_Data.Repositories {
                     transaction = conn.BeginTransaction();
 
                     #region TankkaartBrandstofUpdate
-                    if (huidigeKaart.Brandstoffen != tankkaart.Brandstoffen) {
+                    if (!huidigeKaart.Brandstoffen.Equals(tankkaart.Brandstoffen)) {
                         #region DataTable aanmaken en populaten
                         DataTable table = new DataTable();
                         table.TableName = "TankkaartBrandstof";
@@ -84,7 +84,7 @@ namespace FleetMgmg_Data.Repositories {
 
                     if(huidigeKaart.GeldigheidsDatum != tankkaart.GeldigheidsDatum) {
                         if (kommaZetten) { updateQuery.Append(","); } else kommaZetten = true;
-                        updateQuery.Append(" GeldigDatun=@geldigdatum ");
+                        updateQuery.Append(" GeldigDatum=CAST(@geldigdatum AS date)");
                     }
 
                     if(huidigeKaart.Geblokkeerd != tankkaart.Geblokkeerd) {
@@ -106,7 +106,7 @@ namespace FleetMgmg_Data.Repositories {
                         }
 
                         if (updateQuery.ToString().Contains("@geldigdatum")) {
-                            updateCmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("dd-MM-yyyy"));
+                            updateCmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("yyyy/MM/dd"));
                         }
 
                         if (updateQuery.ToString().Contains("@geblokkeerd")) {
