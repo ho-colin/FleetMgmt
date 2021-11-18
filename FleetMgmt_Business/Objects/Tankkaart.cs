@@ -21,16 +21,16 @@ namespace FleetMgmt_Business.Objects {
 
         public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
-        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen, bool geblokkeerd) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen, geblokkeerd) {
             zetKaartnummer(kaartnummer);
         }
 
-        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen) {
+        public Tankkaart(DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen, bool geblokkeerd) {
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
             updateInBezitVan(inbezitvan);
-            zetGeblokkeerd(false);
+            zetGeblokkeerd(geblokkeerd);
         }
 
         public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode) {
@@ -102,30 +102,14 @@ namespace FleetMgmt_Business.Objects {
             this.Pincode = pincode;
         }
 
-        private void zetKaartnummer(int kaartnummer) {
+        public void zetKaartnummer(int kaartnummer) {
             if (kaartnummer < 1) throw new TankkaartException("Kaartnummer moet hoger zijn dan 1!");
 
             this.KaartNummer = kaartnummer;
         }
 
         public override string ToString() {
-
-            StringBuilder print = new StringBuilder($"Id: {this.KaartNummer}, GeldigheidsDatum: {this.GeldigheidsDatum.ToShortDateString()}, Geblokkeerd: {this.Geblokkeerd}");
-
-            if (!string.IsNullOrWhiteSpace(Pincode)) print.Append($", PinCode: {this.Pincode}");
-
-            if (Brandstoffen.Count > 0) {
-                print.Append(", Brandstoffen: ");
-                for (int i = 0; i < this.Brandstoffen.Count; i++) {
-                    if (i > 0 && i < this.Brandstoffen.Count) print.Append(", ");
-                    print.Append(this.Brandstoffen.ElementAt(i));
-                }
-            }
-
-            if (this.InBezitVan != null) print.Append($", Eigenaar: {this.InBezitVan.Id}, {this.InBezitVan.Voornaam} {this.InBezitVan.Naam}");
-            
-
-            return print.ToString();
+            return $"[Tankkaart] {this.KaartNummer},{this.Geblokkeerd},{this.GeldigheidsDatum.ToString("dd/MM/yyyy")},{this.Brandstoffen.Count}";
         }
 
         public override bool Equals(object obj) {

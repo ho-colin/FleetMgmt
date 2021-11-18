@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Repos {
     public interface ITankkaartRepository {
-        void voegTankkaartToe(Tankkaart tankkaart);
+        Tankkaart voegTankkaartToe(Tankkaart tankkaart);
         void verwijderTankkaart(int id);
         Tankkaart selecteerTankkaart(int id);
         IEnumerable<Tankkaart> geefTankkaarten(int? id, DateTime? geldigheidsDatum, string bestuurder, bool? geblokkeerd, TankkaartBrandstof? brandstof);

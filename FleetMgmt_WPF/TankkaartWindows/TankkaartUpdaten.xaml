@@ -1,0 +1,162 @@
+﻿<Window x:Class="FleetMgmt_WPF.TankkaartWindows.TankkaartUpdaten"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FleetMgmt_WPF.TankkaartWindows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="TankkaartUpdaten" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Styling voertuigwindow-->
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <Style x:Key="HeaderStyle" TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+        <Style x:Key="BestuurderStyle" TargetType="Button">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Width" Value="135" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="cellStyle" TargetType="DataGridCell">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="Black" BorderThickness="0">
+                            <Border x:Name="border"
+                              BorderBrush="White"
+                              BorderThickness="2"
+                              Background="White"
+                              CornerRadius="5">
+                                <ContentPresenter />
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="Orange"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="rowStyle" TargetType="DataGridRow">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Black" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="lbl_TankkaartUpdaten" Content="Tankkaart Updaten" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Labels -->
+                <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}" Content="Id:" Grid.Column="1" Margin="5"/>
+                <Label x:Name="lbl_Geldigheidsdatum" Style="{StaticResource HeaderStyle}" Content="Geldigheidsdatum:" Grid.Column="1" Grid.Row="1" Margin="5"/>
+                <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}" Content="Geblokkeerd:" Grid.Column="1" Grid.Row="2" Margin="5"/>
+                <Label x:Name="lbl_Brandstoffen" Style="{StaticResource HeaderStyle}" Content="Brandstoffen:" Grid.Column="1" Grid.Row="3" Margin="5"/>
+                <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}" Content="Bestuurder:" Grid.Column="1" Grid.Row="4" Margin="5"/>
+                
+                <!-- Nieuwe Waarden -->
+                <TextBox x:Name="txtbx_NieuwId" Grid.Row="0" Grid.Column="2" Margin="5" Background="LightGray" IsEnabled="False" VerticalAlignment="Center"/>
+                <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center"/>
+                <CheckBox x:Name="chekbx_Geblokkeerd" Content="" Grid.Column="2" Grid.Row="2" Margin="5" VerticalAlignment="Top"/>
+                <Grid Grid.Column="2" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_Brandstof" Style="{StaticResource BestuurderStyle}" Content="Selecteer Brandstof" Grid.Column="0" Margin="5" Height="20" Click="btn_Brandstof_Click"/>
+                    <Label Grid.Column="1" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Content="0 Brandstoffen"/>
+                </Grid>
+
+                <Grid Grid.Column="2" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5" Height="20"/>
+                    <Label Content="Geen bestuurder" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource HeaderStyle}" Grid.Column="1"/>
+                </Grid>
+                
+                <!-- Huidige Waarden -->
+                <TextBox x:Name="txtbx_HuidigId" Grid.Row="0" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+                <TextBox x:Name="txtbx_HuidigGeldigheidsdatum" Grid.Row="1" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+                <TextBox x:Name="txtbx_HuidigGeblokkeerd" Grid.Row="2" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+                <TextBox x:Name="textbx_HuidigBrandstoffen" Grid.Row="3" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+                <TextBox x:Name="textbx_HuidigBestuurder" Grid.Row="4" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+
+                <!-- List View -->
+                <ListView x:Name="lstvw_Tankkaarten" SelectionMode="Single" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Foreground="Black"/>
+            </Grid>
+
+
+            <Button x:Name="btn_Delete" Content="Reset Velden" Grid.Row="1" Grid.Column="0" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <Button x:Name="btn_Update" Content="Updaten" Grid.Row="1" Grid.Column="1" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            
+        </Grid>
+    </Grid>
+</Window>

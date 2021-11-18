@@ -10,4 +10,9 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FleetMgmg_Data\FleetMgmg_Data.csproj" />
+    <ProjectReference Include="..\FleetMgmt_Business\FleetMgmt_Business.csproj" />
+  </ItemGroup>
+
 </Project>

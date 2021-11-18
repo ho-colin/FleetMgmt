@@ -162,7 +162,7 @@ namespace FleetMgmg_Data.Repositories {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
                             if (tk == null) {
-                                tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], (string)reader["pincode"], null, null);
+                                tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], (string)reader["pincode"], null, null, (bool)reader["Geblokkeerd"]);
                             }
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
                                 if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<TankkaartBrandstof>(); }
@@ -270,7 +270,7 @@ namespace FleetMgmg_Data.Repositories {
                 if (query.ToString().Contains("@id")) cmd.Parameters.AddWithValue("@id", id.Value);
                 if (query.ToString().Contains("@geldigheidsDatum")) cmd.Parameters.AddWithValue("@geldigheidsDatum", geldigheidsDatum.Value.ToString("yyyy-MM-dd"));
                 if (query.ToString().Contains("@bestuurderId")) cmd.Parameters.AddWithValue("@bestuurder", bestuurder);
-                if (query.ToString().Contains("@geblokkeerd")) cmd.Parameters.AddWithValue("@geblokkeerd", geblokkeerd.Value ? "1" : "0");
+                if (query.ToString().Contains("@geblokkeerd")) cmd.Parameters.AddWithValue("@geblokkeerd", geblokkeerd.Value);
                 if (query.ToString().Contains("@brandstof")) cmd.Parameters.AddWithValue("@brandstof", brandstof.ToString());
 
                 conn.Open();
@@ -289,6 +289,17 @@ namespace FleetMgmg_Data.Repositories {
                             #region Tankkaart
                             if (reader.IsDBNull(reader.GetOrdinal("Id"))) throw new TankkaartRepositoryException("TankkaartRepository : geefTankkaarten - Geen Tankkaart ID gevonden!");
                             if(laatsGebruiktId != (int)reader["Id"]) {
+                                if (dbTankkaart != null) {
+                                    if (brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
+                                    if (dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
+                                    if (dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                                    if (dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
+
+                                    kaarten.Add(dbTankkaart); 
+                                    brandstoffen = null; 
+                                    dbBestuurder = null; 
+                                    dbRijbewijzen = null; 
+                                }
                                 laatsGebruiktId = (int)reader["Id"];
 
                                 dbTankkaart = new Tankkaart(
@@ -296,7 +307,8 @@ namespace FleetMgmg_Data.Repositories {
                                     (DateTime)reader["GeldigDatum"],
                                     reader.IsDBNull(reader.GetOrdinal("Pincode")) ? null : (string)reader["Pincode"],
                                     null,
-                                    null);
+                                    null, 
+                                    (bool)reader["Geblokkeerd"]);
                             }
                             #endregion
                             #region TankkaartBrandstoffen
@@ -334,15 +346,18 @@ namespace FleetMgmg_Data.Repositories {
                                 dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
                             }
                             #endregion
-                        }
-                        if(brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
-                        if(dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x));}
-                        if(dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
-                        if(dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
+
+                        }                      
                         reader.Close();
 
                         #region Laatste ook nog toevoegen
-                        if (dbTankkaart != null) kaarten.Add(dbTankkaart);
+                        if (dbTankkaart != null) {
+                            if (brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
+                            if (dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
+                            if (dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                            if (dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
+                            kaarten.Add(dbTankkaart);
+                        } 
                         #endregion
                     }
                 } catch (Exception ex) {
@@ -371,7 +386,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public void voegTankkaartToe(Tankkaart tankkaart) {
+        public Tankkaart voegTankkaartToe(Tankkaart tankkaart) {
             int insertedId = 0;
 
             string inbezitvan = null;
@@ -423,6 +438,7 @@ namespace FleetMgmg_Data.Repositories {
                     if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", tankkaart.InBezitVan.Rijksregisternummer);
 
                    insertedId = (int)cmd.ExecuteScalar();
+                    tankkaart.zetKaartnummer(insertedId);
                 } catch (Exception ex) {
 
                     throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een fout voorgedaan!",ex);
@@ -452,6 +468,7 @@ namespace FleetMgmg_Data.Repositories {
                 }
 
             }
+            return tankkaart;
             
 
 
