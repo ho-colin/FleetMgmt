@@ -102,6 +102,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -119,18 +120,20 @@
                 <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}" Content="Geblokkeerd:" Grid.Column="1" Grid.Row="2" Margin="5"/>
                 <Label x:Name="lbl_Brandstoffen" Style="{StaticResource HeaderStyle}" Content="Brandstoffen:" Grid.Column="1" Grid.Row="3" Margin="5"/>
                 <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}" Content="Bestuurder:" Grid.Column="1" Grid.Row="4" Margin="5"/>
+                <Label x:Name="lbl_Pincode" Style="{StaticResource HeaderStyle}" Content="Pincode:" Grid.Column="1" Grid.Row="5" Margin="5"/>
                 
                 <!-- Nieuwe Waarden -->
                 <TextBox x:Name="txtbx_NieuwId" Grid.Row="0" Grid.Column="2" Margin="5" Background="LightGray" IsEnabled="False" VerticalAlignment="Center"/>
                 <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center"/>
                 <CheckBox x:Name="chekbx_Geblokkeerd" Content="" Grid.Column="2" Grid.Row="2" Margin="5" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtbx_NieuwPincode" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" MaxLength="4" PreviewTextInput="txtbx_NieuwPincode_PreviewTextInput"/>
                 <Grid Grid.Column="2" Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="btn_Brandstof" Style="{StaticResource BestuurderStyle}" Content="Selecteer Brandstof" Grid.Column="0" Margin="5" Height="20" Click="btn_Brandstof_Click"/>
-                    <Label Grid.Column="1" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Content="0 Brandstoffen"/>
+                    <Label x:Name="lbl_NieuwBrandstoffen" Grid.Column="1" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Content="0 Brandstoffen"/>
                 </Grid>
 
                 <Grid Grid.Column="2" Grid.Row="4">
@@ -148,14 +151,15 @@
                 <TextBox x:Name="txtbx_HuidigGeblokkeerd" Grid.Row="2" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
                 <TextBox x:Name="textbx_HuidigBrandstoffen" Grid.Row="3" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
                 <TextBox x:Name="textbx_HuidigBestuurder" Grid.Row="4" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
+                <TextBox x:Name="textbx_HuidigPincode" Grid.Row="5" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
 
                 <!-- List View -->
                 <ListView x:Name="lstvw_Tankkaarten" SelectionMode="Single" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Foreground="Black"/>
             </Grid>
 
 
-            <Button x:Name="btn_Delete" Content="Reset Velden" Grid.Row="1" Grid.Column="0" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <Button x:Name="btn_Update" Content="Updaten" Grid.Row="1" Grid.Column="1" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Grid.Row="1" Grid.Column="0" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Grid.Row="1" Grid.Column="1" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             
         </Grid>
     </Grid>
