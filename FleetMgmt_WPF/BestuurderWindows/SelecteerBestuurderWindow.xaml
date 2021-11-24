@@ -157,7 +157,7 @@
         <!--Listview-->
         <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" 
         x:Name="lstVw_Bestuurders" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4"
-        Margin="5,81,5,0" IsEnabled="False" Grid.RowSpan="4"/>
+        Margin="5,29,5,0" IsEnabled="False" Grid.RowSpan="4"/>
 
 
     </Grid>
