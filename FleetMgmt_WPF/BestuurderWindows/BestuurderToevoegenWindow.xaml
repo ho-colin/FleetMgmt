@@ -94,20 +94,28 @@
                Style="{StaticResource InputStyle}"
                Grid.Column="1"
                Grid.Row="0"
-               Foreground="LightGray"/>
+                 Margin="10"
+               Foreground="LightGray"
+                 PreviewTextInput="txtbx_Voornaam_PreviewTextInput"
+                 TextChanged="txtbx_Voornaam_TextChanged"/>
 
 
         <TextBox x:Name="txtbx_AchterNaam" 
                Style="{StaticResource InputStyle}"
                Grid.Column="1" 
                Grid.Row="1"
-               Foreground="LightGray"/>
+                   Margin="10"
+               Foreground="LightGray"
+                 PreviewTextInput="txtbx_AchterNaam_PreviewTextInput"
+                 TextChanged="txtbx_AchterNaam_TextChanged"/>
 
         <TextBox x:Name="txtbx_Rijksregisiternummer" 
                Style="{StaticResource InputStyle}"
                Grid.Column="1" 
                Grid.Row="2"
-               Foreground="LightGray"/>
+               Margin="10"
+               Foreground="LightGray"
+                 PreviewTextInput="txtbx_Rijksregisiternummer_PreviewTextInput"/>
 
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
             <Grid.RowDefinitions>

@@ -63,10 +63,13 @@ namespace FleetMgmt_Business.Managers {
                 repo.verwijderBestuurder(id);
         }
 
-        public void voegBestuurderToe(Bestuurder bestuurder) {
+        public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
-            else
-                repo.voegBestuurderToe(bestuurder);
+            try {
+                return repo.voegBestuurderToe(bestuurder);
+            }catch(Exception ex) {
+                throw new BestuurderException("BestuurderManager: VoegBestuurderToe - gefaald", ex);
+            }
         }
     }
 }
