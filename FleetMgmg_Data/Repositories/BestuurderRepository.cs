@@ -192,7 +192,10 @@ namespace FleetMgmg_Data.Repositories {
                             }
 
                             if(t == null  && !reader.IsDBNull(reader.GetOrdinal("Tankkaart"))) {
-                                t = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], (string)reader["pincode"], null, null);
+                                t = new Tankkaart((int)reader["Kaartnummer"], (DateTime)reader["geldidheidsdatum"],
+                                    (string)reader["pincode"], (Bestuurder)reader["Bestuurder"], (List<TankkaartBrandstof>)reader["brandstoffen"], 
+                                    (bool)reader["geblokkeerd"]);
+;
                             }
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
                                 if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<TankkaartBrandstof>(); }
@@ -329,51 +332,49 @@ namespace FleetMgmg_Data.Repositories {
                             if (laatsGebruiktId != (int)reader["Id"]) {
                                 laatsGebruiktId = (int)reader["Id"];
 
-                                dbTankkaart = new Tankkaart(
-                                    (int)reader["Id"],
-                                    (DateTime)reader["GeldigDatum"],
-                                    reader.IsDBNull(reader.GetOrdinal("Pincode")) ? null : (string)reader["Pincode"],
-                                    null,
-                                    null);
-                            }
-                            if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
+                                dbTankkaart = new Tankkaart((int)reader["Kaartnummer"], (DateTime)reader["geldidheidsdatum"],
+                                    (string)reader["pincode"], (Bestuurder)reader["Bestuurder"], (List<TankkaartBrandstof>)reader["brandstoffen"],
+                                    (bool)reader["geblokkeerd"]); ;
 
-                                if (brandstoffen == null) brandstoffen = new List<TankkaartBrandstof>();
-                                TankkaartBrandstof inGelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
-                                if (!brandstoffen.Contains(inGelezenData)) { brandstoffen.Add(inGelezenData); }
-                            }
-                            if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
-                                if (dbBestuurder == null) {
-                                    dbBestuurder = new Bestuurder(
-                                        (string)reader["Bestuurder"],
-                                        (string)reader["Achternaam"],
-                                        (string)reader["Naam"],
-                                        (DateTime)reader["Geboortedatum"]);
+
+                                if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
+
+                                    if (brandstoffen == null) brandstoffen = new List<TankkaartBrandstof>();
+                                    TankkaartBrandstof inGelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
+                                    if (!brandstoffen.Contains(inGelezenData)) { brandstoffen.Add(inGelezenData); }
+                                }
+                                if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
+                                    if (dbBestuurder == null) {
+                                        dbBestuurder = new Bestuurder(
+                                            (string)reader["Bestuurder"],
+                                            (string)reader["Achternaam"],
+                                            (string)reader["Naam"],
+                                            (DateTime)reader["Geboortedatum"]);
+                                    }
+
+                                }
+                                if (dbBestuurder != null && !reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
+                                    if (dbRijbewijzen == null) dbRijbewijzen = new List<Rijbewijs>();
+                                    Rijbewijs gelezenRijbewijs =
+                                        new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
+                                    if (!dbRijbewijzen.Contains(gelezenRijbewijs)) { dbRijbewijzen.Add(gelezenRijbewijs); }
+                                }
+                                if (dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))) {
+                                    BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);
+                                    RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
+                                    string kleur = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
+
+                                    dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur,
+                                        (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"],
+                                        new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
+
                                 }
 
                             }
-                            if (dbBestuurder != null && !reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
-                                if (dbRijbewijzen == null) dbRijbewijzen = new List<Rijbewijs>();
-                                Rijbewijs gelezenRijbewijs =
-                                    new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
-                                if (!dbRijbewijzen.Contains(gelezenRijbewijs)) { dbRijbewijzen.Add(gelezenRijbewijs); }
-                            }
-                            if (dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))) {
-                                BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);
-                                RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
-                                string kleur = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
-
-                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, 
-                                    (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], 
-                                    new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
-
-                            }
-
-                        }
-                        if (brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
-                        if (dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
-                        if (dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
-                        if (dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
+                            if (brandstoffen != null && dbTankkaart != null) { dbTankkaart.zetBrandstoffen(brandstoffen); }
+                            if (dbBestuurder != null && dbRijbewijzen != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
+                            if (dbBestuurder != null && dbVoertuig != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                        }    if (dbBestuurder != null && dbTankkaart != null) { dbTankkaart.updateInBezitVan(dbBestuurder); }
                         reader.Close();
                         if (dbBestuurder != null) lijstbestuurder.Add(dbBestuurder);
                     }
@@ -409,13 +410,14 @@ namespace FleetMgmg_Data.Repositories {
         }
 
 
-        public void voegBestuurderToe(Bestuurder bestuurder) {
+        public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             SqlConnection conn = ConnectionClass.getConnection();
             string query = "INSERT INTO Bestuurder(Naam, Achternaam, Geboortedatum, Rijksregisternummer) VALUES(@Naam, @Achternaam, @Geboortedatum, " +
                 "@Rijksregisternummer, " +
                 ")";
             using(SqlCommand cmd = conn.CreateCommand()) {
                 try {
+                    conn.Open();
                     cmd.Parameters.Add(new SqlParameter("@Naam", System.Data.SqlDbType.NVarChar));
                     cmd.Parameters.Add(new SqlParameter("@Achternaam", System.Data.SqlDbType.NVarChar));
                     cmd.Parameters.Add(new SqlParameter("@Geboortedatum", System.Data.SqlDbType.Date));
@@ -425,7 +427,8 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.Parameters["@Achternaam"].Value = bestuurder.Naam;
                     cmd.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
                     cmd.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
-                    cmd.ExecuteNonQuery();
+                    return new Bestuurder(bestuurder.Rijksregisternummer, bestuurder.Naam, bestuurder.Voornaam, bestuurder.GeboorteDatum);
+
                 }catch(Exception ex) {
                     throw new BestuurderRepositoryException("BestuurderRepository: voegBestuurderToe - Geen bestuurder werd toegevoegd!", ex);
                 }
@@ -437,3 +440,4 @@ namespace FleetMgmg_Data.Repositories {
         }
     }
 }
+#endregion

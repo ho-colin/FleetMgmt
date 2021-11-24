@@ -100,12 +100,17 @@
                  Style="{StaticResource InputStyle}" 
                  Grid.Column="1"
                  Grid.Row="2"
+                 Margin="10"
+                 PreviewTextInput="txtbx_Id_PreviewTextInput"
                  />
 
         <TextBox x:Name="txtbx_Naam" 
                  Style="{StaticResource InputStyle}" 
                  Grid.Column="1"
                  Grid.Row="3"
+                 Margin="10"
+                 PreviewTextInput="txtbx_Naam_PreviewTextInput"
+                 TextChanged="txtbx_Naam_TextChanged"
                  />
 
 
@@ -113,18 +118,23 @@
                  Style="{StaticResource InputStyle}" 
                  Grid.Column="1"
                  Grid.Row="4"
-                 />
+                 Margin="10"
+                 PreviewTextInput="txtbx_Achternaam_PreviewTextInput"
+                 TextChanged="txtbx_Achternaam_TextChanged"/>
 
 
         <DatePickerTextBox
             x:Name="Date_Pckr_Geboortedatum"
             Grid.Column="1"
+            Margin="10"
             Grid.Row="5"/>
 
         <TextBox x:Name="txtbx_rijksregsterNummer" 
                  Style="{StaticResource InputStyle}" 
                  Grid.Column="1"
                  Grid.Row="6"
+                 Margin="10"
+                 PreviewTextInput="txtbx_rijksregsterNummer_PreviewTextInput"
                  />
 
 
@@ -135,23 +145,29 @@
                 Grid.Row="1"
                 Grid.RowSpan="6"
                 Width="200" Click="btb_KeerTerug_Click"
+                Margin="10"
                 />
 
         <!--Buttons-->
         <Button x:Name="btn_Zoeken"
                 Content="Zoeken"
                 Grid.Column="3"
-                Grid.Row="2" Click="btn_Zoeken_Click"/>
+                Grid.Row="2" Click="btn_Zoeken_Click"
+                Margin="5"/>
 
         <Button x:Name="btn_Reset"
                Content="Reset"
-                Grid.Column="2"
-                Grid.Row="3" Grid.ColumnSpan="2" Height="22" Margin="232,22,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="btn_Reset_Click"/>
+                Grid.Column="3"
+                Grid.Row="4" 
+                Height="33" 
+                Margin="10,0,10,0" 
+                VerticalAlignment="Top" />
 
         <Button x:Name="btn_Selecteren"
                 Content="Selecteren"
                 Grid.Column="3"
-                Grid.Row="6" Click="btn_Selecteren_Click"/>
+                Grid.Row="6" Click="btn_Selecteren_Click"
+                Margin="5"/>
 
 
         <!--Listview-->
