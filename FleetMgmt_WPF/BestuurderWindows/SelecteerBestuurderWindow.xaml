@@ -1,0 +1,164 @@
+﻿<Window x:Class="FleetMgmt_WPF.BestuurderWindows.SelecteerBestuurderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FleetMgmt_WPF.BestuurderWindows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="SelecteerBestuurderWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="HeaderStyle" TargetType="Label">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+        <Style x:Key="BestuurderStyle" TargetType="Button">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Width" Value="135" />
+            <Setter Property="Height" Value="30" />
+        </Style>
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <!--Labels-->
+        <Label x:Name="lbl_Id" 
+               Content="Id:"
+               Grid.Column="0" 
+               Grid.Row="2"
+               Style="{StaticResource HeaderStyle}"/>
+
+        <Label x:Name="lbl_Voornaam" 
+               Content="Voornaam:" 
+               Grid.Column="0" 
+               Grid.Row="3" 
+                Style="{StaticResource HeaderStyle}" />
+
+        <Label x:Name="lbl_Achternaam" 
+               Content="Achternaam:" 
+               Grid.Column="0" 
+               Grid.Row="4"
+              Style="{StaticResource HeaderStyle}"  />
+
+        <Label x:Name="lbl_Geboortedatum"
+               Content="Geboortedatum:" 
+               Grid.Column="0" 
+               Grid.Row="5"
+               Style="{StaticResource HeaderStyle}" />
+
+        <Label x:Name="lbl_RijksRegisterNummer" 
+               Content="Rijksregisternummer"
+               Grid.Column="0" 
+               Grid.Row="6"
+               Style="{StaticResource HeaderStyle}" />
+
+        <!--Input velden + DatePicker-->
+        <TextBox x:Name="txtbx_Id" 
+                 Style="{StaticResource InputStyle}" 
+                 Grid.Column="1"
+                 Grid.Row="2"
+                 />
+
+        <TextBox x:Name="txtbx_Naam" 
+                 Style="{StaticResource InputStyle}" 
+                 Grid.Column="1"
+                 Grid.Row="3"
+                 />
+
+
+        <TextBox x:Name="txtbx_Achternaam" 
+                 Style="{StaticResource InputStyle}" 
+                 Grid.Column="1"
+                 Grid.Row="4"
+                 />
+
+
+        <DatePickerTextBox
+            x:Name="Date_Pckr_Geboortedatum"
+            Grid.Column="1"
+            Grid.Row="5"/>
+
+        <TextBox x:Name="txtbx_rijksregsterNummer" 
+                 Style="{StaticResource InputStyle}" 
+                 Grid.Column="1"
+                 Grid.Row="6"
+                 />
+
+
+        <!--Button Keer terug-->
+        <Button x:Name="btb_KeerTerug"
+                Content="Keer terug"
+                Grid.Column="2"
+                Grid.Row="1"
+                Grid.RowSpan="6"
+                Width="200" Click="btb_KeerTerug_Click"
+                />
+
+        <!--Buttons-->
+        <Button x:Name="btn_Zoeken"
+                Content="Zoeken"
+                Grid.Column="3"
+                Grid.Row="2" Click="btn_Zoeken_Click"/>
+
+        <Button x:Name="btn_Reset"
+               Content="Reset"
+                Grid.Column="2"
+                Grid.Row="3" Grid.ColumnSpan="2" Height="22" Margin="232,22,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="btn_Reset_Click"/>
+
+        <Button x:Name="btn_Selecteren"
+                Content="Selecteren"
+                Grid.Column="3"
+                Grid.Row="6" Click="btn_Selecteren_Click"/>
+
+
+        <!--Listview-->
+        <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" 
+        x:Name="lstVw_Bestuurders" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4"
+        Margin="5,81,5,0" IsEnabled="False" Grid.RowSpan="4"/>
+
+
+    </Grid>
+</Window>
