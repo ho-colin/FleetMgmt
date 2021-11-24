@@ -92,7 +92,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!--Labels-->
         <Label x:Name="lbl_Geldigheidsdatum" Style="{StaticResource HeaderStyle}"  Content="Geldigheidsdatum:*" Grid.Column="0" HorizontalAlignment="Left" Margin="5" Height="20"/>
         <Label x:Name="lbl_Geblokkeerd" Style="{StaticResource HeaderStyle}"  Content="Geblokkeerd:*" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="5" Height="20"/>
@@ -116,11 +116,12 @@
 
         <Grid Grid.Row="4" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="107.41"/>
+                <ColumnDefinition Width="37.59"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Click="btn_SelecteerBestuurder_Click" x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5" VerticalAlignment="Center" Height="20" Grid.Column="0"/>
-            <Label x:Name="lbl_GeselecteerdeBestuurder" Style="{StaticResource HeaderStyle}" Foreground="LightGray" Content="" Grid.Column="1"  HorizontalAlignment="Left" Margin="5" Height="20"/>
+            <Button Click="btn_SelecteerBestuurder_Click" x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5,0,5,0" VerticalAlignment="Center" Height="20" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Label x:Name="lbl_GeselecteerdeBestuurder" Style="{StaticResource HeaderStyle}" Foreground="LightGray" Content="" Grid.Column="2"  HorizontalAlignment="Center" Margin="0,5,0,5" Height="20"/>
         </Grid>
 
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
