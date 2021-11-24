@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FleetMgmt_WPF.BestuurderWindows;
 
 namespace FleetMgmt_WPF.TankkaartWindows {
     /// <summary>
@@ -33,7 +34,9 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         }
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
-            //IMPLEMENTEREN BESTUURD SELECTEREN VENSTER
+            SelecteerBestuurderWindow selecteerBestuurder = new SelecteerBestuurderWindow();
+            selecteerBestuurder.Show();
+            this.Close();
         }
 
         private void btn_TankkaartToevoegen_Click(object sender, RoutedEventArgs e) {

@@ -17,6 +17,7 @@ namespace FleetMgmt_WPF {
     /// <summary>
     /// Interaction logic for BestuurderWindow.xaml
     /// </summary>
+
     public partial class BestuurderWindow : Window {
         public BestuurderWindow() {
             InitializeComponent();
@@ -63,10 +64,14 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
-            this.txtbx_RijksregisterInput = null;
-            this.txtbx_VoornaamInput = null;
-            this.txtbx_NaamInput = null;
-            this.txtbx_GeboorteDatumInput = null;
+            resetVelden();
+        }
+
+        private void resetVelden() {
+            this.txtbx_RijksregisterInput.Text = "";
+            this.txtbx_VoornaamInput.Text = "";
+            this.txtbx_NaamInput.Text = "";
+            this.txtbx_GeboorteDatumInput.Text = "";
         }
     }
 }
