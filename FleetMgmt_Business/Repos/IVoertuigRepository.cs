@@ -15,6 +15,8 @@ namespace FleetMgmt_Business.Repos {
             string kleur, int? aantalDeuren, bool strikt = true);
         bool bestaatVoertuig(string chassisnummer);
         bool bestaatVoertuig(Voertuig voertuig);
-        void bewerkVoertuig(Voertuig voertuig, Bestuurder bestuurder);
+        void bewerkVoertuig_BestuurderToevoegen(Voertuig voertuig);
+        void bewerkVoertuig_BestuurderVerwijderen(Voertuig voertuig);
+        void bewerkVoertuig_BestuurderWisselen(Voertuig voertuig);
     }
 }

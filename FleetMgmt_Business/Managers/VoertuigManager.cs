@@ -1,4 +1,6 @@
-﻿using FleetMgmt_Business.Exceptions;
+﻿
+
+using FleetMgmt_Business.Exceptions;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Repos;
 using System;
@@ -65,7 +67,13 @@ namespace FleetMgmt_Business.Managers {
                     if(voertuigDB == voertuig) {
                         throw new VoertuigManagerException("VoertuigManager: updateVoertuig - Voertuigen verschillen niet!");
                     } else {
-                        repo.bestaatVoertuig(voertuig);
+                        if(voertuigDB.Bestuurder == null && voertuig.Bestuurder != null) {
+                            repo.bewerkVoertuig_BestuurderToevoegen(voertuig);
+                        }else if(voertuigDB.Bestuurder != null && voertuig.Bestuurder == null) {
+                            repo.bewerkVoertuig_BestuurderVerwijderen(voertuig);
+                        }else if(voertuigDB.Bestuurder != null && voertuig.Bestuurder != null) {
+                            repo.bewerkVoertuig_BestuurderWisselen(voertuig);
+                        }
                     }
                 }
             } catch (Exception ex) {
