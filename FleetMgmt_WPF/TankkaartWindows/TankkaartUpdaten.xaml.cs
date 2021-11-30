@@ -93,7 +93,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
                 txtbx_HuidigGeblokkeerd.Text = Tankkaart.Geblokkeerd ? "Ja" : "Nee";
 
-                textbx_HuidigBrandstoffen.Text = Tankkaart.Brandstoffen.Count.ToString();
+                textbx_HuidigBrandstoffen.Text = showHuidigeBrandstoffen(Tankkaart.Brandstoffen);
 
                 textbx_HuidigPincode.Text = string.IsNullOrWhiteSpace(Tankkaart.Pincode) ? "Geen Pincode" : Tankkaart.Pincode;
 
@@ -106,6 +106,17 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
 
+        }
+
+        private string showHuidigeBrandstoffen(List<TankkaartBrandstof> brandstoffen) {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < brandstoffen.Count; i++) {
+                sb.Append(brandstoffen[i]);
+                if(i != brandstoffen.Count - 1) {
+                    sb.Append(", ");
+                }
+            }
+            return sb.ToString();
         }
 
         private void txtbx_NieuwPincode_PreviewTextInput(object sender, TextCompositionEventArgs e) {
