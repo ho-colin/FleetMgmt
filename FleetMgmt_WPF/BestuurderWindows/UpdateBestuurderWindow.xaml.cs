@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Managers;
+using FleetMgmt_Business.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,28 +21,37 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     /// Interaction logic for UpdateBestuurderWindow.xaml
     /// </summary>
     public partial class UpdateBestuurderWindow : Window {
-        public UpdateBestuurderWindow() {
+
+        BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
+
+        Bestuurder bst { get; set; }
+
+        public UpdateBestuurderWindow(Bestuurder bestuurder) {
+            this.bst = bestuurder;
+
             InitializeComponent();
+
+
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
-            this.txtbx_Voornaam.Text = "";
-            this.txtbx_Achternaam.Text = "";
-            this.DatePckr_Geboortedatum.SelectedDate = null;
-            this.txtbx_Id.Text = "";
-            this.txtbx_RijksregisterNummer.Text = "";
+            reset();
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btn_Return_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                DateTime dt = Convert.ToDateTime(DatePckr_Geboortedatum);
+                Bestuurder b = new Bestuurder(txtbx_RijksregisterNummer.Text, txtbx_Achternaam.Text, txtbx_Voornaam.Text, dt);
+                bm.bewerkBestuurder(b);
+                DialogResult = true;
+                Close();
+            }catch(Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
 
         private void txtbx_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-
+            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
         private void txtbx_Voornaam_TextChanged(object sender, TextChangedEventArgs e) {
@@ -51,14 +63,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void txtbx_RijksregisterNummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"^\d+$")) {
-                e.Handled = true;
-            }
+            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
         private void startVoorNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_Voornaam.SelectionStart <= txtbx_Voornaam.Text.Length - oldText.Length
                 || txtbx_Voornaam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Voornaam.Text.FirstOrDefault())) {
@@ -74,7 +83,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void startAchterNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_Achternaam.SelectionStart <= txtbx_Achternaam.Text.Length - oldText.Length
                 || txtbx_Achternaam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Voornaam.Text.FirstOrDefault())) {
@@ -97,6 +105,19 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
                 e.Handled = true;
             }
+        }
+
+        private void reset() {
+            this.txtbx_Voornaam.Text = "";
+            this.txtbx_Achternaam.Text = "";
+            this.DatePckr_Geboortedatum.SelectedDate = null;
+            this.txtbx_Id.Text = "";
+            this.txtbx_RijksregisterNummer.Text = "";
+        }
+
+        public static bool isIdValid(string s) {
+            int i;
+            return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
         }
     }
 }

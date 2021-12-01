@@ -42,6 +42,9 @@
         <Style x:Key="ComboStyle" TargetType="ComboBox">
             <Setter Property="Background" Value="LightGray"/>
         </Style>
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
         <Style x:Key="cellStyle" TargetType="DataGridCell">
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="2" />
@@ -92,19 +95,49 @@
         <Label  x:Name="lbl_naam" Style="{StaticResource HeaderStyle}"  Content="Naam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,150,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <Label  x:Name="lbl_geboortedatum" Style="{StaticResource HeaderStyle}"  Content="Geboortedatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,184,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <!--Button rechts-->
-        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="485,88,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1"/>
-        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="485,136,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" RenderTransformOrigin="0.455,0.601"/>
-        <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="485,186,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_ResetVelden_Click"/>
+        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="485,89,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1"/>
+        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="485,139,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" RenderTransformOrigin="0.455,0.601" Click="btn_BestuurderZoeken_Click"/>
+        <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="485,194,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_ResetVelden_Click"/>
 
         <!--Input + combox velden-->
-        <TextBox x:Name="txtbx_RijksregisterInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,88,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
-        <TextBox x:Name="txtbx_VoornaamInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox x:Name="txtbx_NaamInput"  Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox x:Name="txtbx_GeboorteDatumInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="144,186,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
+        <TextBox x:Name="txtbx_RijksregisterInput" Style="{StaticResource InputStyle}" 
+                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,88,0,0" 
+                 Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+                 RenderTransformOrigin="0.536,0.514"
+                 PreviewTextInput="txtbx_RijksregisterInput_PreviewTextInput"
+                 />
+
+        <TextBox x:Name="txtbx_VoornaamInput" Style="{StaticResource InputStyle}" 
+                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,117,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140"
+                 PreviewTextInput="txtbx_VoornaamInput_PreviewTextInput"
+                 TextChanged="txtbx_VoornaamInput_TextChanged"
+                 />
+
+        <TextBox x:Name="txtbx_NaamInput"  Style="{StaticResource InputStyle}" 
+                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,150,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140"
+                 PreviewTextInput="txtbx_NaamInput_PreviewTextInput"
+                 TextChanged="txtbx_NaamInput_TextChanged"
+                 />
+
+        <DatePicker x:Name="dtpickr_Geboortedatum" Style="{StaticResource DatePickerStyle}"
+                    Grid.Column="1" HorizontalAlignment="Left" Margin="144,182,0,228" Width="140" />
 
 
-        <!--Datagrid-->
-        <DataGrid x:Name="dataGrid" Grid.Column="1" Margin="0,234,0,0"/>
-
+        <!--Listview-->
+        <ListView x:Name="lstVw_Bestuurders" 
+                  Background="White" 
+                  BorderBrush="LightGray" 
+                  BorderThickness="5" 
+                  Grid.Column="1" 
+                  Margin="0,250,0,0">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="btn_Update" Header="Update" Click="btn_Update_Click"/>
+                    <MenuItem x:Name="btn_Delete" Header="Delete" Click="btn_Delete_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
     </Grid>
 </Window>

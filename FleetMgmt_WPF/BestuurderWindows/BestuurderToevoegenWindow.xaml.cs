@@ -36,7 +36,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void startVoorNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_Voornaam.SelectionStart <= txtbx_Voornaam.Text.Length - oldText.Length
                 || txtbx_Voornaam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Voornaam.Text.FirstOrDefault())) {
@@ -52,7 +51,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void startAchterNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_AchterNaam.SelectionStart <= txtbx_AchterNaam.Text.Length - oldText.Length
                 || txtbx_AchterNaam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Voornaam.Text.FirstOrDefault())) {
@@ -95,16 +93,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             lstVw_Bestuurders.ItemsSource = bestuurders;
         }
 
-        private void btn_KeerTerug_Click(object sender, RoutedEventArgs e) {
-            Hide();
-            new BestuurderToevoegenWindow().ShowDialog();
-            ShowDialog();
-        }
-
         private void txtbx_Rijksregisiternummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"^\d+$")) {
-                e.Handled = true;
-            }
+            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
 
@@ -127,6 +117,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
                 e.Handled = true;
             }
+        }
+
+        public static bool isIdValid(string s) {
+            int i;
+            return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
         }
     }
 }
