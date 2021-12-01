@@ -1,4 +1,6 @@
-﻿using FleetMgmt_Business.Enums;
+﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Enums;
+using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace FleetMgmt_WPF {
     public partial class TypeVoertuigWindow : Window {
 
         ObservableCollection<TypeVoertuig> TypeVoertuigen = new ObservableCollection<TypeVoertuig>();
+
+        TypeVoertuigManager tvm = new TypeVoertuigManager(new TypeVoertuigRepository());
 
         public TypeVoertuigWindow() {
 
@@ -63,10 +67,15 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_TypeVoertuigZoeken_Click(object sender, RoutedEventArgs e) {
-            string gevondenString = string.IsNullOrWhiteSpace(txtbx_TypeInput.Text) ? null : txtbx_TypeInput.Text;
+            string gevondenType = string.IsNullOrWhiteSpace(txtbx_TypeInput.Text) ? null : txtbx_TypeInput.Text;
             RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != 0) ? (RijbewijsEnum)combobx_VereistRijbewijs.SelectedItem : null;
 
-
+            try {
+                this.TypeVoertuigen = new ObservableCollection<TypeVoertuig>(tvm.verkrijgVoertuigen(gevondenType, gevondenRijbewijs));
+                lstvw_TypeVoertuig.ItemsSource = this.TypeVoertuigen;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message,ex.GetType().Name);
+            }
         }
 
         private void btn_TypeVoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
