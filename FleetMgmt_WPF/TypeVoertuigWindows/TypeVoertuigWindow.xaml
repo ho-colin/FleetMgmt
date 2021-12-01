@@ -96,8 +96,8 @@
         <TextBox x:Name="txtbx_TypeInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="139,89,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
         <ComboBox x:Name="combobx_VereistRijbewijs" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="139,121,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
         <!--Button rechts-->
-        <Button x:Name="btn_TankkaartToevoegen" Content="Tankkaart toevoegen" HorizontalAlignment="Left" Margin="495,86,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1"/>
-        <Button x:Name="btn_TankkaartZoeken" Content="Tankkaart zoeken" HorizontalAlignment="Left" Margin="495,131,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1"/>
+        <Button x:Name="btn_TypeVoertuigToevoegen" Content="TypeVoertuig toevoegen" HorizontalAlignment="Left" Margin="495,86,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_TypeVoertuigToevoegen_Click"/>
+        <Button x:Name="btn_TypeVoertuigZoeken" Content="TypeVoertuig zoeken" HorizontalAlignment="Left" Margin="495,131,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_TypeVoertuigZoeken_Click"/>
         <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="495,177,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_ResetVelden_Click"/>
 
         <!--DataGid-->
