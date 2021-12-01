@@ -139,14 +139,6 @@
 
 
         <!--Button Keer terug-->
-        <Button x:Name="btb_KeerTerug"
-                Content="Keer terug"
-                Grid.Column="2"
-                Grid.Row="1"
-                Grid.RowSpan="6"
-                Width="200" Click="btb_KeerTerug_Click"
-                Margin="10"
-                />
 
         <!--Buttons-->
         <Button x:Name="btn_Zoeken"
@@ -159,15 +151,9 @@
                Content="Reset"
                 Grid.Column="3"
                 Grid.Row="4" 
-                Height="33" 
+                Height="26" 
                 Margin="10,0,10,0" 
                 VerticalAlignment="Top" />
-
-        <Button x:Name="btn_Selecteren"
-                Content="Selecteren"
-                Grid.Column="3"
-                Grid.Row="6" Click="btn_Selecteren_Click"
-                Margin="5"/>
 
 
         <!--Listview-->

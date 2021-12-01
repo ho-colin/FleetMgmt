@@ -251,7 +251,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public IEnumerable<Bestuurder> toonBestuurders(int? id, string rijksregisternummer, string naam, string voornaam, DateTime? geboortedatum, Rijbewijs rijbewijs) {
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornaam, DateTime? geboortedatum) {
             List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
             SqlConnection conn = ConnectionClass.getConnection();
             StringBuilder query = new StringBuilder("SELECT b.*,tb.Brandstof,tk.Pincode, tk.GeldigDatun, tk.Geblokkeerd, tk.Bestuurder ,br.Id BehaaldId, " +
@@ -265,13 +265,6 @@ namespace FleetMgmg_Data.Repositories {
 
             bool where = false;
             bool and = false;
-
-
-            if (id != 0) {
-                if (!where) query.Append(" WHERE "); where = true;
-                if (and) query.Append(" AND "); else and = true;
-                query.Append(" b.Id=@id ");
-            }
 
             if (rijksregisternummer != null) {
                 if (!where) query.Append(" WHERE "); where = true;
@@ -295,13 +288,6 @@ namespace FleetMgmg_Data.Repositories {
                 if (!where) query.Append(" WHERE "); where = true;
                 if (and) query.Append(" AND "); else and = true;
                 query.Append(" b.Geboortedatum=@geboortedatum");
-            }
-
-            if (rijbewijs != null) {
-                if (!where) query.Append(" WHERE "); where = true;
-                if (and) query.Append(" AND "); else and = true;
-
-                query.Append(" bId=@bestuurderId");
             }
 
             using (SqlCommand cmd = conn.CreateCommand()) {
@@ -352,12 +338,6 @@ namespace FleetMgmg_Data.Repositories {
                                             (DateTime)reader["Geboortedatum"]);
                                     }
 
-                                }
-                                if (dbBestuurder != null && !reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
-                                    if (dbRijbewijzen == null) dbRijbewijzen = new List<Rijbewijs>();
-                                    Rijbewijs gelezenRijbewijs =
-                                        new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
-                                    if (!dbRijbewijzen.Contains(gelezenRijbewijs)) { dbRijbewijzen.Add(gelezenRijbewijs); }
                                 }
                                 if (dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))) {
                                     BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);

@@ -149,9 +149,8 @@
             </Grid>
 
             <!--Buttons-->
-            <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Grid.Row="1" Grid.Column="0" Margin="110,0,0,0" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Grid.Row="1" Margin="325,0,0,0" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-            <Button Click="btn_Return_Click" x:Name="btn_Return" Content="Keer terug" Grid.Row="1" Grid.Column="1" Margin="20" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Margin="150,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Margin="50,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
 
         </Grid>
     </Grid>

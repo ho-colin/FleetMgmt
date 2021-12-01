@@ -1,6 +1,9 @@
-﻿using FleetMgmt_Business.Objects;
+﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Managers;
+using FleetMgmt_Business.Objects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,6 +25,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         public List<Bestuurder> Bestuurders { get; set; }
 
 
+        private BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
+
+        private ObservableCollection<Bestuurder> bestuurdersLijst = new ObservableCollection<Bestuurder>();
+
+
         public SelecteerBestuurderWindow() {
             InitializeComponent();
         }
@@ -38,22 +46,22 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             this.txtbx_rijksregsterNummer.Text = "";
         }
 
-        private void btb_KeerTerug_Click(object sender, RoutedEventArgs e) {
-            Hide();
-            new SelecteerBestuurderWindow().ShowDialog();
-            ShowDialog();
-        }
-
         private void btn_Zoeken_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btn_Selecteren_Click(object sender, RoutedEventArgs e) {
-            //Misschien hantereen om in plaats van een button, een dubbelklik op de row van de listview om iets te selecteren
+            int rijks = int.Parse(txtbx_rijksregsterNummer.Text);
+            string voornaam = txtbx_Naam.Text;
+            string achternaam = txtbx_Achternaam.Text;
+            DateTime geboortedatum = Convert.ToDateTime(Date_Pckr_Geboortedatum.Text);
+            try {
+                //bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, voornaam, achternaam, geboortedatum).ToList());
+                lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
 
         private void txtbx_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-
+            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
         private void txtbx_Naam_TextChanged(object sender, TextChangedEventArgs e) {
@@ -65,15 +73,12 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void txtbx_rijksregsterNummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"^\d+$")) {
-                e.Handled = true;
-            }
+            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
 
         private void startVoorNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_Naam.SelectionStart <= txtbx_Naam.Text.Length - oldText.Length
                 || txtbx_Naam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Naam.Text.FirstOrDefault())) {
@@ -89,7 +94,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void startAchterNaamMetHoofdletter() {
             string oldText = "";
-            //Naam begint met hoofdletter!
             if ((txtbx_Achternaam.SelectionStart <= txtbx_Achternaam.Text.Length - oldText.Length
                 || txtbx_Achternaam.SelectionStart == 0) &&
                 char.IsLower(txtbx_Achternaam.Text.FirstOrDefault())) {
@@ -112,6 +116,12 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
                 e.Handled = true;
             }
+        }
+
+
+        public static bool isIdValid(string s) {
+            int i;
+            return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
         }
     }
 }
