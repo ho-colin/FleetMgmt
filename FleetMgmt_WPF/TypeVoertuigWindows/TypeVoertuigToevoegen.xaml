@@ -1,10 +1,10 @@
-﻿<Window x:Class="FleetMgmt_WPF.TypeVoertuigWindow"
+﻿<Window x:Class="FleetMgmt_WPF.TypeVoertuigWindows.TypeVoertuigToevoegen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FleetMgmt_WPF"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:FleetMgmt_WPF.TypeVoertuigWindows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -13,9 +13,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="TypeVoertuigWindow" Height="450" Width="800">
+        Title="TypeVoertuigToevoegen" Height="300" Width="400">
     <Window.Resources>
-        <!--Styling TypeVoertuig-->
+        <!-- Styling voertuigwindow-->
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Background" Value="Black"/>
@@ -27,7 +27,7 @@
         </Style>
         <Style x:Key="HeaderStyle" TargetType="Label">
             <Setter Property="Width" Value="auto"/>
-            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
         <Style x:Key="BestuurderStyle" TargetType="Button">
             <Setter Property="Width" Value="auto"/>
@@ -37,6 +37,9 @@
             <Setter Property="Height" Value="30" />
         </Style>
         <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
             <Setter Property="Background" Value="LightGray"/>
         </Style>
         <Style x:Key="ComboStyle" TargetType="ComboBox">
@@ -74,34 +77,43 @@
             <Setter Property="Background" Value="Black" />
         </Style>
     </Window.Resources>
-    <Grid Margin="0,0,0,4">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!-- Button links-->
-        <Button  x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click"/>
-        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_BestuurderNavigatie_Click"/>
-        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Labels -->
+        <Label Content="TypeVoertuig"  HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="Type: " Style="{StaticResource HeaderStyle}"  Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <Label Content="Rijbewijs: " Style="{StaticResource HeaderStyle}" Grid.Row="2" Grid.Column="0" Margin="5"/>
 
+        <!-- TextBox -->
+        <TextBox x:Name="txtbx_TypeVoertuig" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        
+        <!-- Button -->
+        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btn_ResetVelden" Content="Reset Velden" Grid.Column="0" Margin="5" Click="btn_ResetVelden_Click"/>
+            <Button x:Name="btn_VoegTypeToe" Content="Toevoegen" Grid.Column="1" Margin="5" Click="btn_VoegTypeToe_Click"/>
+        </Grid>
+       
 
-        <!--Labels-->
-        <Label Grid.Column="1" Content="Type voertuig" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="210"/>
-        <Label x:Name="lbl_Type" Style="{StaticResource HeaderStyle}"  Content="Type:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,89,0,0" VerticalAlignment="Top" Height="27" Width="105"/>
-        <Label x:Name="lbl_VereistRijbewijs" Style="{StaticResource HeaderStyle}"  Content="Vereist rijbewijs:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,117,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <!-- ComboBox -->
+        <ComboBox x:Name="combobx_Rijbewijs" Grid.Row="2" Grid.Column="1" Margin="5"/>
 
-
-        <!--Textbox + combobox-->
-        <TextBox x:Name="txtbx_TypeInput" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="139,89,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.536,0.514"/>
-        <ComboBox x:Name="combobx_VereistRijbewijs" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="139,121,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
-        <!--Button rechts-->
-        <Button x:Name="btn_TypeVoertuigToevoegen" Content="TypeVoertuig toevoegen" HorizontalAlignment="Left" Margin="495,86,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_TypeVoertuigToevoegen_Click"/>
-        <Button x:Name="btn_TypeVoertuigZoeken" Content="TypeVoertuig zoeken" HorizontalAlignment="Left" Margin="495,131,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_TypeVoertuigZoeken_Click"/>
-        <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="495,177,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="1" Click="btn_ResetVelden_Click"/>
-
-        <!--ListView-->
-        <ListView x:Name="lstvw_TypeVoertuig" Grid.Column="1" Margin="10,234,0,0"/>
+        <!-- ListView -->
+        <ListView x:Name="lstvw_TypeVoertuig" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"/>
 
     </Grid>
 </Window>
