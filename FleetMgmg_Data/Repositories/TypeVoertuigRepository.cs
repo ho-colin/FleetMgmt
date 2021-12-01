@@ -11,10 +11,26 @@ using System.Threading.Tasks;
 
 namespace FleetMgmg_Data.Repositories {
     public class TypeVoertuigRepository : ITypeVoertuigRepository {
+        
+        //Update vereistRijbewijs, verkrijgt via type
         public TypeVoertuig updateTypeVoertuig(TypeVoertuig type) {
-            throw new NotImplementedException();
+            string query = "UPDATE TypeVoertuig SET Rijbewijs=@rijbewijs WHERE TypeVoertuig=@type";
+            SqlConnection conn = ConnectionClass.getConnection();
+            using(SqlCommand cmd = conn.CreateCommand()) {
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@type", type.Type);
+                cmd.Parameters.AddWithValue("@rijbewijs", type.vereistRijbewijs.ToString());
+
+                try {
+                    cmd.ExecuteNonQuery();
+                    return type;
+                } catch (Exception ex) {
+                    throw new TypeVoertuigException("TypeVoertuigRepository : updateTypeVoertuig", ex);
+                } finally { conn.Close(); }
+            }
         }
 
+        // Verkrijgt exact TypeVoertuig
         public TypeVoertuig verkrijgTypeVoertuig(string type, RijbewijsEnum rijbewijs) {
             string query = "SELECT * FROM TypeVoertuig WHERE TypeVoertuig=@type AND Rijbewijs=@rijbewijs";
             TypeVoertuig typeVoertuigDB = null;
@@ -34,6 +50,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
+        // Verkrijgt alle TypeVoertuigen afhankelijk van opgegeven parameters, null ook mogelijk
         public ICollection<TypeVoertuig> verkrijgVoertuigen(string type, RijbewijsEnum? rijbewijs) {
             List<TypeVoertuig> dbObjects = new List<TypeVoertuig>();
             SqlConnection conn = ConnectionClass.getConnection();
@@ -77,6 +94,7 @@ namespace FleetMgmg_Data.Repositories {
 
         }
 
+        //Verwijder voertuig afhankeljk van typevoertuig en typerijbewijs
         public void verwijderTypeVoertuig(TypeVoertuig type) {
             SqlConnection conn = ConnectionClass.getConnection();
             string query = "DELETE FROM TypeVoertuig TypeVoertuig=@type AND Rijbewijs=@rijbewijs";
@@ -94,6 +112,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
+        //Voeg nieuw typevoertuig toe afhankelijk van TypeVoertuig object
         public void voegTypeVoertuigToe(TypeVoertuig type) {
             SqlConnection conn = ConnectionClass.getConnection();
             string query = "INSERT INTO TypeVoertuig VALUES (@type,@rijbewijs)";
