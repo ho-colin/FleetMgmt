@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 namespace FleetMgmt_Business.Repos {
     public interface IVoertuigRepository {
 
-        void voegVoertuigToe(Voertuig voertuig);
+        Voertuig voegVoertuigToe(Voertuig voertuig);
         void verwijderVoertuig(Voertuig voertuig);
         Voertuig geefVoertuig(string chassisnummer);
         IEnumerable<Voertuig> toonVoertuigen(string merk, string model, string typeVoertuig, string brandstof,
-            string kleur, int? aantalDeuren, bool strikt = true);
+            string kleur, int? aantalDeuren, string bestuurderId);
         bool bestaatVoertuig(string chassisnummer);
         bool bestaatVoertuig(Voertuig voertuig);
-        void bewerkVoertuig(Voertuig voertuig, Bestuurder bestuurder);
+        void bewerkVoertuig_BestuurderToevoegen(Voertuig voertuig);
+        void bewerkVoertuig_BestuurderVerwijderen(Voertuig voertuig);
+        void bewerkVoertuig_BestuurderWisselen(Voertuig voertuig);
     }
 }

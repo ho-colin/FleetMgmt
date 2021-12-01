@@ -16,7 +16,7 @@ namespace FleetMgmt_Business.Objects {
 
         public string Kleur { get; private set; }
 
-        public int AantalDeuren { get; private set; }
+        public int? AantalDeuren { get; private set; }
 
         public string Merk { get; private set; }
 
@@ -28,7 +28,7 @@ namespace FleetMgmt_Business.Objects {
 
         public Bestuurder Bestuurder { get; private set; }
 
-        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int aantaldeuren, string merk, string model, TypeVoertuig typevoertuig, string nummerplaat) {
+        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int? aantaldeuren, string merk, string model, TypeVoertuig typevoertuig, string nummerplaat) {
             this.Brandstof = brandstof;
             zetChassisnummer(chassisnummer);
             zetKleur(kleur);
@@ -39,7 +39,7 @@ namespace FleetMgmt_Business.Objects {
             zetNummerplaat(nummerplaat);
         }
 
-        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int aantalDeuren, string merk, string model, TypeVoertuig typeVoertuig, string nummerplaat, Bestuurder bestuurder) 
+        public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int? aantalDeuren, string merk, string model, TypeVoertuig typeVoertuig, string nummerplaat, Bestuurder bestuurder) 
             : this(brandstof, chassisnummer, kleur, aantalDeuren, merk, model, typeVoertuig, nummerplaat) {
             this.Bestuurder = bestuurder;
         }
