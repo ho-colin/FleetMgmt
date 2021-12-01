@@ -2,6 +2,7 @@
 using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
+using FleetMgmt_WPF.TypeVoertuigWindows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -79,7 +80,8 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_TypeVoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
-
+            TypeVoertuigToevoegen w = new TypeVoertuigToevoegen();
+            w.Show();
         }
     }
 }

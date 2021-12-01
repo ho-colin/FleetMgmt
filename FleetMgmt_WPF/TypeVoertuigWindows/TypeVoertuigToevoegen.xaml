@@ -104,8 +104,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btn_ResetVelden" Content="Reset Velden" Grid.Column="0" Margin="5"/>
-            <Button x:Name="btn_VoegTypeToe" Content="Toevoegen" Grid.Column="1" Margin="5"/>
+            <Button x:Name="btn_ResetVelden" Content="Reset Velden" Grid.Column="0" Margin="5" Click="btn_ResetVelden_Click"/>
+            <Button x:Name="btn_VoegTypeToe" Content="Toevoegen" Grid.Column="1" Margin="5" Click="btn_VoegTypeToe_Click"/>
         </Grid>
        
 
