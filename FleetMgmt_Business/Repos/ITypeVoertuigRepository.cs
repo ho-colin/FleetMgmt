@@ -13,6 +13,6 @@ namespace FleetMgmt_Business.Repos {
         TypeVoertuig updateTypeVoertuig(TypeVoertuig type);
         void verwijderTypeVoertuig(TypeVoertuig type);
         TypeVoertuig verkrijgTypeVoertuig(string type, RijbewijsEnum rijbewijs);
-        ICollection<TypeVoertuig> verkrijgVoertuigen(string type, RijbewijsEnum? rijbewijs);
+        ICollection<TypeVoertuig> verkrijgTypeVoertuigen(string type, RijbewijsEnum? rijbewijs);
     }
 }

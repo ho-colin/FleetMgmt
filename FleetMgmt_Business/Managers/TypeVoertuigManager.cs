@@ -28,8 +28,8 @@ namespace FleetMgmt_Business.Managers {
             return repo.verkrijgTypeVoertuig(type, rijbewijs);
         }
 
-        public ICollection<TypeVoertuig> verkrijgVoertuigen(string type, RijbewijsEnum? rijbewijs) {
-            return repo.verkrijgVoertuigen(type, rijbewijs);
+        public ICollection<TypeVoertuig> verkrijgTypeVoertuigen(string type, RijbewijsEnum? rijbewijs) {
+            return repo.verkrijgTypeVoertuigen(type, rijbewijs);
         }
 
         public void verwijderTypeVoertuig(TypeVoertuig type) {

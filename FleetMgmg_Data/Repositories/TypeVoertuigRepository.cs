@@ -51,7 +51,7 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         // Verkrijgt alle TypeVoertuigen afhankelijk van opgegeven parameters, null ook mogelijk
-        public ICollection<TypeVoertuig> verkrijgVoertuigen(string type, RijbewijsEnum? rijbewijs) {
+        public ICollection<TypeVoertuig> verkrijgTypeVoertuigen(string type, RijbewijsEnum? rijbewijs) {
             List<TypeVoertuig> dbObjects = new List<TypeVoertuig>();
             SqlConnection conn = ConnectionClass.getConnection();
             StringBuilder query = new StringBuilder("SELECT * FROM TypeVoertuig ");
