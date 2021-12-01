@@ -64,7 +64,7 @@ namespace FleetMgmt_WPF {
         /// <param name="e"></param>
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
             this.txtbx_TypeInput.Text = "";
-            this.combobx_VereistRijbewijs.SelectedItem = null;
+            this.combobx_VereistRijbewijs.SelectedIndex = 0;
         }
 
         private void btn_TypeVoertuigZoeken_Click(object sender, RoutedEventArgs e) {
@@ -72,7 +72,7 @@ namespace FleetMgmt_WPF {
             RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != 0) ? (RijbewijsEnum)combobx_VereistRijbewijs.SelectedItem : null;
 
             try {
-                this.TypeVoertuigen = new ObservableCollection<TypeVoertuig>(tvm.verkrijgVoertuigen(gevondenType, gevondenRijbewijs));
+                this.TypeVoertuigen = new ObservableCollection<TypeVoertuig>(tvm.verkrijgTypeVoertuigen(gevondenType, gevondenRijbewijs));
                 lstvw_TypeVoertuig.ItemsSource = this.TypeVoertuigen;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message,ex.GetType().Name);
@@ -82,6 +82,13 @@ namespace FleetMgmt_WPF {
         private void btn_TypeVoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
             TypeVoertuigToevoegen w = new TypeVoertuigToevoegen();
             w.Show();
+        }
+
+        private void populateRijbewijzen() {
+            List<string> rijbewijzen = new List<string>(Enum.GetValues(typeof(RijbewijsEnum)).Cast<string>().ToList());
+            rijbewijzen.Insert(0, "<Geen Rijbewijs>");
+            combobx_VereistRijbewijs.ItemsSource = rijbewijzen;
+            combobx_VereistRijbewijs.SelectedIndex = 0;
         }
     }
 }
