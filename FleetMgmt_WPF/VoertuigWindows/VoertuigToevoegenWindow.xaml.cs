@@ -57,16 +57,18 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             try {
                 Voertuig gevondenVoertuig = voertuig == null ? null : voertuig;
                 string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
-                string gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : txtbx_AantalDeuren.Text;
+                int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
                 Bestuurder gevondenBestuurder = bestuurder == null ? null : bestuurder;
 
-                voertuig = new Voertuig((BrandstofEnum)combobx_Brandstof.SelectedItem, txtbx_Chassisnummer.Text, gevondenKleur, int.Parse(gevondenAantalDeuren),
+                voertuig = new Voertuig((BrandstofEnum)combobx_Brandstof.SelectedItem, txtbx_Chassisnummer.Text, gevondenKleur, gevondenAantalDeuren,
                     txtbx_Merk.Text, txtbx_Model.Text, typeVoertuig, txtbx_Nummerplaat.Text);
                 Voertuig voertuigNew = vm.voegVoertuigToe(voertuig);
+                voertuigen.Add(voertuigNew);
             } catch (Exception ex) {
 
-                throw;
+                MessageBox.Show(ex.Message, ex.GetType().Name);
             }
+            lstVw_Voertuigen.ItemsSource = voertuigen;
         }
     }
 }

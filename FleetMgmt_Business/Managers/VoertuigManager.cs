@@ -39,7 +39,7 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public IEnumerable<Voertuig> zoekVoertuigen(string chassisnummer, string merk, string model, string typeVoertuig, string brandstof,
-            string kleur, int? aantalDeuren) {
+            string kleur, int? aantalDeuren, string bestuurderId) {
             List<Voertuig> voertuigen = new List<Voertuig>();
             try {
                 if(chassisnummer != null) {
@@ -47,8 +47,9 @@ namespace FleetMgmt_Business.Managers {
                 } else {
                     if (!string.IsNullOrWhiteSpace(merk) || !string.IsNullOrWhiteSpace(model)
                         || !string.IsNullOrWhiteSpace(typeVoertuig) || !string.IsNullOrWhiteSpace(brandstof)
-                        || !string.IsNullOrWhiteSpace(kleur) || aantalDeuren.HasValue) {
-                        voertuigen.AddRange(repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, false));
+                        || !string.IsNullOrWhiteSpace(kleur) || aantalDeuren.HasValue
+                        || !string.IsNullOrWhiteSpace(bestuurderId))  {
+                        voertuigen.AddRange(repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, bestuurderId));
                     } else throw new VoertuigManagerException("ZoekVoertuigen, geen zoekcriteria");
                 }
                 return voertuigen;
@@ -62,18 +63,24 @@ namespace FleetMgmt_Business.Managers {
             try {
                 if (repo.bestaatVoertuig(voertuig.Chassisnummer)) {
                     Voertuig voertuigDB = repo.geefVoertuig(voertuig.Chassisnummer);
-                    if(voertuigDB == voertuig) {
+                    if (voertuigDB == voertuig) {
                         throw new VoertuigManagerException("VoertuigManager: updateVoertuig - Voertuigen verschillen niet!");
                     } else {
-                        repo.bestaatVoertuig(voertuig);
+                        if (voertuigDB.Bestuurder == null && voertuig.Bestuurder != null) {
+                            repo.bewerkVoertuig_BestuurderToevoegen(voertuig);
+                        } else if (voertuigDB.Bestuurder != null && voertuig.Bestuurder == null) {
+                            repo.bewerkVoertuig_BestuurderVerwijderen(voertuig);
+                        } else if (voertuigDB.Bestuurder != null && voertuig.Bestuurder != null) {
+                            repo.bewerkVoertuig_BestuurderWisselen(voertuig);
+                        }
                     }
                 }
             } catch (Exception ex) {
 
-                throw new VoertuigManagerException("VoertuigManager: updateVoertuig",ex);
+                throw new VoertuigManagerException("VoertuigManager: updateVoertuig", ex);
             }
         }
-                
+
         public void verwijderVoertuig(Voertuig voertuig) {
             try {
                 if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - verwijderVoertuig - Voertuig is null");

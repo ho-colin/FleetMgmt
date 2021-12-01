@@ -172,7 +172,7 @@
                     Content="Reset Velden" Margin="5" 
                     Grid.Column="1" Grid.Row="1"/>
             <ListView Foreground="Black" BorderBrush="LightGray" 
-                      BorderThickness="5" x:Name="lstVw_Tankkaarten" 
+                      BorderThickness="5" x:Name="lstVw_Voertuigen" 
                       Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" 
                       Margin="5" IsEnabled="False"/>
 
