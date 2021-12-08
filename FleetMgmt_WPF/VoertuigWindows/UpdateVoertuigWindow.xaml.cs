@@ -3,6 +3,7 @@ using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_WPF.BestuurderWindows;
+using FleetMgmt_WPF.TypeVoertuigWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
     public partial class UpdateVoertuigWindow : Window {
         VoertuigManager vm = new VoertuigManager(new VoertuigRepository());
         Voertuig Voertuig { get; set; }
+        TypeVoertuig TypeVoertuig { get; set; }
         Bestuurder Bestuurder = null;
         public UpdateVoertuigWindow(Voertuig v) {
             this.Voertuig = v;
@@ -41,7 +43,11 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         }
 
         private void btn_TypeVoertuig_Click(object sender, RoutedEventArgs e) {
-
+            TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
+            if(w.ShowDialog() == true) {
+                this.TypeVoertuig = w.TypeVoertuig;
+                lbl_NieuwTypeVoertuig.Content = this.TypeVoertuig.Type;
+            }
         }
         private void resetVelden() {
             try {
@@ -75,9 +81,30 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 txtbx_HuidigAantalDeuren.Text = Voertuig.AantalDeuren.ToString();
                 txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Naam;
             } catch (Exception ex) {
-
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
+        }
+
+        private void btn_Update_Click(object sender, RoutedEventArgs e) {
+            try {
+                BrandstofEnum gevondenBrandstof = (BrandstofEnum)combobx_Brandstof.SelectedItem;
+                string gevondenChassisnummer = txtbx_Chassisnummer.Text;
+                string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
+                int? gevondenAantalDeuren = txtbx_AantalDeuren.Text == null ? null : int.Parse(txtbx_AantalDeuren.Text);
+                string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
+                string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
+                TypeVoertuig gevondenTypeVoertuig = this.TypeVoertuig;
+                string gevondenNummerplaat = string.IsNullOrWhiteSpace(txtbx_Nummerplaat.Text) ? null : txtbx_Nummerplaat.Text;
+
+                Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat);
+                vm.updateVoertuig(geupdateVoertuig);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
+        }
+
+        private void btn_Reset_Click(object sender, RoutedEventArgs e) {
+            resetVelden();
         }
     }
 }
