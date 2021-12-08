@@ -57,7 +57,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -93,6 +93,12 @@
                Content="Rijksregisternummer"
                Grid.Column="0" 
                Grid.Row="6"
+               Style="{StaticResource HeaderStyle}" />
+
+        <Label x:Name="lbl_Rijbewijs" 
+               Content="Rijbewijs"
+               Grid.Column="0" 
+               Grid.Row="7"
                Style="{StaticResource HeaderStyle}" />
 
         <!--Input velden + DatePicker-->
@@ -160,6 +166,14 @@
                 Height="26" 
                 Margin="5,0,5,0" 
                 VerticalAlignment="Center" />
+
+        <Button x:Name="btn_SelecteerRijbewijs"
+               Content="Selecter rijbewijs"
+                Grid.Column="1"
+                Grid.Row="7" 
+                Height="26" 
+                Margin="5,0,5,0" 
+                VerticalAlignment="Center" Click="btn_SelecteerRijbewijs_Click" />
 
 
         <!--Listview-->
