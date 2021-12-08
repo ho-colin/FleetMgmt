@@ -57,7 +57,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void zetGeldigheidsDatum(DateTime geldigheidsdatum) {
-            if (geldigheidsdatum < DateTime.Now) throw new TankkaartException("Geldigheidsdatum moet groter zijn dan vandaag!");
+            //if (geldigheidsdatum < DateTime.Now) throw new TankkaartException("Geldigheidsdatum moet groter zijn dan vandaag!");
 
             this.GeldigheidsDatum = geldigheidsdatum;
         }
