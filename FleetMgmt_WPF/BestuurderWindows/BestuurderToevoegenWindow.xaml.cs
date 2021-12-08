@@ -102,7 +102,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             startVoorNaamMetHoofdletter();
         }
 
-        private string OldTextTwo = "";
+
         private void txtbx_AchterNaam_TextChanged(object sender, TextChangedEventArgs e) {
             startAchterNaamMetHoofdletter();
         }

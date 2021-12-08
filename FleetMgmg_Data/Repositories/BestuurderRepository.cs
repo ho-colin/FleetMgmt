@@ -151,7 +151,7 @@ namespace FleetMgmg_Data.Repositories {
                     try {
                         transaction.Rollback();
                     }catch(Exception e) {
-                        throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - gefaald", ex);
+                        throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - gefaald", e);
                     }
                 }
                 finally {

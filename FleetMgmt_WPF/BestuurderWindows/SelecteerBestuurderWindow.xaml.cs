@@ -24,6 +24,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     public partial class SelecteerBestuurderWindow : Window {
         public List<Bestuurder> Bestuurders { get; set; }
 
+        Bestuurder Bestuurder = null;
+
 
         private BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
 
@@ -52,7 +54,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             string achternaam = txtbx_Achternaam.Text;
             DateTime geboortedatum = Convert.ToDateTime(Date_Pckr_Geboortedatum.Text);
             try {
-                //bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, voornaam, achternaam, geboortedatum).ToList());
+                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks.ToString(), voornaam, achternaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
             catch (Exception ex) {
@@ -118,10 +120,15 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             }
         }
 
-
         public static bool isIdValid(string s) {
             int i;
             return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
+        }
+
+        private void btn_Selecteren_Click(object sender, RoutedEventArgs e) {
+            this.Bestuurder = (Bestuurder)lstVw_Bestuurders.SelectedItem;
+            DialogResult = true;
+            this.Close();
         }
     }
 }
