@@ -100,6 +100,8 @@
         <!--Button selecteer bestuurder-->
         <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" HorizontalAlignment="Left" Margin="358,148,0,0" VerticalAlignment="Top" 
                 Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerBestuurder_Click"/>
+        <Button x:Name="btn_SelecteerTypeVoertuig" Style="{StaticResource BestuurderStyle}" Content="Selecteer TypeVoertuig" HorizontalAlignment="Left" Margin="127,172,0,0" VerticalAlignment="Top" 
+                Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerTypeVoertuig_Click"/>
 
 
 
@@ -118,7 +120,6 @@
         <TextBox x:Name="txtbx_Model" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,148,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <TextBox x:Name="txtbx_Kleur" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,105,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <TextBox x:Name="txtbx_AantalDeuren" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,128,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <ComboBox x:Name="combobx_TypeVoertuig" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,172,0,0" VerticalAlignment="Top" Width="140"/>
         <ComboBox x:Name="combobx_Brandstof" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,77,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
         <DataGrid x:Name="dtgd_Voertuigen" HeadersVisibility="None" GridLinesVisibility="None" SelectionMode="Single" SelectionUnit="Cell" IsReadOnly="true"
       RowStyle="{StaticResource rowStyle}" CellStyle="{StaticResource cellStyle}" 
@@ -130,7 +131,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label x:Name="lbl_BestuurderNaam" Foreground="White" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="358,177,0,0" VerticalAlignment="Top" Height="15" Width="140"/>
+        <Label x:Name="lbl_BestuurderNaam" Foreground="White" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="358,174,0,0" VerticalAlignment="Top" Height="15" Width="140"/>
+        <Label x:Name="lbl_GeselecteerdTypeVoertuig" Foreground="White" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="278,174,0,0" VerticalAlignment="Top" Height="15" Width="70"/>
 
 
     </Grid>
