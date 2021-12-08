@@ -93,7 +93,8 @@
         <ListBox x:Name="lstbx_Rijbewijzen" 
                  Grid.Row="1"
                  Margin="5" 
-                 SelectionMode="Multiple"/>
+                 SelectionMode="Multiple"
+                 SelectionChanged="lstbx_Rijbewijzen_SelectionChanged"/>
 
 
         <Button x:Name="btn_Selecteer"

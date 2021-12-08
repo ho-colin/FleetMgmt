@@ -36,5 +36,17 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
             DialogResult = true;
             this.Close();
         }
+
+        private void lstbx_Rijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            switch (lstbx_Rijbewijzen.SelectedIndex) {
+                case -1:
+                    btn_Selecteer.IsEnabled = false;
+                    break;
+                default:
+                    btn_Selecteer.IsEnabled = true;
+                    break;
+            }
+
+        }
     }
 }
