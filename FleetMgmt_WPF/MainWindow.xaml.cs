@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FleetMgmt_WPF.TankkaartWindows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace FleetMgmt_WPF {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -37,6 +39,12 @@ namespace FleetMgmt_WPF {
         private void Button_Click_2(object sender, RoutedEventArgs e) {
             TypeVoertuigWindow tvw = new TypeVoertuigWindow();
             tvw.Show();
+            this.Close();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e) {
+            TankkaartWindow w = new TankkaartWindow();
+            w.Show();
             this.Close();
         }
     }
