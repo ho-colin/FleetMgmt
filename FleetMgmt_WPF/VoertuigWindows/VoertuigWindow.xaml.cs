@@ -4,6 +4,7 @@ using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_WPF.BestuurderWindows;
 using FleetMgmt_WPF.TankkaartWindows;
+using FleetMgmt_WPF.TypeVoertuigWindows;
 using FleetMgmt_WPF.VoertuigWindows;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ namespace FleetMgmt_WPF {
     /// </summary>
     public partial class VoertuigWindow : Window {
         VoertuigManager vm = new VoertuigManager(new VoertuigRepository());
-        private Bestuurder b = null;
+        private Bestuurder Bestuurder = null;
+        TypeVoertuig TypeVoertuig { get; set; }
         private ObservableCollection<Voertuig> gevondenVoertuigen = new ObservableCollection<Voertuig>();
         public VoertuigWindow() {
             InitializeComponent();
@@ -44,7 +46,7 @@ namespace FleetMgmt_WPF {
             BestuurderWindow bw = new BestuurderWindow();
             bw.Show();
             this.Close();
-        }
+        }        
         /// <summary>
         /// Navigatie naar VoertuigWindow
         /// </summary>
@@ -81,20 +83,29 @@ namespace FleetMgmt_WPF {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
-            this.txtbw_ChassisNummer = null;
-            this.txtbx_Nummerplaat = null;
-            this.txtbx_Merk = null;
-            this.txtbx_Model = null;
-            this.combobx_TypeVoertuig = null;
-            this.combobx_Brandstof = null;
-            this.txtbx_Kleur = null;
-            this.txtbx_AantalDeuren = null;
+            txtbw_ChassisNummer.Text = "";
+            txtbx_Nummerplaat.Text = "";
+            txtbx_Merk.Text = "";
+            txtbx_Model.Text = "";
+            lbl_GeselecteerdTypeVoertuig.Content = "";
+            lbl_BestuurderNaam.Content = "";
+            combobx_Brandstof.SelectedIndex = 0;
+            txtbx_Kleur.Text = "";
+            txtbx_AantalDeuren.Text = "";
         }
-
+        private void btn_SelecteerTypeVoertuig_Click(object sender, RoutedEventArgs e) {
+            TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
+            if (ShowDialog() == true) {
+                this.TypeVoertuig = w.TypeVoertuig;
+                lbl_GeselecteerdTypeVoertuig.Content = this.TypeVoertuig.Type;
+            }
+        }
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
-            stw.Show();
-            this.Close();
+            if (stw.ShowDialog() == true) {
+                this.Bestuurder = stw.Bestuurder;
+                lbl_Bestuurder.Content = this.Bestuurder.Naam;
+            }
         }
 
         private void btn_VoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
@@ -106,14 +117,15 @@ namespace FleetMgmt_WPF {
             string gevondenChassis = string.IsNullOrWhiteSpace(txtbw_ChassisNummer.Text) ? null : txtbw_ChassisNummer.Text;
             string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
             string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
-            string gevondenTypeVoertuig = null;//nog vragen
+            string gevondenTypeVoertuig = (this.TypeVoertuig != null) ? this.TypeVoertuig.Type.ToString() : null;
             string gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : combobx_Brandstof.SelectedItem.ToString();
             string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
             int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
-            string gevondenBestuurder = (this.b != null) ? this.b.Rijksregisternummer : null;
+            string gevondenBestuurder = (this.Bestuurder != null) ? this.Bestuurder.Rijksregisternummer : null;
             try {
                 gevondenVoertuigen = new ObservableCollection<Voertuig>(vm.zoekVoertuigen(
                     gevondenChassis, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenBrandstof, gevondenKleur, gevondenAantalDeuren,gevondenBestuurder));
+                dtgd_Voertuigen.ItemsSource = gevondenVoertuigen;
             } catch (Exception ex) {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);
