@@ -24,7 +24,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     public partial class SelecteerBestuurderWindow : Window {
         public List<Bestuurder> Bestuurders { get; set; }
 
-        Bestuurder Bestuurder = null;
+        public Bestuurder Bestuurder = null;
 
 
         private BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
