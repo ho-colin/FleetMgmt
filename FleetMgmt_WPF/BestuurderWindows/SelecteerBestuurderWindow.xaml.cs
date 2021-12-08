@@ -140,5 +140,9 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 this.Rijbewijzen = rbs.Rijbewijzen;
             lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
         }
+
+        private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
