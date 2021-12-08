@@ -79,52 +79,52 @@
         </Style>
     </Window.Resources>
     <Grid RenderTransformOrigin="0.176,0.995">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="151*"/>
-            <ColumnDefinition Width="180*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!-- Button links-->
-        <Button  x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click"/>
-        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Height="54" Width="118"/>
-        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Center" Margin="0,350,0,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click"/>
-        <!--Labels-->
-        <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Left" Margin="241,35,0,0" VerticalAlignment="Top" Height="61" Width="180" Grid.ColumnSpan="2"/>
-        <Label x:Name="lbl_rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,77,0,0" VerticalAlignment="Top" Height="27" Width="105"/>
-        <Label  x:Name="lbl_voornaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,109,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label  x:Name="lbl_naam" Style="{StaticResource HeaderStyle}"  Content="Naam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,139,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label  x:Name="lbl_geboortedatum" Style="{StaticResource HeaderStyle}"  Content="Geboortedatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,169,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click" />
+        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_BestuurderNavigatie_Click"/>
+        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TankkaartNavigatie_Click" />
+        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click" />
+
+            <!--Labels-->
+        <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="162"/>
+        <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="22,100,0,0" VerticalAlignment="Top" Height="25" Width="105"/>
+        <Label x:Name="lbl_Voornaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Achternaam" Style="{StaticResource HeaderStyle}"  Content="Achternaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Geboortedatum" Style="{StaticResource HeaderStyle}"  Content="Geboortedatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,166,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
+
+
+        <Label x:Name="lbl_Tankkaart" Style="{StaticResource HeaderStyle}"  Content="Tankkaart:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,79,0,0" VerticalAlignment="Top" Height="20" Width="106"/>
+        <Label x:Name="lbl_Rijbewijs" Style="{StaticResource HeaderStyle}"  Content="Rijbewijs:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+
+        <!--Button-->
+        <Button x:Name="btn_SelecteerTankkaart" Style="{StaticResource BestuurderStyle}" Content="Selecteer tankkaart" HorizontalAlignment="Left" Margin="358,84,0,0" VerticalAlignment="Top" 
+                Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerTankkaart_Click"/>
+
+        <Button x:Name="btn_SelecteerRijbewijs" Style="{StaticResource BestuurderStyle}" Content="Selecteer rijbewijs" HorizontalAlignment="Left" Margin="358,109,0,0" VerticalAlignment="Top" 
+                Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerRijbewijs_Click"/>
+
+
+
         <!--Button rechts-->
-        <Button x:Name="btn_BestuurderToevoegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="183,89,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="2"/>
-        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="183,139,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="2" RenderTransformOrigin="0.455,0.601" Click="btn_BestuurderZoeken_Click"/>
-        <Button x:Name="btn_ResetVelden" Content="Reset velden" HorizontalAlignment="Left" Margin="183,194,0,0" VerticalAlignment="Top" Height="30" Width="132" Grid.Column="2" Click="btn_ResetVelden_Click"/>
+        <Button x:Name="btn_BestuurderToevegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="523,77,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1"
+                Click="btn_BestuurderToevegen_Click" />
+        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="523,116,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"
+                Click="btn_BestuurderZoeken_Click" />
+        <Button x:Name="btn_Reset" Content="Reset velden" HorizontalAlignment="Left" Margin="523,156,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1" Click="btn_Reset_Click" />
+
 
         <!--Input + combox velden-->
-        <TextBox x:Name="txtbx_RijksregisterInput" Style="{StaticResource InputStyle}" 
-                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,77,0,0" 
-                 Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
-                 RenderTransformOrigin="0.536,0.514"
-                 PreviewTextInput="txtbx_RijksregisterInput_PreviewTextInput"
-                 />
-
-        <TextBox x:Name="txtbx_VoornaamInput" Style="{StaticResource InputStyle}" 
-                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,111,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140"
-                 PreviewTextInput="txtbx_VoornaamInput_PreviewTextInput"
-                 TextChanged="txtbx_VoornaamInput_TextChanged"
-                 />
-
-        <TextBox x:Name="txtbx_NaamInput"  Style="{StaticResource InputStyle}" 
-                 Grid.Column="1" HorizontalAlignment="Left" Margin="144,139,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140"
-                 PreviewTextInput="txtbx_NaamInput_PreviewTextInput"
-                 TextChanged="txtbx_NaamInput_TextChanged"
-                 />
-
-        <DatePicker x:Name="dtpickr_Geboortedatum" Style="{StaticResource DatePickerStyle}"
-                    Grid.Column="1" HorizontalAlignment="Left" Margin="144,167,0,245" Width="140" />
-
+        <TextBox x:Name="txtbw_Id" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_Rijksregisternummer" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="txtbx_Voornaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,125,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <TextBox x:Name="txtbx_Achternaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,148,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
+        <DatePicker x:Name="dtpckr_Geboortedatum" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="247,171,0,0" />
 
         <!--Listview-->
         <ListView x:Name="lstVw_Bestuurders" 

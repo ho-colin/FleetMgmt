@@ -119,5 +119,13 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             int i;
             return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
         }
+
+        private void btn_Rijbewijs_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

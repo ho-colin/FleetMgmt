@@ -58,7 +58,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -101,6 +101,13 @@
                Grid.Row="7"
                Style="{StaticResource HeaderStyle}" />
 
+
+        <Label x:Name="lbl_Tankkaart" 
+               Content="Tankkaart"
+               Grid.Column="0" 
+               Grid.Row="8"
+               Style="{StaticResource HeaderStyle}" />
+
         <!--Input velden + DatePicker-->
         <TextBox x:Name="txtbx_Id" 
                  Style="{StaticResource InputStyle}" 
@@ -129,10 +136,10 @@
                  TextChanged="txtbx_Achternaam_TextChanged"/>
 
 
-        <DatePickerTextBox
+        <DatePicker
             x:Name="Date_Pckr_Geboortedatum"
             Grid.Column="1"
-            Margin="10"
+            Margin="10,0,10,0"
             Grid.Row="5"/>
 
         <TextBox x:Name="txtbx_rijksregsterNummer" 
@@ -143,8 +150,6 @@
                  PreviewTextInput="txtbx_rijksregsterNummer_PreviewTextInput"
                  />
 
-
-        <!--Button Keer terug-->
 
         <!--Buttons-->
         <Button x:Name="btn_Zoeken"
@@ -175,11 +180,20 @@
                 Margin="5,0,5,0" 
                 VerticalAlignment="Center" Click="btn_SelecteerRijbewijs_Click" />
 
+        <Button x:Name="btn_SelecteerTankkaart"
+               Content="Selecter Tankkaaart"
+                Grid.Column="1"
+                Grid.Row="8" 
+                Height="26" 
+                Margin="5,0,5,0" 
+                VerticalAlignment="Center"
+                Click="btn_SelecteerTankkaart_Click"/>
+
 
         <!--Listview-->
         <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" 
-        x:Name="lstVw_Bestuurders" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4"
-        Margin="5,29,5,0" IsEnabled="False" Grid.RowSpan="4"/>
+        x:Name="lstVw_Bestuurders" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4"
+        Margin="5,75,5,0" IsEnabled="False" Grid.RowSpan="3"/>
 
 
     </Grid>
