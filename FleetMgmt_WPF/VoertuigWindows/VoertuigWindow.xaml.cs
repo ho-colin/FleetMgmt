@@ -107,7 +107,7 @@ namespace FleetMgmt_WPF {
             string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
             string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
             string gevondenTypeVoertuig = null;//nog vragen
-            BrandstofEnum? gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : (BrandstofEnum)combobx_Brandstof.SelectedItem;
+            string gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : combobx_Brandstof.SelectedItem.ToString();
             string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
             int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
             string gevondenBestuurder = (this.b != null) ? this.b.Rijksregisternummer : null;

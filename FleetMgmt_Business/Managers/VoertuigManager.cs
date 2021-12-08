@@ -93,11 +93,11 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public void voegVoertuigToe(Voertuig voertuig) {
+        public Voertuig voegVoertuigToe(Voertuig voertuig) {
             try {
                 if (voertuig == null) throw new VoertuigManagerException("VoertuigManager - voegVoertuigToe - Voertuig is null");
                 if (repo.bestaatVoertuig(voertuig)) throw new VoertuigManagerException("VoertuigManager - voegVoertuigToe - Voertuig bestaat al");
-                repo.voegVoertuigToe(voertuig);
+                return repo.voegVoertuigToe(voertuig);
 
             } catch (Exception ex) {
 

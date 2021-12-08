@@ -26,7 +26,7 @@ namespace FleetMgmt_WPF.TypeVoertuigWindows {
         TypeVoertuigManager tvm = new TypeVoertuigManager(new TypeVoertuigRepository());
         ObservableCollection<TypeVoertuig> gevondenTypes = new ObservableCollection<TypeVoertuig>();
 
-        TypeVoertuig TypeVoertuig = null;
+        public TypeVoertuig TypeVoertuig = null;
 
         public TypeVoertuigSelecteren() {
             InitializeComponent();
