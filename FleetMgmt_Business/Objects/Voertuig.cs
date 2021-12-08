@@ -65,10 +65,11 @@ namespace FleetMgmt_Business.Objects {
             } else this.Kleur = kleur;
         }
 
-        private void zetAantalDeuren(int aantal){
-            if (aantal < 1) {
-                this.AantalDeuren = 0;
-            } else this.AantalDeuren = aantal;
+        private void zetAantalDeuren(int? aantal){
+            if (aantal.HasValue) {
+                if (aantal == 0) { throw new VoertuigException("Voertuig: Een voertuig moet minstens 1 deur hebben."); }
+                this.AantalDeuren = aantal.Value;
+            } else this.AantalDeuren = null;
         }
 
         private void zetChassisnummer(string chassisnummer){
@@ -86,7 +87,6 @@ namespace FleetMgmt_Business.Objects {
         public void updateBestuurder(Bestuurder bestuurder) {
             if (bestuurder == this.Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
             if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
-            //bestuurder.updateVoertuig(this);
             this.Bestuurder = bestuurder;
             if (bestuurder.Voertuig != this) { bestuurder.updateVoertuig(this); }           
         }

@@ -24,6 +24,18 @@ namespace FleetMgmt_xUnit.Objects {
         }
 
         [Fact]
+        public void Test_AantalDeuren_Empty() {
+            Voertuig v = new Voertuig(BrandstofEnum.Diesel, "1HGBH41JXMN109186", "Zwart", null, "BMW", "1Serie", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
+            Assert.Null(v.AantalDeuren);
+        }
+
+        [Fact]
+        public void Test_AantalDeuren_0() {
+            var ex = Assert.Throws<VoertuigException>(() =>new Voertuig(BrandstofEnum.Diesel, "1HGBH41JXMN109186", "Zwart", 0, "BMW", "1Serie", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123"));
+            Assert.Equal("Voertuig: Een voertuig moet minstens 1 deur hebben.", ex.Message);
+        }
+
+        [Fact]
         public void Test_UpdateBestuurder() {
             Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Colpaert", "Pieter", new DateTime(1990, 02, 27), new List<Rijbewijs>() { new Rijbewijs("B",DateTime.Now) });
