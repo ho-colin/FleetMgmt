@@ -1,6 +1,8 @@
 ﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
+using FleetMgmt_WPF.RijbewijsWindows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +28,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public Bestuurder Bestuurder = null;
 
+        List<RijbewijsEnum> Rijbewijzen = new List<RijbewijsEnum>();
 
         private BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
 
@@ -129,6 +132,13 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             this.Bestuurder = (Bestuurder)lstVw_Bestuurders.SelectedItem;
             DialogResult = true;
             this.Close();
+        }
+
+        private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
+            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Rijbewijzen = rbs.Rijbewijzen;
+            lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
         }
     }
 }

@@ -20,11 +20,14 @@ namespace FleetMgmt_WPF.TankkaartWindows {
     public partial class BrandstofSelecteren : Window {
 
         public List<TankkaartBrandstof> brandstoffen { get; set; }
+
+
         public BrandstofSelecteren() {
             InitializeComponent();
 
             lstbx_Brandstoffen.ItemsSource = Enum.GetValues(typeof(TankkaartBrandstof));
         }
+
 
         private void btn_Selecteer_Click(object sender, RoutedEventArgs e) {
             if(lstbx_Brandstoffen.SelectedItems.Count < 1) {

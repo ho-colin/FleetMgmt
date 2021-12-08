@@ -82,7 +82,7 @@ namespace FleetMgmg_Data.Repositories {
                     }
                     StringBuilder queryBuilder = new StringBuilder("UPDATE Bestuurder SET ");
                     bool komma = false;
-                    if(huidigieBestuurder.Rijksregisternummer != bestuurder.Rijksregisternummer) {
+                    if (huidigieBestuurder.Rijksregisternummer != bestuurder.Rijksregisternummer) {
                         queryBuilder.Append(" RijksregisterNummer=@rijksregisterNummer");
                         komma = true;
                     }
@@ -115,7 +115,7 @@ namespace FleetMgmg_Data.Repositories {
 
                     queryBuilder.Append(" WHERE Id=@id");
 
-                    using(SqlCommand cmd = new(queryBuilder.ToString(), conn, transaction)) {
+                    using (SqlCommand cmd = new(queryBuilder.ToString(), conn, transaction)) {
                         if (queryBuilder.ToString().Contains("@rijksregisterNummer")) {
                             cmd.Parameters.AddWithValue("@rijksregisterNummer", bestuurder.Rijksregisternummer == null ? DBNull.Value : bestuurder.Rijksregisternummer);
                         }
@@ -146,7 +146,8 @@ namespace FleetMgmg_Data.Repositories {
                     }
                     transaction.Commit();
 
-                    }catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - Rollback gefaald", ex);
                     try {
                         transaction.Rollback();
