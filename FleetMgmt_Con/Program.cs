@@ -30,7 +30,7 @@ namespace FleetMgmt_Con {
             //Tankkaart nieuweTankkaart1 = new Tankkaart(new DateTime(2022, 10, 25), "2548", null, null);
             //repo.voegTankkaartToe(nieuweTankkaart1);
 
-            Tankkaart nieuweTankkaart = new Tankkaart(new DateTime(2025, 12, 25), "6869", null, new List<TankkaartBrandstof>() { TankkaartBrandstof.Benzine, TankkaartBrandstof.Diesel} );
+            Tankkaart nieuweTankkaart = new Tankkaart(500,new DateTime(2025, 12, 25), "6869", null, new List<TankkaartBrandstof>() { TankkaartBrandstof.Benzine, TankkaartBrandstof.Diesel}, false);
             repo.voegTankkaartToe(nieuweTankkaart);
 
 
