@@ -3,6 +3,7 @@ using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_WPF.RijbewijsWindows;
+using FleetMgmt_WPF.TankkaartWindows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         public List<Bestuurder> Bestuurders { get; set; }
 
         public Bestuurder Bestuurder = null;
+
+        Tankkaart Tankkaart { get; set; }
 
         List<RijbewijsEnum> Rijbewijzen = new List<RijbewijsEnum>();
 
@@ -142,7 +145,10 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
-
+            TankkaartSelecteren rbs = new TankkaartSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Tankkaart = rbs.Tankkaart;
+            lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
         }
     }
 }

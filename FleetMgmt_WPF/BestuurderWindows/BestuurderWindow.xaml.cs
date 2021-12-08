@@ -20,6 +20,7 @@ using FleetMgmt_WPF.BestuurderWindows;
 using System.Collections.ObjectModel;
 using FleetMgmt_WPF.RijbewijsWindows;
 using FleetMgmt_WPF.TankkaartWindows;
+using FleetMgmt_Business.Enums;
 
 namespace FleetMgmt_WPF {
     /// <summary>
@@ -31,6 +32,10 @@ namespace FleetMgmt_WPF {
 
         private BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
 
+        Tankkaart Tankkaart { get; set; }
+
+        public List<RijbewijsEnum> Rijbewijzen { get; set; }
+
         private ObservableCollection<Bestuurder> bestuurdersLijst = new ObservableCollection<Bestuurder>();
 
         public BestuurderWindow() {
@@ -39,11 +44,22 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_BestuurderToevegen_Click(object sender, RoutedEventArgs e) {
-
+            BestuurderToevoegenWindow btw = new BestuurderToevoegenWindow();
+            btw.Show();
         }
 
         private void btn_BestuurderZoeken_Click(object sender, RoutedEventArgs e) {
-
+            string rijks = txtbx_Rijksregisternummer.Text;
+            string voornaam = txtbx_Voornaam.Text;
+            string achternaam = txtbx_Achternaam.Text;
+            DateTime geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.Value);
+            try {
+                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, achternaam, voornaam, geboortedatum).ToList());
+                lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
 
         private void Reset() {
@@ -59,13 +75,17 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
-
+            TankkaartSelecteren rbs = new TankkaartSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Tankkaart = rbs.Tankkaart;
+            lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
         }
 
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
-            RijbewijsSelecteren r = new RijbewijsSelecteren();
-            r.Show();
-            this.Close();
+            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Rijbewijzen = rbs.Rijbewijzen;
+            lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
@@ -93,11 +113,27 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                Bestuurder bst = (Bestuurder)lstVw_Bestuurders.SelectedItem;
+                UpdateBestuurderWindow bws = new UpdateBestuurderWindow(bst);
+                if (bws.ShowDialog() == true) {
+                    btn_BestuurderZoeken_Click(sender, e);
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                Bestuurder bs = (Bestuurder)lstVw_Bestuurders.SelectedItem;
+                bm.verwijderBestuurder(bs.Id);
+                btn_BestuurderZoeken_Click(sender, e);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
     }
 }
