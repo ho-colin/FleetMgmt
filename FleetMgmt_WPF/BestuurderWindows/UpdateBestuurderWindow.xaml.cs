@@ -1,6 +1,9 @@
 ﻿using FleetMgmg_Data.Repositories;
+using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
+using FleetMgmt_WPF.RijbewijsWindows;
+using FleetMgmt_WPF.TankkaartWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,10 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     public partial class UpdateBestuurderWindow : Window {
 
         BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
+
+        Tankkaart Tankkaart { get; set; }
+
+        public  List<RijbewijsEnum> Rijbewijzen { get; set; }
 
         Bestuurder bst { get; set; }
 
@@ -121,11 +128,17 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void btn_Rijbewijs_Click(object sender, RoutedEventArgs e) {
-
+            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Rijbewijzen = rbs.Rijbewijzen;
+            lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
         }
 
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
-
+            TankkaartSelecteren rbs = new TankkaartSelecteren();
+            if (rbs.ShowDialog() == true)
+                this.Tankkaart = rbs.Tankkaart;
+            lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
         }
     }
 }

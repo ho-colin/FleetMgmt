@@ -16,6 +16,8 @@ using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Validators;
 using FleetMgmg_Data.Repositories;
 using System.Text.RegularExpressions;
+using FleetMgmt_WPF.TankkaartWindows;
+using FleetMgmt_WPF.RijbewijsWindows;
 
 namespace FleetMgmt_WPF.BestuurderWindows {
     /// <summary>
@@ -122,6 +124,18 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         public static bool isIdValid(string s) {
             int i;
             return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
+        }
+
+        private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
+            TankkaartSelecteren tws = new TankkaartSelecteren();
+            tws.Show();
+            this.Close();
+        }
+
+        private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
+            RijbewijsSelecteren rs = new RijbewijsSelecteren();
+            rs.Show();
+            this.Close();
         }
     }
 }
