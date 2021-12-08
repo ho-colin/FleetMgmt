@@ -147,13 +147,19 @@
                 Grid.Row="2" Click="btn_Zoeken_Click"
                 Margin="5"/>
 
+        <Button x:Name="btn_Selecteren"
+                Content="Selecteren"
+                Grid.Column="3"
+                Grid.Row="3" Click="btn_Selecteren_Click"
+                Margin="5,5,5,5"/>
+
         <Button x:Name="btn_Reset"
                Content="Reset"
                 Grid.Column="3"
                 Grid.Row="4" 
                 Height="26" 
-                Margin="10,0,10,0" 
-                VerticalAlignment="Top" />
+                Margin="5,0,5,0" 
+                VerticalAlignment="Center" />
 
 
         <!--Listview-->
