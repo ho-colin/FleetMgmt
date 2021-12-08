@@ -3,6 +3,8 @@ using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_WPF.BestuurderWindows;
+using FleetMgmt_WPF.TypeVoertuigWindows;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,15 +36,17 @@ namespace FleetMgmt_WPF.VoertuigWindows {
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow w = new SelecteerBestuurderWindow();
-            w.Show();
-            this.Close();
+            if(w.ShowDialog()== true) {
+                this.bestuurder = w.Bestuurder;
+                lbl_GeselecteerdeBestuurder.Content = this.bestuurder.Naam;
+            }
         }
 
         private void btn_SelecteerTypeVoertuig_Click(object sender, RoutedEventArgs e) {
-            SelecteerTypeVoertuigWindow w = new SelecteerTypeVoertuigWindow();
+            TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
             if(w.ShowDialog()== true) {
-                this.typeVoertuig = w.typeVoertuig;
-                lbl_TypeVoertuig.Content = voertuig.TypeVoertuig;
+                this.typeVoertuig = w.TypeVoertuig;
+                lbl_TypeVoertuig.Content = this.typeVoertuig.Type;
             }
         }
 
@@ -69,6 +73,18 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
             lstVw_Voertuigen.ItemsSource = voertuigen;
+        }
+
+        private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
+            txtbx_Chassisnummer.Text = "";
+            txtbx_Model.Text = "";
+            txtbx_Merk.Text = "";
+            txtbx_Nummerplaat.Text = "";
+            this.bestuurder = null;
+            this.typeVoertuig = null;
+            combobx_Brandstof.SelectedIndex = 0;
+            txtbx_AantalDeuren.Text = "";
+            txtbx_Kleur.Text = "";
         }
     }
 }
