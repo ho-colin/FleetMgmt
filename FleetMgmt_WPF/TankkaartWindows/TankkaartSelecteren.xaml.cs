@@ -35,7 +35,9 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             InitializeComponent();
 
             //Brandstof box populaten
-            List<BrandstofEnum> brandstoffen = new List<BrandstofEnum>();
+            List<string> brandstoffen = new List<string>(Enum.GetValues(typeof(BrandstofEnum)).Cast<string>().Select(v => v.ToString()).ToList());
+            brandstoffen.Insert(0, "< Geen Brandstof >");
+            cmbbx_Brandstof.ItemsSource = brandstoffen;
             
 
             //Geblokkeerd box populaten
@@ -59,7 +61,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             DateTime? gevondenDatum = dtpckr_Geldigheidsdatum.SelectedDate == null ? null : dtpckr_Geldigheidsdatum.SelectedDate.Value;
             string gevondenBestuurder = this.Bestuurder == null ? null : this.Bestuurder.Rijksregisternummer;
             bool? gevondenGeblokkeerd = cmbbx_Geblokkeerd.SelectedIndex == 0 ? null : cmbbx_Geblokkeerd.SelectedIndex == 1 ? true : false;
-            TankkaartBrandstof? gevondenBrandstof = cmbbx_Brandstof.SelectedIndex == 0 ? null : (TankkaartBrandstof)cmbbx_Brandstof.SelectedItem;
+            TankkaartBrandstof? gevondenBrandstof = cmbbx_Brandstof.SelectedIndex == 0 ? null : (TankkaartBrandstof)Enum.Parse(typeof(BrandstofEnum),cmbbx_Brandstof.SelectedItem.ToString());
             this.tankkaarten = new ObservableCollection<Tankkaart>(tm.geefTankkaarten(gevondenId, gevondenDatum, gevondenBestuurder, gevondenGeblokkeerd, gevondenBrandstof));
             lstvw_Tankkaarten.ItemsSource = tankkaarten;
         }

@@ -42,7 +42,6 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
             stw.Show();
-            this.Close();
         }
 
         private void btn_TankkaartToevoegen_Click(object sender, RoutedEventArgs e) {
@@ -81,13 +80,15 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         }
 
         private void btn_BestuurderNavigatie_Click(object sender, RoutedEventArgs e) {
-            //IMPLEMENTEREN NAAR BESTUURDER
-            Close();
+            BestuurderWindow w = new BestuurderWindow();
+            w.Show();
+            this.Close();
         }
 
         private void btn_TypeVoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
-            //IMPLEMENTEREN NAAR TYPEVOERTUIG
-            Close();
+            TypeVoertuigWindow w = new TypeVoertuigWindow();
+            w.Show();
+            this.Close();
         }
 
         private void btn_TankkaartNavigatie_Click(object sender, RoutedEventArgs e) {
@@ -96,8 +97,9 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
-            //IMPLEMENTEREN NAAR VOERTUIG
-            Close();
+            VoertuigWindow w = new VoertuigWindow();
+            w.Show();
+            this.Close();
         }
 
         private bool? checkDisabled() {
@@ -113,9 +115,8 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 if(w.ShowDialog() == true) {
                     btn_TankkaartZoeken_Click(sender, e);
                 }
-            } catch (Exception) {
-
-                throw;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
             }
         }
 

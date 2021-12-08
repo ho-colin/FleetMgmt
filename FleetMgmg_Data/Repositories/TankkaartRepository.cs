@@ -162,7 +162,8 @@ namespace FleetMgmg_Data.Repositories {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
                             if (tk == null) {
-                                tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], (string)reader["pincode"], null, null, (bool)reader["Geblokkeerd"]);
+                                tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], null, null, null, (bool)reader["Geblokkeerd"]);
+                                if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) { tk.updatePincode((string)reader["Pincode"]); }
                             }
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
                                 if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<TankkaartBrandstof>(); }
@@ -304,7 +305,7 @@ namespace FleetMgmg_Data.Repositories {
 
                                 dbTankkaart = new Tankkaart(
                                     (int) reader["Id"],
-                                    (DateTime)reader["GeldigDatum"],
+                                    (DateTime) reader["GeldigDatum"],
                                     reader.IsDBNull(reader.GetOrdinal("Pincode")) ? null : (string)reader["Pincode"],
                                     null,
                                     null, 

@@ -69,7 +69,7 @@ namespace FleetMgmt_WPF {
 
         private void btn_TypeVoertuigZoeken_Click(object sender, RoutedEventArgs e) {
             string gevondenType = string.IsNullOrWhiteSpace(txtbx_TypeInput.Text) ? null : txtbx_TypeInput.Text;
-            RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != 0) ? (RijbewijsEnum)combobx_VereistRijbewijs.SelectedItem : null;
+            RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != null) ? (RijbewijsEnum)combobx_VereistRijbewijs.SelectedItem : null;
 
             try {
                 this.TypeVoertuigen = new ObservableCollection<TypeVoertuig>(tvm.verkrijgTypeVoertuigen(gevondenType, gevondenRijbewijs));
