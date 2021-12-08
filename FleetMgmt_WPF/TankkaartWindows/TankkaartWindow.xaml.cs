@@ -31,6 +31,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
         public TankkaartWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
 
             List<string> combobxgeblokkeerd = new List<String>() { "<Leeg>", "Ja", "Nee" };
             combobx_Geblokkeerd.ItemsSource = combobxgeblokkeerd;
@@ -76,6 +77,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             gevondenTankkaarten.Clear();
             lstVw_Tankkaarten.ItemsSource = gevondenTankkaarten;
             combobx_Brandstof.SelectedItem = null;
+            
         }
 
         private void btn_BestuurderNavigatie_Click(object sender, RoutedEventArgs e) {

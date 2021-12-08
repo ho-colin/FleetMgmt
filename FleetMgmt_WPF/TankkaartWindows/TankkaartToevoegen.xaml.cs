@@ -31,12 +31,15 @@ namespace FleetMgmt_WPF.TankkaartWindows {
 
         public TankkaartToevoegen() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
-            SelecteerBestuurderWindow selecteerBestuurder = new SelecteerBestuurderWindow();
-            selecteerBestuurder.Show();
-            this.Close();
+            SelecteerBestuurderWindow w = new SelecteerBestuurderWindow();
+            if(w.ShowDialog() == true) {
+                this.bestuurder = w.Bestuurder;
+                lbl_GeselecteerdeBestuurder.Content = this.bestuurder.Naam;
+            }
         }
 
         private void btn_TankkaartToevoegen_Click(object sender, RoutedEventArgs e) {
@@ -70,12 +73,14 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         }
 
         private void resetVelden() {
-            txtbx_Geldigheidsdatum.SelectedDate = DateTime.Now;
+            txtbx_Geldigheidsdatum.SelectedDate = null;
             chekbx_Geblokkeerd.IsChecked = false;
             brandstoffen.Clear();
             txtbw_Pincode.Text = "";
             this.bestuurder = null;
             lbl_GeselecteerdeBestuurder.Content = "";
+            this.brandstoffen = null;
+            lbl_BrandstofAantal.Content = "";
         }
 
         private void btn_Brandstof_Click(object sender, RoutedEventArgs e) {
