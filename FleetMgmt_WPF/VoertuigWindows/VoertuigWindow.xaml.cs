@@ -114,15 +114,15 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_VoertuigZoeken_Click(object sender, RoutedEventArgs e) {
-            string gevondenChassis = string.IsNullOrWhiteSpace(txtbw_ChassisNummer.Text) ? null : txtbw_ChassisNummer.Text;
-            string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
-            string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
-            string gevondenTypeVoertuig = (this.TypeVoertuig != null) ? this.TypeVoertuig.Type.ToString() : null;
-            string gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : combobx_Brandstof.SelectedItem.ToString();
-            string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
-            int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
-            string gevondenBestuurder = (this.Bestuurder != null) ? this.Bestuurder.Rijksregisternummer : null;
             try {
+                string gevondenChassis = string.IsNullOrWhiteSpace(txtbw_ChassisNummer.Text) ? null : txtbw_ChassisNummer.Text;
+                string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
+                string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
+                string gevondenTypeVoertuig = (this.TypeVoertuig != null) ? this.TypeVoertuig.Type.ToString() : null;
+                string gevondenBrandstof = combobx_Brandstof.SelectedItem == null ? null : combobx_Brandstof.SelectedItem.ToString();
+                string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
+                int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
+                string gevondenBestuurder = (this.Bestuurder != null) ? this.Bestuurder.Rijksregisternummer : null;
                 gevondenVoertuigen = new ObservableCollection<Voertuig>(vm.zoekVoertuigen(
                     gevondenChassis, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenBrandstof, gevondenKleur, gevondenAantalDeuren,gevondenBestuurder));
                 dtgd_Voertuigen.ItemsSource = gevondenVoertuigen;

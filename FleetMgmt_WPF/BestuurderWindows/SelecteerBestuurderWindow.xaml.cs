@@ -55,11 +55,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void btn_Zoeken_Click(object sender, RoutedEventArgs e) {
-            int rijks = int.Parse(txtbx_rijksregsterNummer.Text);
-            string voornaam = txtbx_Naam.Text;
-            string achternaam = txtbx_Achternaam.Text;
-            DateTime geboortedatum = Convert.ToDateTime(Date_Pckr_Geboortedatum.Text);
             try {
+                int rijks = int.Parse(txtbx_rijksregsterNummer.Text);
+                string voornaam = txtbx_Naam.Text;
+                string achternaam = txtbx_Achternaam.Text;
+                DateTime geboortedatum = Convert.ToDateTime(Date_Pckr_Geboortedatum.Text);
                 bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks.ToString(), voornaam, achternaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }

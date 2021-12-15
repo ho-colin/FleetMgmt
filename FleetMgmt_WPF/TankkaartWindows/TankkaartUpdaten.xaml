@@ -121,7 +121,7 @@
                 <Label x:Name="lbl_Brandstoffen" Style="{StaticResource HeaderStyle}" Content="Brandstoffen:" Grid.Column="1" Grid.Row="3" Margin="5"/>
                 <Label x:Name="lbl_Bestuurder" Style="{StaticResource HeaderStyle}" Content="Bestuurder:" Grid.Column="1" Grid.Row="4" Margin="5"/>
                 <Label x:Name="lbl_Pincode" Style="{StaticResource HeaderStyle}" Content="Pincode:" Grid.Column="1" Grid.Row="5" Margin="5"/>
-                
+
                 <!-- Nieuwe Waarden -->
                 <TextBox x:Name="txtbx_NieuwId" Grid.Row="0" Grid.Column="2" Margin="5" Background="LightGray" IsEnabled="False" VerticalAlignment="Center"/>
                 <DatePicker x:Name="txtbx_Geldigheidsdatum" Style="{StaticResource DatePickerStyle}" Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center"/>
@@ -138,13 +138,14 @@
 
                 <Grid Grid.Column="2" Grid.Row="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="76.717"/>
+                        <ColumnDefinition Width="68.283"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5" Height="20"/>
-                    <Label Content="Geen bestuurder" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource HeaderStyle}" Grid.Column="1"/>
+                    <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5,7,5,6" Height="20" Grid.ColumnSpan="2"/>
+                    <Label Content="Geen bestuurder" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource HeaderStyle}" Grid.Column="2"/>
                 </Grid>
-                
+
                 <!-- Huidige Waarden -->
                 <TextBox x:Name="txtbx_HuidigId" Grid.Row="0" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
                 <TextBox x:Name="txtbx_HuidigGeldigheidsdatum" Grid.Row="1" Grid.Column="4" Margin="5" Background="LightGray" IsEnabled="False"/>
@@ -160,7 +161,7 @@
 
             <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Grid.Row="1" Grid.Column="0" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Grid.Row="1" Grid.Column="1" Margin="20" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            
+
         </Grid>
     </Grid>
 </Window>

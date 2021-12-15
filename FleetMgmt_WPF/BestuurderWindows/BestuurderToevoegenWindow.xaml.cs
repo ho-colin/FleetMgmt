@@ -18,6 +18,8 @@ using FleetMgmg_Data.Repositories;
 using System.Text.RegularExpressions;
 using FleetMgmt_WPF.TankkaartWindows;
 using FleetMgmt_WPF.RijbewijsWindows;
+using FleetMgmt_Business.Enums;
+using System.Collections.ObjectModel;
 
 namespace FleetMgmt_WPF.BestuurderWindows {
     /// <summary>
@@ -27,6 +29,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
         List<Bestuurder> bestuurders = new List<Bestuurder>();
+        List<RijbewijsEnum> Rijbewijzen = new List<RijbewijsEnum>();
+        ObservableCollection<Tankkaart> Tankkaarten = new ObservableCollection<Tankkaart>();
 
         public BestuurderToevoegenWindow() {
             InitializeComponent();
@@ -73,26 +77,25 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e) {
-            string Voornaam = txtbx_Voornaam.Text;
-            string Achternaam = txtbx_AchterNaam.Text;
-            DateTime tijd = Convert.ToDateTime(txtbx_Geldigheidsdatum.Text);
-            string rijksregisternummer = txtbx_Rijksregisiternummer.Text;
-
-            if (Voornaam == null) { MessageBox.Show("Gelieve een voornaam in te vullen!", "ERROR", MessageBoxButton.OK); }
-            if (Achternaam == null) { MessageBox.Show("Gelieve een achternaam in te vullen!", "ERROR", MessageBoxButton.OK); }
-            if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
-            if (rijksregisternummer == null) MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
+ 
             try {
-
+                string Voornaam = txtbx_Voornaam.Text;
+                string Achternaam = txtbx_AchterNaam.Text;
+                DateTime tijd = Convert.ToDateTime(txtbx_Geldigheidsdatum.Text);
+                string rijksregisternummer = txtbx_Rijksregisiternummer.Text;
+                if (Voornaam == null) { MessageBox.Show("Gelieve een voornaam in te vullen!", "ERROR", MessageBoxButton.OK); }
+                if (Achternaam == null) { MessageBox.Show("Gelieve een achternaam in te vullen!", "ERROR", MessageBoxButton.OK); }
+                if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
+                if (rijksregisternummer == null) MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
                 RijksregisterValidator.isGeldig(rijksregisternummer, tijd);
+                Bestuurder bestuurder = new Bestuurder(rijksregisternummer, Voornaam, Achternaam, tijd);
+                Bestuurder b2 = bm.voegBestuurderToe(bestuurder);
+                bestuurders.Add(b2);
+                lstVw_Bestuurders.ItemsSource = bestuurders;
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
-            Bestuurder bestuurder = new Bestuurder(rijksregisternummer, Voornaam, Achternaam, tijd);
-            Bestuurder b2 = bm.voegBestuurderToe(bestuurder);
-            bestuurders.Add(b2);
-            lstVw_Bestuurders.ItemsSource = bestuurders;
         }
 
         private void txtbx_Rijksregisiternummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
@@ -123,19 +126,23 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public static bool isIdValid(string s) {
             int i;
-            return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
+            return int.TryParse(s, out i) && i >= 0 && i <= int.MaxValue;
         }
 
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
             TankkaartSelecteren tws = new TankkaartSelecteren();
-            tws.Show();
-            this.Close();
+            if(tws.ShowDialog() == true) {
+                this.Tankkaarten = tws.tankkaarten;
+                lbl_Tankkaart.Content = this.Tankkaarten.Count;
+            }
         }
 
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
             RijbewijsSelecteren rs = new RijbewijsSelecteren();
-            rs.Show();
-            this.Close();
+            if(rs.ShowDialog() == true) {
+                this.Rijbewijzen = rs.Rijbewijzen;
+                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+            }
         }
     }
 }

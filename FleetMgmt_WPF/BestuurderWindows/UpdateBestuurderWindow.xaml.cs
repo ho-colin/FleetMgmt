@@ -29,7 +29,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         Tankkaart Tankkaart { get; set; }
 
-        public  List<RijbewijsEnum> Rijbewijzen { get; set; }
+        private List<RijbewijsEnum> Rijbewijzen { get; set; }
 
         Bestuurder bst { get; set; }
 
@@ -40,7 +40,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
 
         }
-
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
             reset();
         }
@@ -124,7 +123,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public static bool isIdValid(string s) {
             int i;
-            return int.TryParse(s, out i) && i >= 0 && i <= 100000000;
+            return int.TryParse(s, out i) && i >= 0 && i <= int.MaxValue;
         }
 
         private void btn_Rijbewijs_Click(object sender, RoutedEventArgs e) {
