@@ -49,11 +49,11 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_BestuurderZoeken_Click(object sender, RoutedEventArgs e) {
-            string rijks = txtbx_Rijksregisternummer.Text;
-            string voornaam = txtbx_Voornaam.Text;
-            string achternaam = txtbx_Achternaam.Text;
-            DateTime geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.Value);
             try {
+                string rijks = txtbx_Rijksregisternummer.Text;
+                string voornaam = txtbx_Voornaam.Text;
+                string achternaam = txtbx_Achternaam.Text;
+                DateTime? geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.Value);
                 bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, achternaam, voornaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
