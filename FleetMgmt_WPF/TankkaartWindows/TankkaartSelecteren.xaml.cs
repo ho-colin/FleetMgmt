@@ -35,7 +35,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             InitializeComponent();
 
             //Brandstof box populaten
-            List<string> brandstoffen = new List<string>(Enum.GetValues(typeof(BrandstofEnum)).Cast<string>().Select(v => v.ToString()).ToList());
+            List<string> brandstoffen = new List<string>(Enum.GetNames(typeof(BrandstofEnum)).ToList());
             brandstoffen.Insert(0, "< Geen Brandstof >");
             cmbbx_Brandstof.ItemsSource = brandstoffen;
             
