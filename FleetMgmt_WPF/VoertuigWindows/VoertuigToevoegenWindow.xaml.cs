@@ -51,14 +51,14 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         }
 
         private void btn_VoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
-            if(txtbx_Chassisnummer.Text == null) { MessageBox.Show("Gelieve een chassisnummer in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);return; }
-            if (txtbx_Merk.Text == null) { MessageBox.Show("Gelieve een merk in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
-            if (txtbx_Model.Text == null) { MessageBox.Show("Gelieve een model in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
-            if (txtbx_Nummerplaat.Text == null) { MessageBox.Show("Gelieve een nummerplaat in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
-            if (lbl_GeselecteerdeTypeVoertuig == null) { MessageBox.Show("Gelieve een chassisnummer in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
-            if(combobx_Brandstof.SelectedItem == null) { MessageBox.Show("Gelieve een brandstof in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);return; }
-
+            
             try {
+                if (txtbx_Chassisnummer.Text == null) { MessageBox.Show("Gelieve een chassisnummer in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                if (txtbx_Merk.Text == null) { MessageBox.Show("Gelieve een merk in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                if (txtbx_Model.Text == null) { MessageBox.Show("Gelieve een model in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                if (txtbx_Nummerplaat.Text == null) { MessageBox.Show("Gelieve een nummerplaat in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                if (lbl_GeselecteerdeTypeVoertuig == null) { MessageBox.Show("Gelieve een chassisnummer in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                if (combobx_Brandstof.SelectedItem == null) { MessageBox.Show("Gelieve een brandstof in te vullen!", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
                 Voertuig gevondenVoertuig = voertuig == null ? null : voertuig;
                 string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
                 int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
