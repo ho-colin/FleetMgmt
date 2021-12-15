@@ -29,9 +29,8 @@ namespace FleetMgmt_WPF {
         TypeVoertuigManager tvm = new TypeVoertuigManager(new TypeVoertuigRepository());
 
         public TypeVoertuigWindow() {
-
-
             InitializeComponent();
+            this.populateRijbewijzen();
             this.ResizeMode = ResizeMode.NoResize;
         }
 
@@ -69,7 +68,7 @@ namespace FleetMgmt_WPF {
 
         private void btn_TypeVoertuigZoeken_Click(object sender, RoutedEventArgs e) {
             string gevondenType = string.IsNullOrWhiteSpace(txtbx_TypeInput.Text) ? null : txtbx_TypeInput.Text;
-            RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != 0) ? (RijbewijsEnum)combobx_VereistRijbewijs.SelectedItem : null;
+            RijbewijsEnum? gevondenRijbewijs = (combobx_VereistRijbewijs.SelectedIndex != 0) ? (RijbewijsEnum) Enum.Parse(typeof(RijbewijsEnum), combobx_VereistRijbewijs.SelectedItem.ToString()) : null;
 
             try {
                 this.TypeVoertuigen = new ObservableCollection<TypeVoertuig>(tvm.verkrijgTypeVoertuigen(gevondenType, gevondenRijbewijs));
@@ -85,10 +84,22 @@ namespace FleetMgmt_WPF {
         }
 
         private void populateRijbewijzen() {
-            List<string> rijbewijzen = new List<string>(Enum.GetValues(typeof(RijbewijsEnum)).Cast<string>().ToList());
+            List<string> rijbewijzen = new List<string>(Enum.GetNames(typeof(RijbewijsEnum))).ToList();
             rijbewijzen.Insert(0, "<Geen Rijbewijs>");
             combobx_VereistRijbewijs.ItemsSource = rijbewijzen;
             combobx_VereistRijbewijs.SelectedIndex = 0;
+        }
+
+        private void btn_Delete_Click(object sender, RoutedEventArgs e) {
+            try {
+                TypeVoertuig geselecteerd = (TypeVoertuig)lstvw_TypeVoertuig.SelectedItem;
+                tvm.verwijderTypeVoertuig(geselecteerd);
+
+                MessageBox.Show("Type succesvol verwijdert!", "Type Voertuig");
+                this.btn_TypeVoertuigZoeken_Click(sender, e);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, ex.GetType().Name);
+            }
         }
     }
 }
