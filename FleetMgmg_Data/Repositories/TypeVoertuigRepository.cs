@@ -22,6 +22,7 @@ namespace FleetMgmg_Data.Repositories {
                 cmd.Parameters.AddWithValue("@rijbewijs", type.vereistRijbewijs.ToString());
 
                 try {
+                    conn.Open();
                     cmd.ExecuteNonQuery();
                     return type;
                 } catch (Exception ex) {
@@ -36,17 +37,23 @@ namespace FleetMgmg_Data.Repositories {
             TypeVoertuig typeVoertuigDB = null;
             SqlConnection conn = ConnectionClass.getConnection();
             using(SqlCommand cmd = conn.CreateCommand()) {
-                cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("@type", type);
-                cmd.Parameters.AddWithValue("@rijbewijs", rijbewijs.ToString());
+                try {
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@type", type);
+                    cmd.Parameters.AddWithValue("@rijbewijs", rijbewijs.ToString());
 
-                using(SqlDataReader reader = cmd.ExecuteReader()) {
-                    while (reader.Read()) {
-                        typeVoertuigDB = new TypeVoertuig((string) reader["TypeVoertuig"], (RijbewijsEnum) Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]));
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        while (reader.Read()) {
+                            typeVoertuigDB = new TypeVoertuig((string)reader["TypeVoertuig"], (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]));
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
-                }
-                return typeVoertuigDB;
+                    return typeVoertuigDB;
+                } catch (Exception ex) {
+                    throw new TypeVoertuigException("TypeVoertuigRepository : verkrijgTypeVoertuig", ex);
+                } finally { conn.Close(); }
+
             }
         }
 
@@ -78,6 +85,7 @@ namespace FleetMgmg_Data.Repositories {
                     if (query.ToString().Contains("@type")) cmd.Parameters.AddWithValue("@type", type);
                     if (query.ToString().Contains("@rijbewijs")) cmd.Parameters.AddWithValue("@rijbewijs", rijbewijs.Value.ToString());
 
+                    conn.Open();
                     using(SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
                             TypeVoertuig verkregenDB = null;
@@ -97,7 +105,7 @@ namespace FleetMgmg_Data.Repositories {
         //Verwijder voertuig afhankeljk van typevoertuig en typerijbewijs
         public void verwijderTypeVoertuig(TypeVoertuig type) {
             SqlConnection conn = ConnectionClass.getConnection();
-            string query = "DELETE FROM TypeVoertuig TypeVoertuig=@type AND Rijbewijs=@rijbewijs";
+            string query = "DELETE FROM TypeVoertuig WHERE TypeVoertuig=@type AND Rijbewijs=@rijbewijs";
             using(SqlCommand cmd = conn.CreateCommand()) {
                 conn.Open();
                 try {
@@ -108,7 +116,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.ExecuteNonQuery();
                 } catch (Exception ex) {
                     throw new TypeVoertuigException("TypeVoertuigRepository : verwijderTypeVoertuig",ex);
-                }
+                } finally { conn.Close(); }
             }
         }
 
@@ -126,7 +134,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.ExecuteNonQuery();
                 } catch (Exception ex) {
                     throw new TypeVoertuigException("TypeVoertuigRepository : voegTypeVoertuigToe", ex);
-                }
+                } finally { conn.Close(); }
             }
         }
     }

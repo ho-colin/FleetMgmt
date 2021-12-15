@@ -32,5 +32,9 @@ namespace FleetMgmt_Business.Objects {
             if (this.vereistRijbewijs == rijbewijs) throw new TypeVoertuigException("TypeVoertuig : updateRijbewijs - Rijbewijs mag niet hetzelfde zijn.");
             this.vereistRijbewijs = rijbewijs;
         }
+
+        public override string ToString() {
+            return $"[Type] {this.Type}, Rijbewijs: {this.vereistRijbewijs.ToString()}";
+        }
     }
 }

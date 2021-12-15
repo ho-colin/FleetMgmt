@@ -30,6 +30,8 @@ namespace FleetMgmt_WPF.TypeVoertuigWindows {
 
         public TypeVoertuigToevoegen() {
             InitializeComponent();
+
+            combobx_Rijbewijs.ItemsSource = Enum.GetNames(typeof(RijbewijsEnum));
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
@@ -40,11 +42,16 @@ namespace FleetMgmt_WPF.TypeVoertuigWindows {
         private void btn_VoegTypeToe_Click(object sender, RoutedEventArgs e) {
 
             string gevondenType = txtbx_TypeVoertuig.Text;
-            RijbewijsEnum gevondenRijbewijs = (RijbewijsEnum) combobx_Rijbewijs.SelectedItem;
+            RijbewijsEnum gevondenRijbewijs = (RijbewijsEnum) Enum.Parse(typeof(RijbewijsEnum), combobx_Rijbewijs.SelectedItem.ToString());
 
             try {
                 TypeVoertuig tv = new TypeVoertuig(gevondenType, gevondenRijbewijs);
                 tvm.voegTypeVoertuigToe(tv);
+                MessageBox.Show($"{tv.Type} met rijbewijs {tv.vereistRijbewijs.ToString()} toegevoegd!");
+
+                txtbx_TypeVoertuig.Text = "";
+                combobx_Rijbewijs.SelectedIndex = 0;
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
