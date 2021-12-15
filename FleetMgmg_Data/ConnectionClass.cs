@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace FleetMgmg_Data {
     public static class ConnectionClass {
 
-        public static string connectionString = @"Data Source=DESKTOP-P24EBNO\SQLEXPRESS;Initial Catalog=FleetMgmt;Integrated Security=True";
+        public static string connectionString = @"workstation id=fleetmgmt.mssql.somee.com;packet size=4096;user id=ddecaluwe_SQLLogin_1;pwd=q76z5jwcr9;data source=fleetmgmt.mssql.somee.com;persist security info=False;initial catalog=fleetmgmt";
+        //public static string connectionString = @"Data Source=DESKTOP-P24EBNO\SQLEXPRESS;Initial Catalog=FleetMgmt;Integrated Security=True";
 
         public static SqlConnection getConnection() {
             try {
