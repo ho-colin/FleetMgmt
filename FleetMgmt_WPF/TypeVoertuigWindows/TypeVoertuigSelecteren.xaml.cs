@@ -58,7 +58,7 @@ namespace FleetMgmt_WPF.TypeVoertuigWindows {
         }
 
         private void populateRijbewijzen() {
-            List<string> rijbewijzen = new List<string>(Enum.GetValues(typeof(RijbewijsEnum)).Cast<string>().ToList());
+            List<string> rijbewijzen = new List<string>(Enum.GetNames(typeof(RijbewijsEnum)));
             rijbewijzen.Insert(0, "<Geen Rijbewijs>");
             cmbobx_Rijbewijs.ItemsSource = rijbewijzen;
             cmbobx_Rijbewijs.SelectedIndex = 0;
