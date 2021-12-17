@@ -10,6 +10,7 @@ using FleetMgmt_Business.Validators;
 namespace FleetMgmt_Business.Objects {
     public class Bestuurder {
         public int Id { get; private set; }
+
         public string Rijksregisternummer { get; private set; }
 
         public string Naam { get; private set; }
