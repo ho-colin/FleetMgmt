@@ -7,6 +7,7 @@ using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Repos;
 using FleetMgmt_Business.Exceptions;
 using System.Collections;
+using System.Diagnostics;
 
 namespace FleetMgmt_Business.Managers {
     public class BestuurderManager : IBestuurderRepository {
@@ -19,13 +20,12 @@ namespace FleetMgmt_Business.Managers {
 
         public bool bestaatBestuurder(int id) {
             try {
-                if (!repo.bestaatBestuurder(id)) return false;
-                else
-                    return true;
+                return repo.bestaatBestuurder(id);
             }catch(Exception ex) {
                 throw new BestuurderManagerException("BestuurderManager: bestaatBestuurder -", ex);
             }
         }
+
 
         public void bewerkBestuurder(Bestuurder bestuurder) {
             try {
@@ -61,12 +61,14 @@ namespace FleetMgmt_Business.Managers {
             if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
             else
                 repo.verwijderBestuurder(id);
+            Console.Write("Id werd verwijderd!");
         }
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             try {
                 return repo.voegBestuurderToe(bestuurder);
+                Console.Write($"{bestuurder.Naam} is toegevoegd!");
             }catch(Exception ex) {
                 throw new BestuurderException("BestuurderManager: VoegBestuurderToe - gefaald", ex);
             }

@@ -16,14 +16,14 @@ namespace FleetMgmg_Data.Repositories {
 
         public bool bestaatBestuurder(int id) {
             SqlConnection conn = ConnectionClass.getConnection();
-            string query = "SELECT COUNT(*) FROM [Bestuurder] WHERE Id = @Id";
+            string query = "SELECT COUNT(*) FROM [Bestuurder] WHERE Rijksregisternummer = @Rijksregisternummer";
             using (SqlCommand cmd = conn.CreateCommand()) {
                 conn.Open();
                 try {
                     bool result = false;
                     cmd.CommandText = query;
-                    cmd.Parameters.Add(new SqlParameter("@Id", System.Data.SqlDbType.Int));
-                    cmd.Parameters["@Id"].Value = id;
+                    cmd.Parameters.Add(new SqlParameter("@Rijksregisternummer", System.Data.SqlDbType.Int));
+                    cmd.Parameters["@Rijksregisternummer"].Value = id;
 
                     Console.WriteLine();
                     result = (int)cmd.ExecuteScalar() == 1 ? true : false;
@@ -134,11 +134,11 @@ namespace FleetMgmg_Data.Repositories {
                         }
 
                         if (queryBuilder.ToString().Contains("@TankkaartId")) {
-                            cmd.Parameters.AddWithValue("@geboorteTankkaartIdDatum", bestuurder.Tankkaart.Equals(0) ? DBNull.Value : bestuurder.Tankkaart);
+                            cmd.Parameters.AddWithValue("@TankkaartId", bestuurder.Tankkaart.KaartNummer.Equals(0) ? DBNull.Value : bestuurder.Tankkaart.KaartNummer);
                         }
 
                         if (queryBuilder.ToString().Contains("@VoertuigChassisnummer")) {
-                            cmd.Parameters.AddWithValue("@VoertuigChassisnummer", bestuurder.Voertuig.Equals(0) ? DBNull.Value : bestuurder.Voertuig);
+                            cmd.Parameters.AddWithValue("@VoertuigChassisnummer", bestuurder.Voertuig.Chassisnummer.Equals(0) ? DBNull.Value : bestuurder.Voertuig.Chassisnummer);
                         }
 
                         cmd.Parameters.AddWithValue("@id", bestuurder.Id);
@@ -406,36 +406,103 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             SqlConnection conn = ConnectionClass.getConnection();
-            string query = "INSERT INTO Bestuurder(Naam, Achternaam, " +
-                "Geboortedatum, Rijksregisternummer) VALUES(@Naam, @Achternaam, @Geboortedatum, " +
-                "@Rijksregisternummer, " +
-                ")";
-            using(SqlCommand cmd = conn.CreateCommand()) {
-                try {
-                    conn.Open();
-                    cmd.Parameters.Add(new SqlParameter("@Naam", System.Data.SqlDbType.NVarChar));
-                    cmd.Parameters.Add(new SqlParameter("@Achternaam", System.Data.SqlDbType.NVarChar));
-                    cmd.Parameters.Add(new SqlParameter("@Geboortedatum", System.Data.SqlDbType.Date));
-                    cmd.Parameters.Add(new SqlParameter("@Rijksregisternummer", System.Data.SqlDbType.NVarChar));
-                    cmd.CommandText = query;
-                    cmd.Parameters["@Naam"].Value = bestuurder.Voornaam;
-                    cmd.Parameters["@Achternaam"].Value = bestuurder.Naam;
-                    cmd.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
-                    cmd.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
-                    return new Bestuurder(bestuurder.Rijksregisternummer, bestuurder.Naam, bestuurder.Voornaam, bestuurder.GeboorteDatum);
+            string queryOne = "INSERT INTO Bestuurder(Naam, Achternaam, " +
+                "Geboortedatum, Rijksregisternummer";
+            string queryTwo="INSERT INTO BestuurderRijbewijs(Bestuurder, Categorie, Behaald) VALUES(@Bestuurder," +
+                "@Categorie, @Behaald";
+            string queryThree = "UPDATE TANKAART SET TankkaartId=@id WHERE id=@BestuurderId";
+                //Bestuurder tabel
+                if (!string.IsNullOrWhiteSpace(bestuurder.Rijksregisternummer)) {
+                    queryOne += ", Rijksregisternummer ";
+                }
 
-                }catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: voegBestuurderToe - Geen bestuurder werd toegevoegd!", ex);
+                if (!string.IsNullOrWhiteSpace(bestuurder.Voornaam)) {
+                    queryOne += ", Naam ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(bestuurder.Naam)) {
+                    queryOne += ", Achternaam ";
+                }
+
+                if(bestuurder.GeboorteDatum.GetHashCode() != 0) {
+                    queryOne += ", Geboortedatum ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(bestuurder.Tankkaart.KaartNummer.ToString())) {
+                    queryOne += ", TankkaartId ";
+                }
+                if (!string.IsNullOrWhiteSpace(bestuurder.Voertuig.Chassisnummer.ToString())) {
+                    queryOne += ", Chassisnummer ";
+                }
+                queryOne += ")  VALUES(@Naam, @Achternaam, @Geboortedatum, @Rijksregisternummer";
+                if (!string.IsNullOrWhiteSpace(bestuurder.Rijksregisternummer)) {
+                    queryOne += ",@Rijksregisternummer ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(bestuurder.Voornaam)) {
+                    queryOne += ",@Naam ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(bestuurder.Naam)) {
+                    queryOne += ",@Achternaam ";
+                }
+
+                if (bestuurder.GeboorteDatum.GetHashCode() != 0) {
+                    queryOne += ",@Geboortedatum ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(bestuurder.Tankkaart.KaartNummer.ToString())) {
+                    queryOne += ",@TankkaartId ";
+                }
+                if (!string.IsNullOrWhiteSpace(bestuurder.Voertuig.Chassisnummer.ToString())) {
+                    queryOne += ",@Chassisnummer ";
+                }
+                queryOne += ")";
+                using(SqlCommand cmdOne = conn.CreateCommand())
+                using (SqlCommand cmdTwo = conn.CreateCommand())
+                using(SqlCommand cmdThree = conn.CreateCommand()) {
+                    conn.Open();
+                    SqlTransaction trans = conn.BeginTransaction();
+                try {
+                    cmdOne.Transaction = trans;
+                    cmdOne.Parameters.Add(new SqlParameter("@Rijksregisternummer", SqlDbType.NVarChar));
+                    cmdOne.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
+                    cmdOne.Parameters.Add(new SqlParameter("@Naam", SqlDbType.NVarChar));
+                    cmdOne.Parameters["@Naam"].Value = bestuurder.Voornaam;
+                    cmdOne.Parameters.Add(new SqlParameter("@Achternaam", SqlDbType.NVarChar));
+                    cmdOne.Parameters["@Achternaam"].Value = bestuurder.Naam;
+                    cmdOne.Parameters.Add(new SqlParameter("@Geboortedatum", SqlDbType.Date));
+                    cmdOne.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
+                    if (queryOne.Contains("@TankkaartId")) {
+                        cmdOne.Parameters.Add(new SqlParameter("@TankkaartId", SqlDbType.Int));
+                        cmdOne.Parameters["@TankkaartId"].Value = bestuurder.Tankkaart.KaartNummer;
+                    }
+                    cmdOne.CommandText = queryOne;
+                    cmdOne.ExecuteNonQuery();
+                    if(bestuurder.Tankkaart != null) {
+                        cmdThree.Transaction = trans;
+                        cmdThree.CommandText = queryThree;
+                        cmdThree.Parameters.Add(new SqlParameter("@TankkaartId", SqlDbType.Int));
+                        cmdThree.Parameters["@TankkaartId"].Value = bestuurder.Tankkaart.KaartNummer;
+                        cmdThree.Parameters.Add(new SqlParameter("@Rijksregisternummer", SqlDbType.NVarChar));
+                        cmdThree.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
+                        cmdThree.ExecuteNonQuery();
+                    }
+                    trans.Commit();
+                    return bestuurder;
+                }
+                catch (Exception ex) {
+                    trans.Rollback();
                 }
                 finally {
                     conn.Close();
+                }
+
                 }
             }
 
         }
     }
-}
 #endregion
