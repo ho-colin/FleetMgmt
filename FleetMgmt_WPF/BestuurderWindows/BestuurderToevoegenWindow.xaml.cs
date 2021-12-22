@@ -88,6 +88,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (rijksregisternummer == null) 
                     MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
                 //Rijbewijs kan nog niet toegevoegd worden
+                //Lijst van categoriën met de datum die er bij hoort.
                 RijksregisterValidator.isGeldig(rijksregisternummer, tijd);
                 Bestuurder bestuurder = new Bestuurder(rijksregisternummer, Voornaam, Achternaam, tijd);
                 Bestuurder b2 = bm.voegBestuurderToe(bestuurder);

@@ -50,13 +50,14 @@ namespace FleetMgmt_WPF {
 
         private void btn_BestuurderZoeken_Click(object sender, RoutedEventArgs e) {
             try {
-                string rijks = txtbx_Rijksregisternummer.Text;
-                string voornaam = txtbx_Voornaam.Text;
+                string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_Rijksregisternummer.Text) ? null : txtbx_Rijksregisternummer.Text;
+                string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
+                string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
                 string achternaam = txtbx_Achternaam.Text;
                 DateTime? geboortedatum = 
                     Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? 
                     dtpckr_Geboortedatum.SelectedDate.Value : null);
-                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, achternaam, voornaam, geboortedatum).ToList());
+                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(gevondenRijks, gevondenNaam, gevondenAchternaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
             catch (Exception ex) {
