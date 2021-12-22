@@ -87,6 +87,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
                 if (rijksregisternummer == null) 
                     MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
+
                 //Rijbewijs kan nog niet toegevoegd worden
                 //Lijst van categoriën met de datum die er bij hoort.
                 RijksregisterValidator.isGeldig(rijksregisternummer, tijd);

@@ -163,16 +163,17 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public Bestuurder selecteerBestuurder(string rijks) {
-            string query = "SELECT b.*,tb.Brandstof,tk.Pincode, tk.GeldigDatun, tk.Geblokkeerd, tk.Bestuurder ,br.Id BehaaldId, " +
-                "br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof, " +
-                "v.TypeVoertuig,v.Kleur,v.AantalDeuren," +
-                "tv.Rijbewijs FROM bestuurder b " +
-                "LEFT JOIN TankkaartBrandstof tb ON b.Id=tb.TankkaartId " +
-                "LEFT JOIN Tankkaart b ON b.TankkaartId=t.BestuurderId " +
-                "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer=br.Bestuurder " +
-                "LEFT JOIN Voertuig v ON b.VoertuigChassisnummer=v.Chassisnummer " +
-                "LEFT JOIN TypeVoertuig tv ON v.TypeVoertuig=tv.TypeVoertuig " +
-                "WHERE t.Id=@id";
+            string query = "SELECT b.*, tb.Brandstof, tk.Id, tk.Pincode, "+
+                "tk.GeldigDatum, tk.Geblokkeerd, tk.Bestuurder, br.Id BehaaldId, "+
+                "br.Categorie, br.Behaald, v.Merk, v.Model, v.Nummerplaat, v.Brandstof "+
+                "voertuigBrandstof, v.TypeVoertuig, v.Kleur, v.AantalDeuren, "+
+                "tv.Rijbewijs FROM bestuurder b "+
+                "LEFT JOIN TankkaartBrandstof tb ON b.TankkaartId = tb.TankkaartId "+
+                "LEFT JOIN Tankkaart tk ON b.TankkaartId = tk.Bestuurder "+
+                "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer = br.Bestuurder "+
+                "LEFT JOIN Voertuig v ON b.VoertuigChassisnummer = v.Chassisnummer "+
+                "LEFT JOIN TypeVoertuig tv ON v.TypeVoertuig = tv.TypeVoertuig "+
+                "WHERE b.Rijksregisternummer = @Rijksregisternummer";
             Bestuurder b = null;
             Tankkaart t = null;
             List<TankkaartBrandstof> tankkaartBrandstof = null;
@@ -182,7 +183,7 @@ namespace FleetMgmg_Data.Repositories {
             SqlConnection conn = ConnectionClass.getConnection();
             using(SqlCommand cmd = conn.CreateCommand()) {
                 cmd.CommandText = query;
-                cmd.Parameters.AddWithValue("@Bestuurder", rijks);
+                cmd.Parameters.AddWithValue("@Rijksregisternummer", rijks);
 
                 conn.Open();
                 try {
@@ -194,7 +195,7 @@ namespace FleetMgmg_Data.Repositories {
                             }
 
                             if(t == null  && !reader.IsDBNull(reader.GetOrdinal("Tankkaart"))) {
-                                t = new Tankkaart((int)reader["Kaartnummer"], (DateTime)reader["geldidheidsdatum"],
+                                t = new Tankkaart((int)reader["Kaartnummer"], (DateTime)reader["Geldigdatum"],
                                     (string)reader["pincode"], (Bestuurder)reader["Bestuurder"], 
                                     (List<TankkaartBrandstof>)reader["brandstoffen"], 
                                     (bool)reader["geblokkeerd"]);
@@ -233,14 +234,10 @@ namespace FleetMgmg_Data.Repositories {
                                 }
                             }
                         }
-
                         reader.Close();
-
                         t.updateInBezitVan(b);
                         b.updateTankkaart(t);
                         b.updateVoertuig(v);
-
-
                         if (b != null && r != null) { b.rijbewijzen = r; }
                         if (b != null) v.updateBestuurder(b);
 
