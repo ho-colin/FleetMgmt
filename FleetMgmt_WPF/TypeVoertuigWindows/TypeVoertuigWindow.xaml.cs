@@ -2,6 +2,7 @@
 using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
+using FleetMgmt_WPF.TankkaartWindows;
 using FleetMgmt_WPF.TypeVoertuigWindows;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,12 @@ namespace FleetMgmt_WPF {
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
+        }
+
+        private void btn_TankkaartNavigatie_Click(object sender, RoutedEventArgs e) {
+            TankkaartWindow tw = new TankkaartWindow();
+            tw.Show();
+            this.Close();
         }
     }
 }
