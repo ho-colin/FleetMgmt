@@ -72,6 +72,8 @@ namespace FleetMgmt_Business.Managers {
                             repo.bewerkVoertuig_BestuurderVerwijderen(voertuig);
                         } else if (voertuigDB.Bestuurder != null && voertuig.Bestuurder != null) {
                             repo.bewerkVoertuig_BestuurderWisselen(voertuig);
+                        } else if (voertuigDB.Bestuurder == null && voertuig.Bestuurder == null) {
+                            repo.bewerkVoertuig_GeenBestuurder(voertuig);
                         }
                     }
                 }

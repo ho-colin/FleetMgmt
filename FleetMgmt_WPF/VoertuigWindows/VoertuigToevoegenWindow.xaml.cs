@@ -68,6 +68,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                     txtbx_Merk.Text, txtbx_Model.Text, typeVoertuig, txtbx_Nummerplaat.Text);
                 Voertuig voertuigNew = vm.voegVoertuigToe(voertuig);
                 voertuigen.Add(voertuigNew);
+                lstVw_Voertuigen.ItemsSource = voertuigen;
             } catch (Exception ex) {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);

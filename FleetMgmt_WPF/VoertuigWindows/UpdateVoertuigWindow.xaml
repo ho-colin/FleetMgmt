@@ -163,7 +163,7 @@
 
                 <!-- Huidige Waarden -->
                 <TextBox x:Name="txtbx_HuidigChassisnummer" Grid.Row="0" Grid.Column="4" 
-                         Margin="5" Background="LightGray" IsEnabled="False"/>
+                         Margin="5" Background="LightGray"  IsEnabled="False"/>
                 <TextBox x:Name="txtbx_HuidigMerk" Grid.Row="1" Grid.Column="4" 
                          Margin="5" Background="LightGray" IsEnabled="False"/>
                 <TextBox x:Name="txtbx_HuidigModel" Grid.Row="2" Grid.Column="4" 

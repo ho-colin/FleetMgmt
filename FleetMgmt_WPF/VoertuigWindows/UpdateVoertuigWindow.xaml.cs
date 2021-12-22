@@ -30,6 +30,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         public UpdateVoertuigWindow(Voertuig v) {
             this.Voertuig = v;
             if(this.Bestuurder != null) { this.Bestuurder = Voertuig.Bestuurder; }
+            this.TypeVoertuig = v.TypeVoertuig;
             InitializeComponent();
             resetVelden();
         }
@@ -79,7 +80,10 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 txtbx_HuidigTypeVoertuig.Text = Voertuig.TypeVoertuig.ToString();
                 txtbx_HuidigKleur.Text = Voertuig.Kleur;
                 txtbx_HuidigAantalDeuren.Text = Voertuig.AantalDeuren.ToString();
-                txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Naam;
+                if (this.Bestuurder != null)
+                    txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Naam;
+                else
+                    txtbx_HuidigBestuurder.Text = "Geen Bestuurder";
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
