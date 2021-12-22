@@ -9,7 +9,6 @@ using FleetMgmt_Business.Validators;
 
 namespace FleetMgmt_Business.Objects {
     public class Bestuurder {
-        public int Id { get; private set; }
 
         public string Rijksregisternummer { get; private set; }
 
@@ -25,10 +24,6 @@ namespace FleetMgmt_Business.Objects {
 
         public List<Rijbewijs> rijbewijzen = new List<Rijbewijs>();
 
-        public Bestuurder(int id, string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) : this(rijksregisternummer, naam, voornaam, geboortedatum, rijbewijzen) {
-            zetId(id);
-        }
-
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) :this(rijksregisternummer,naam,voornaam,geboortedatum) {
             this.rijbewijzen = rijbewijzen;
         }
@@ -38,11 +33,6 @@ namespace FleetMgmt_Business.Objects {
             zetNaam(naam);
             zetVoornaam(voornaam);
             zetGeboorteDatum(geboortedatum);
-        }
-
-        private void zetId(int id) {
-            if (id <= 0) throw new BestuurderException("Bestuurder - zetId - Id is kleiner of gelijk aan 0");
-            this.Id = id;
         }
 
         private void zetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {

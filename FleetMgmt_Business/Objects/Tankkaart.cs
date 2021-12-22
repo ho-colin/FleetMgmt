@@ -21,7 +21,8 @@ namespace FleetMgmt_Business.Objects {
 
         public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
-        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen, bool geblokkeerd) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen, geblokkeerd) {
+        public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen, 
+            bool geblokkeerd) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen, geblokkeerd) {
             zetKaartnummer(kaartnummer);
         }
 

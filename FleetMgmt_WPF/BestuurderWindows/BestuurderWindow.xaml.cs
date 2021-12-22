@@ -53,7 +53,9 @@ namespace FleetMgmt_WPF {
                 string rijks = txtbx_Rijksregisternummer.Text;
                 string voornaam = txtbx_Voornaam.Text;
                 string achternaam = txtbx_Achternaam.Text;
-                DateTime? geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.Value);
+                DateTime? geboortedatum = 
+                    Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? 
+                    dtpckr_Geboortedatum.SelectedDate.Value : null);
                 bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks, achternaam, voornaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
@@ -128,7 +130,7 @@ namespace FleetMgmt_WPF {
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
                 Bestuurder bs = (Bestuurder)lstVw_Bestuurders.SelectedItem;
-                bm.verwijderBestuurder(bs.Id);
+                bm.verwijderBestuurder(bs.Rijksregisternummer);
                 btn_BestuurderZoeken_Click(sender, e);
             }
             catch (Exception ex) {
