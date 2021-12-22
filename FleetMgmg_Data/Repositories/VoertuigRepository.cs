@@ -79,7 +79,7 @@ namespace FleetMgmg_Data.Repositories {
                 #region optioneleParametersValues
                 if (query.ToString().Contains("@kleur")) cmd.Parameters.AddWithValue("@kleur", voertuig.Kleur);
                 if (query.ToString().Contains("@aantaldeuren")) cmd.Parameters.AddWithValue("@aantaldeuren", voertuig.AantalDeuren);
-                if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", voertuig.Bestuurder.Id);
+                if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", voertuig.Bestuurder.Rijksregisternummer);
                 #endregion
 
                 conn.Open();
@@ -176,14 +176,16 @@ namespace FleetMgmg_Data.Repositories {
         public IEnumerable<Voertuig> toonVoertuigen(string merk, string model, string typeVoertuig, string brandstof,
             string kleur, int? aantalDeuren, string bestuurderId) {
             List<Voertuig> voertuigen = new List<Voertuig>();
+            Bestuurder br = null;
             SqlConnection connection = getConnection();
-            string query = "SELECT v.Chassisnummer, v.Merk, v.model, v.TypeVoertuig, v.Brandstof, v.Kleur, v.AantalDeuren, v.BestuurderId " +
-                "b.Naam, b.Voornaam, b.Adres, b.Geboortedatum, b.Rijksregisternummer, " +
-                "t.Id, t.Pincode, t.GeldigheidDatum, t.Geblokkkeerd , tb.TankkaartBrandstof" +
+            string query = "SELECT v.Chassisnummer, v.Merk, v.Model, v.TypeVoertuig, v.Brandstof, v.Kleur, v.AantalDeuren, v.Nummerplaat, v.Bestuurder," +
+                "b.Naam, b.Achternaam, b.Geboortedatum, b.Rijksregisternummer, " +
+                "t.Id, t.Pincode, t.GeldigDatum, t.Geblokkeerd , tb.Brandstof, tb.TankkaartId, tv.Rijbewijs " +
                 "FROM Voertuig v " +
-                "LEFT JOIN Bestuurder b ON v.BestuurderId = b.Id " +
+                "LEFT JOIN Bestuurder b ON v.Bestuurder = b.Rijksregisternummer " +
                 "LEFT JOIN Tankkaart t ON b.TankkaartId = t.Id " +
-                "LEFT JOIN TankkaartBrandstof tb ON t.Id = tb.TankkaartId";
+                "LEFT JOIN TankkaartBrandstof tb ON t.Id = tb.TankkaartId " +
+                "LEFT JOIN TypeVoertuig tv ON tv.TypeVoertuig = v.TypeVoertuig ";
             bool AND = false;
             bool WHERE = false;
             if (!string.IsNullOrWhiteSpace(merk)) {
@@ -219,7 +221,7 @@ namespace FleetMgmg_Data.Repositories {
             if (!string.IsNullOrWhiteSpace(bestuurderId)) {
                 if (!WHERE) query += "WHERE "; WHERE = true;
                 if (AND) query += " AND "; else AND = true;
-                query += " v.BestuurderId=@bestuurderId";
+                query += " v.Bestuurder=@bestuurder";
             }
 
             using (SqlCommand command = connection.CreateCommand()) {
@@ -248,8 +250,8 @@ namespace FleetMgmg_Data.Repositories {
                     command.Parameters["@aantalDeuren"].Value = aantalDeuren;
                 }
                 if(bestuurderId != null) {
-                    command.Parameters.Add(new SqlParameter("@bestuurderId", SqlDbType.Int));
-                    command.Parameters["@bestuurderId"].Value = bestuurderId;
+                    command.Parameters.Add(new SqlParameter("@bestuurder", SqlDbType.Int));
+                    command.Parameters["@bestuurder"].Value = bestuurderId;
                 }
                 command.CommandText = query;
 
@@ -258,12 +260,14 @@ namespace FleetMgmg_Data.Repositories {
                     SqlDataReader reader = command.ExecuteReader();
                     List<TankkaartBrandstof> brandstoffen = null;
                     while (reader.Read()) {
+                        //Voertuigen
                         string chassisnummerDB = (string)reader["Chassisnummer"];
                         string merkDB = (string)reader["Merk"];
                         string modelDB = (string)reader["Model"];
                         string nummerplaatDB = (string)reader["Nummerplaat"];
                         string brandstofDB = (string)reader["Brandstof"];
                         string typeVoertuigDB = (string)reader["TypeVoertuig"];
+                        string rijbewijsDB = (string)reader["Rijbewijs"];
                         string kleurDB = null;
                         if (!reader.IsDBNull(reader.GetOrdinal("Kleur"))) {
                             kleurDB = (string)reader["Kleur"];
@@ -273,39 +277,46 @@ namespace FleetMgmg_Data.Repositories {
                             aantalDeurenDB = (int)reader["AantalDeuren"];
                         }
                         int bestuurderIdDB = 0;
-                        if (!reader.IsDBNull(reader.GetOrdinal("BestuurderId"))) {
-                            bestuurderIdDB = (int)reader["BestuurderId"];
+                        if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
+                            bestuurderIdDB = (int)reader["Bestuurder"];
                         }
-                        string rijksregisternummerDB = (string)reader["Rijksregisternummer"];
-                        string naamDB = (string)reader["Naam"];
-                        string achternaamDB = (string)reader["Achternaam"];
-                        string adresDB = null;
-                        if (!reader.IsDBNull(reader.GetOrdinal("Adres"))) {
-                            adresDB = (string)reader["Adres"];
-                        }
-                        DateTime geboortedatumDB = (DateTime)reader["Geboortedatum"];
+                        TypeVoertuig tv = new TypeVoertuig(typeVoertuigDB, ((RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), rijbewijsDB)));
 
-                        int kaartnummerDB = ((int)reader["Id"]);
-                        DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
-                        string pincodeDB = null;
-                        if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) {
-                            pincodeDB = (string)reader["Pincode"];
-                        }
-                        string tankkaartBrandstofDB = null;
-                        if (!reader.IsDBNull(reader.GetOrdinal("TankkaartBrandstof"))) {
-                            tankkaartBrandstofDB = (string)reader["TankkaartBrandstof"];
-                        }
-                        bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
+                        Voertuig voertuig = new Voertuig((BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), brandstofDB), 
+                            chassisnummerDB, kleurDB, aantalDeurenDB,
+                        merkDB, modelDB, tv, nummerplaatDB, br);
 
-                        Bestuurder bestuurder = new Bestuurder(rijksregisternummerDB, naamDB, achternaamDB, geboortedatumDB);
-                        Tankkaart tankkaart = new Tankkaart(kaartnummerDB, geldigDatumDB, pincodeDB, bestuurder, brandstoffen, geblokkeerdDB);
-                        TankkaartBrandstof ingelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), tankkaartBrandstofDB);
-                        if (!brandstoffen.Contains(ingelezenData)) {
-                            brandstoffen.Add(ingelezenData);
+                        //Bestuurder
+                        if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
+                            br = new((string)reader["Rijksregisternummer"], 
+                                (string)reader["Naam"], 
+                                (string)reader["Achternaam"],
+                                (DateTime)reader["Geboortedatum"]);
                         }
-                        Voertuig voertuig = new Voertuig((BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), brandstofDB), chassisnummerDB, kleurDB, aantalDeurenDB,
-                            merkDB, modelDB, (TypeVoertuig)Enum.Parse(typeof(TypeVoertuig), typeVoertuigDB), nummerplaatDB, bestuurder);
+
+                        //Tankkaart
+                        if (!reader.IsDBNull(reader.GetOrdinal("TankkaartId"))) {
+                            string pincode = null;
+                            if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) {
+                                pincode = (string)reader["Pincode"];
+                            }
+                            int kaartnummerDB = ((int)reader["Id"]);
+                            DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
+                            string tankkaartBrandstofDB = null;
+                            if (!reader.IsDBNull(reader.GetOrdinal("TankkaartBrandstof"))) {
+                                tankkaartBrandstofDB = (string)reader["TankkaartBrandstof"];
+                            }
+                            bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
+
+                            Tankkaart tk = new(kaartnummerDB, geldigDatumDB, pincode, br, brandstoffen, geblokkeerdDB);
+                            TankkaartBrandstof ingelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), tankkaartBrandstofDB);
+                            if (!brandstoffen.Contains(ingelezenData)) {
+                                brandstoffen.Add(ingelezenData);
+                            }
+                            br.updateTankkaart(tk);
+                        }
                         voertuigen.Add(voertuig);
+
                     }
                     reader.Close();
 
@@ -349,10 +360,10 @@ namespace FleetMgmg_Data.Repositories {
                     } else {
                         commandV.Parameters.AddWithValue("@Kleur", voertuig.Kleur);
                     }
-                    commandV.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Id);
+                    commandV.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Rijksregisternummer);
                     commandV.CommandText = queryV;
                     //waardes voor bestuurdertabel                     
-                    commandB.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Id);
+                    commandB.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Rijksregisternummer);
                     commandB.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
                     commandB.CommandText = queryB;
                     commandV.ExecuteNonQuery();
@@ -447,14 +458,14 @@ namespace FleetMgmg_Data.Repositories {
                     } else {
                         commandV.Parameters.AddWithValue("@Kleur", voertuig.Kleur);
                     }
-                    commandV.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Id);
+                    commandV.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Rijksregisternummer);
                     commandV.CommandText = queryV;
                     //waardes voor bestuurdertabel chassinummer verwijderen bij vorige bestuurder
                     commandBV.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
                     commandBV.Parameters.AddWithValue("@LegeChassisnummer", DBNull.Value);
                     commandBV.CommandText = queryBV;
                     //waardes voor bestuurdertabel chassisnummer plaatsen bij nieuwe bestuurder                     
-                    commandBN.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Id);
+                    commandBN.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Rijksregisternummer);
                     commandBN.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
                     commandBN.CommandText = queryBN;
                     commandV.ExecuteNonQuery();
@@ -492,7 +503,7 @@ namespace FleetMgmg_Data.Repositories {
         public Voertuig voegVoertuigToe(Voertuig voertuig) {
             SqlConnection connection = getConnection();
             string query = "INSERT INTO Voertuig(Chassisnummer, Merk, Model, Nummerplaat, Brandstof, TypeVoertuig";
-            string queryB = "UPDATE Bestuurder SET VoertuigChassisnummer=@Chassisnummer WHERE Id=@BestuurderId"; ;
+            string queryB = "UPDATE Bestuurder SET VoertuigChassisnummer=@Chassisnummer WHERE Rijksregisternummer=@BestuurderId"; ;
             //Kleur, AantalDeuren, BestuurderId is optioneel
             if (!string.IsNullOrWhiteSpace(voertuig.Kleur)) {
                 query += ", Kleur ";
@@ -500,7 +511,7 @@ namespace FleetMgmg_Data.Repositories {
             if (!string.IsNullOrWhiteSpace(voertuig.AantalDeuren.ToString())) {
                 query += ", AantalDeuren";
             }
-            if (!string.IsNullOrWhiteSpace(voertuig.Bestuurder.Id.ToString())) {
+            if (!string.IsNullOrWhiteSpace(voertuig.Bestuurder.Rijksregisternummer.ToString())) {
                 query += ", BestuurderId";
             }
             query += ") VALUES (@Chassisnummer, @Merk, @Model, @Nummerplaat, @Brandstof, @TypeVoertuig";
@@ -510,7 +521,7 @@ namespace FleetMgmg_Data.Repositories {
             if (!string.IsNullOrWhiteSpace(voertuig.AantalDeuren.ToString())) {
                 query += ",@AantalDeuren";
             }
-            if (!string.IsNullOrWhiteSpace(voertuig.Bestuurder.Id.ToString())) {
+            if (!string.IsNullOrWhiteSpace(voertuig.Bestuurder.Rijksregisternummer.ToString())) {
                 query += ",@BestuurderId";
             }
             query += ")";
@@ -542,7 +553,7 @@ namespace FleetMgmg_Data.Repositories {
                     }
                     if (query.Contains("@BestuurderId")) {
                         command.Parameters.Add(new SqlParameter("@BestuurderId", SqlDbType.Int));
-                        command.Parameters["@BestuurderId"].Value = voertuig.Bestuurder.Id;
+                        command.Parameters["@BestuurderId"].Value = voertuig.Bestuurder.Rijksregisternummer;
                     }
                     command.CommandText = query;
                     command.ExecuteNonQuery();
@@ -551,7 +562,7 @@ namespace FleetMgmg_Data.Repositories {
                         commandB.Transaction = transaction;
                         commandB.CommandText = queryB;
                         commandB.Parameters.Add(new SqlParameter("@BestuurderId", SqlDbType.Int));
-                        commandB.Parameters["@BestuurderId"].Value = voertuig.Bestuurder.Id;
+                        commandB.Parameters["@BestuurderId"].Value = voertuig.Bestuurder.Rijksregisternummer;
                         commandB.Parameters.Add(new SqlParameter("@Chassisnummer", SqlDbType.NVarChar));
                         commandB.Parameters["@Chassisnummer"].Value = voertuig.Chassisnummer;
                         commandB.ExecuteNonQuery();

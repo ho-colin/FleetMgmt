@@ -18,9 +18,9 @@ namespace FleetMgmt_Business.Managers {
             this.repo = repo;
         }
 
-        public bool bestaatBestuurder(int id) {
+        public bool bestaatBestuurder(string rijks) {
             try {
-                return repo.bestaatBestuurder(id);
+                return repo.bestaatBestuurder(rijks);
             }catch(Exception ex) {
                 throw new BestuurderManagerException("BestuurderManager: bestaatBestuurder -", ex);
             }
@@ -29,7 +29,7 @@ namespace FleetMgmt_Business.Managers {
 
         public void bewerkBestuurder(Bestuurder bestuurder) {
             try {
-                if (!repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: bewerkBestuurder - Bestuurder bestaat niet");
+                if (!repo.bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderException("BestuurderManager: bewerkBestuurder - Bestuurder bestaat niet");
                 else
                     repo.bewerkBestuurder(bestuurder);
             }catch(Exception ex) {
@@ -47,25 +47,25 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public Bestuurder selecteerBestuurder(int id) {
+        public Bestuurder selecteerBestuurder(string rijks) {
             try {
-                if (id <= 0) throw new BestuurderException("selecteerBestuurder: selecteerBestuurder - id is 0");
-                if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: selecteerBestuurder - bestuurder bestaat niet!");
-                return repo.selecteerBestuurder(id);
+                if (string.IsNullOrWhiteSpace(rijks)) throw new BestuurderException("selecteerBestuurder: selecteerBestuurder - id is 0");
+                if (!repo.bestaatBestuurder(rijks)) throw new BestuurderException("BestuurderManager: selecteerBestuurder - bestuurder bestaat niet!");
+                return repo.selecteerBestuurder(rijks);
             }catch(Exception ex) {
                 throw new BestuurderManagerException("BestuurderManager: SelecteerBestuurder - gefaald", ex);
             }
         }
 
-        public void verwijderBestuurder(int id) {
-            if (!repo.bestaatBestuurder(id)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
+        public void verwijderBestuurder(string rijks) {
+            if (!repo.bestaatBestuurder(rijks)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
             else
-                repo.verwijderBestuurder(id);
+                repo.verwijderBestuurder(rijks);
             Console.Write("Id werd verwijderd!");
         }
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
-            if (repo.bestaatBestuurder(bestuurder.Id)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
+            if (repo.bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             try {
                 return repo.voegBestuurderToe(bestuurder);
                 Console.Write($"{bestuurder.Naam} is toegevoegd!");

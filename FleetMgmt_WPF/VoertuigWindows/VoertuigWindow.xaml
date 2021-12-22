@@ -121,18 +121,23 @@
         <TextBox x:Name="txtbx_Kleur" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,105,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <TextBox x:Name="txtbx_AantalDeuren" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,128,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <ComboBox x:Name="combobx_Brandstof" Style="{StaticResource ComboStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="358,77,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.498,-0.507"/>
-        <DataGrid x:Name="dtgd_Voertuigen" HeadersVisibility="None" GridLinesVisibility="None" SelectionMode="Single" SelectionUnit="Cell" IsReadOnly="true"
-      RowStyle="{StaticResource rowStyle}" CellStyle="{StaticResource cellStyle}" 
-      Background="White" BorderThickness="5" Foreground="White" Grid.Column="1" Margin="10,207,10,21">
-            <DataGrid.ContextMenu>
+        
+        <ListView x:Name="dtgd_Voertuigen"
+       Background="White" BorderThickness="5" Foreground="Black" Grid.Column="1"
+                  Margin="10,207,10,21">
+            <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="btn_Update" Header="Update" Click="btn_Update_Click"/>
                     <MenuItem x:Name="btn_Delete" Header="Delete" Click="btn_Delete_Click"/>
                 </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
-        <Label x:Name="lbl_BestuurderNaam" Foreground="White" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="358,174,0,0" VerticalAlignment="Top" Height="15" Width="140"/>
-        <Label x:Name="lbl_GeselecteerdTypeVoertuig" Foreground="White" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="278,174,0,0" VerticalAlignment="Top" Height="15" Width="70"/>
+            </ListView.ContextMenu>
+        </ListView>
+        <Label x:Name="lbl_BestuurderNaam" Foreground="White" Content="" Grid.Column="1" 
+               HorizontalAlignment="Left" Margin="358,174,0,0" VerticalAlignment="Top" 
+               Height="15" Width="140"/>
+        <Label x:Name="lbl_GeselecteerdTypeVoertuig" Foreground="White" Content=""
+               Grid.Column="1" HorizontalAlignment="Left" Margin="278,174,0,0" 
+               VerticalAlignment="Top" Height="15" Width="70"/>
 
 
     </Grid>

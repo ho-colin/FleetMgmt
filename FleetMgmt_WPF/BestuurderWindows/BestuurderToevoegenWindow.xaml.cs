@@ -77,7 +77,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void btn_BestuurderToevoegen_Click(object sender, RoutedEventArgs e) {
- 
             try {
                 string Voornaam = txtbx_Voornaam.Text;
                 string Achternaam = txtbx_AchterNaam.Text;
@@ -86,7 +85,9 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (Voornaam == null) { MessageBox.Show("Gelieve een voornaam in te vullen!", "ERROR", MessageBoxButton.OK); }
                 if (Achternaam == null) { MessageBox.Show("Gelieve een achternaam in te vullen!", "ERROR", MessageBoxButton.OK); }
                 if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
-                if (rijksregisternummer == null) MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
+                if (rijksregisternummer == null) 
+                    MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
+                //Rijbewijs kan nog niet toegevoegd worden
                 RijksregisterValidator.isGeldig(rijksregisternummer, tijd);
                 Bestuurder bestuurder = new Bestuurder(rijksregisternummer, Voornaam, Achternaam, tijd);
                 Bestuurder b2 = bm.voegBestuurderToe(bestuurder);
@@ -98,10 +99,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             }
         }
 
-        private void txtbx_Rijksregisiternummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
-        }
-
 
         private void txtbx_Voornaam_TextChanged(object sender, TextChangedEventArgs e) {
             startVoorNaamMetHoofdletter();
@@ -110,18 +107,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void txtbx_AchterNaam_TextChanged(object sender, TextChangedEventArgs e) {
             startAchterNaamMetHoofdletter();
-        }
-
-        private void txtbx_AchterNaam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
-        }
-
-        private void txtbx_Voornaam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
         }
 
         public static bool isIdValid(string s) {
