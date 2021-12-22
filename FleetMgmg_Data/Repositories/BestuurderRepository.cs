@@ -499,7 +499,7 @@ namespace FleetMgmg_Data.Repositories {
                 finally {
                     conn.Close();
                 }
-
+                return null;
                 }
             }
 
