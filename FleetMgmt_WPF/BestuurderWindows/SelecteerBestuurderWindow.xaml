@@ -177,9 +177,9 @@
 
 
         <!--Listview-->
-        <ListView Foreground="Black" BorderBrush="White" BorderThickness="5" 
+        <ListView Foreground="Black" Background="White" BorderBrush="White" BorderThickness="5" 
         x:Name="lstVw_Bestuurders" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4"
-        Margin="5,75,5,0" IsEnabled="False" Grid.RowSpan="3"/>
+        Margin="5,75,5,0" IsEnabled="True" Grid.RowSpan="3"/>
 
 
     </Grid>
