@@ -40,6 +40,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public SelecteerBestuurderWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -47,7 +48,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void reset() {
-            this.txtbx_Id.Text= "";
             this.txtbx_Naam.Text = "";
             this.txtbx_Achternaam.Text = "";
             this.Date_Pckr_Geboortedatum.Text = "";
@@ -56,11 +56,14 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void btn_Zoeken_Click(object sender, RoutedEventArgs e) {
             try {
-                int rijks = int.Parse(txtbx_rijksregsterNummer.Text);
-                string voornaam = txtbx_Naam.Text;
+                string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_rijksregsterNummer.Text) ? null : txtbx_rijksregsterNummer.Text;
+                string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Naam.Text) ? null : txtbx_Naam.Text;
+                string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
                 string achternaam = txtbx_Achternaam.Text;
-                DateTime geboortedatum = Convert.ToDateTime(Date_Pckr_Geboortedatum.Text);
-                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(rijks.ToString(), voornaam, achternaam, geboortedatum).ToList());
+                DateTime? geboortedatum =
+                    Convert.ToDateTime(Date_Pckr_Geboortedatum.SelectedDate.HasValue ?
+                    Date_Pckr_Geboortedatum.SelectedDate.Value : null);
+                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(gevondenRijks, gevondenNaam, gevondenAchternaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
             catch (Exception ex) {
@@ -68,7 +71,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             }
         }
 
-        private void txtbx_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            private void txtbx_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
         }
 
@@ -114,17 +117,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             oldText = txtbx_Achternaam.Text;
         }
 
-        private void txtbx_Naam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
-        }
-
-        private void txtbx_Achternaam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
-        }
 
         public static bool isIdValid(string s) {
             int i;

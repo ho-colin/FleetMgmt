@@ -79,7 +79,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 if(this.Bestuurder == null) {
                     lbl_Bestuurder.Content = "Geen Bestuurder";
                 } else {
-                    lbl_Bestuurder.Content = this.Bestuurder.Naam;
+                    lbl_Bestuurder.Content = this.Bestuurder.Voornaam;
                 }
 
                 if (string.IsNullOrWhiteSpace(Tankkaart.Pincode)) {
@@ -100,7 +100,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 if (this.Bestuurder == null) {
                     textbx_HuidigBestuurder.Text = "Geen Bestuurder";
                 } else {
-                    textbx_HuidigBestuurder.Text = this.Bestuurder.Naam;
+                    textbx_HuidigBestuurder.Text = this.Bestuurder.Voornaam;
                 }
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);

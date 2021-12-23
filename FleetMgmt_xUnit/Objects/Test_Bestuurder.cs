@@ -15,15 +15,15 @@ namespace FleetMgmt_xUnit.Objects
         public void Test_Alles_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
             Assert.Equal("90.02.01-999-02", b.Rijksregisternummer);
-            Assert.Equal("Gheysens", b.Naam);
-            Assert.Equal("Louis", b.Voornaam);
+            Assert.Equal("Gheysens", b.Voornaam);
+            Assert.Equal("Louis", b.Achternaam);
             Assert.Equal(new DateTime(1933, 12, 11), b.GeboorteDatum);
         }
 
         [Fact]
         public void Test_ZetNaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Gheysens", b.Naam);
+            Assert.Equal("Gheysens", b.Voornaam);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetVoornaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Louis", b.Voornaam);
+            Assert.Equal("Louis", b.Achternaam);
         }
 
         [Fact]
@@ -63,15 +63,6 @@ namespace FleetMgmt_xUnit.Objects
             var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", dt));
             Assert.Equal("Bestuurder: Datum mag niet in de toekomst zijn!", exc.Message);
         }
-
-        //[Fact]
-        //public void Test_UpdateTankkaart_Valid() {
-        //    Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
-        //    Tankkaart tk = new Tankkaart(1234, new DateTime(2025, 10, 13), "1236", new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11)), null);
-        //    b.updateTankkaart(tk);
-        //    Assert.True(true);
-        //}
-
         [Fact]
         public void Test_VoegRijbewijsToe_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));

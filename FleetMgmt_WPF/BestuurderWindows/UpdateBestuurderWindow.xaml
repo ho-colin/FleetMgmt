@@ -86,8 +86,6 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Label 2st grid-->
-                <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}" Content="Id:" 
-                       Grid.Column="1" Margin="5"/>
                 <Label x:Name="lbl_Voornaam" Style="{StaticResource HeaderStyle}"
                        Content="Voornaam:" Grid.Column="1" Grid.Row="1" 
                        Margin="5"/>
@@ -110,20 +108,14 @@
                        Grid.Row="6" Margin="5"/>
 
                 <!-- Textboxen -->
-                <TextBox x:Name="txtbx_Id" Grid.Row="0" Grid.Column="2" Margin="5,4,5,5"
-                         Style="{StaticResource InputStyle}"
-                         PreviewTextInput="txtbx_Id_PreviewTextInput"
-                         />
 
                 <TextBox x:Name="txtbx_Voornaam" Grid.Row="1" Grid.Column="2" Margin="5" 
                          Style="{StaticResource InputStyle}"
-                         PreviewTextInput="txtbx_Voornaam_PreviewTextInput"
                          TextChanged="txtbx_Voornaam_TextChanged"/>
 
 
                 <TextBox x:Name="txtbx_Achternaam" Grid.Row="2" Grid.Column="2" Margin="5" 
                          Style="{StaticResource InputStyle}"
-                         PreviewTextInput="txtbx_Achternaam_PreviewTextInput"
                          TextChanged="txtbx_Achternaam_TextChanged"/>
 
                 <DatePicker x:Name="DatePckr_Geboortedatum" Grid.Row="2" Grid.Column="2"
@@ -136,10 +128,6 @@
                          PreviewTextInput="txtbx_RijksregisterNummer_PreviewTextInput"/>
 
                 <!--Nieuwe waarden invullen aan de hand van textboxen-->
-
-                <TextBox x:Name="txtbx_IdOud" Grid.Row="0" Grid.Column="4" Margin="5,4,5,0"
-                         Style="{StaticResource InputStyle}" Height="18" VerticalAlignment="Top"
-                         />
 
                 <TextBox x:Name="txtbx_VoornaamOud" Grid.Row="1" Grid.Column="4" Margin="5,5,5,10" 
                          Style="{StaticResource InputStyle}" />
@@ -166,8 +154,8 @@
             <!--Buttons-->
             <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Margin="150,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Margin="50,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Button Click="btn_Rijbewijs_Click"  x:Name="btn_Rijbewijs" Content="Rijbewijs selecteren" Margin="225,165,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-            <Button Click="btn_Tankkaart_Click" x:Name="btn_Tankkaart" Content="Tankkaart selecteren" Margin="225,200,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+            <Button Click="btn_Rijbewijs_Click"  x:Name="btn_Rijbewijs" Content="Rijbewijs selecteren" Margin="225,130,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+            <Button Click="btn_Tankkaart_Click" x:Name="btn_Tankkaart" Content="Tankkaart selecteren" Margin="225,165,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 
         </Grid>
     </Grid>

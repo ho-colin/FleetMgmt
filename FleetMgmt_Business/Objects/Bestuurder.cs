@@ -12,9 +12,9 @@ namespace FleetMgmt_Business.Objects {
 
         public string Rijksregisternummer { get; private set; }
 
-        public string Naam { get; private set; }
-
         public string Voornaam { get; private set; }
+
+        public string Achternaam { get; private set; }
 
         public DateTime GeboorteDatum { get; private set; }
 
@@ -42,12 +42,12 @@ namespace FleetMgmt_Business.Objects {
 
         private void zetNaam(string naam) {
             if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("Bestuurder: naam mag niet leeg zijn!");
-            this.Naam = naam;
+            this.Voornaam = naam;
         }
 
         private void zetVoornaam(string voornaam) {
             if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: voornaam mag niet leeg zijn!");
-            this.Voornaam = voornaam;
+            this.Achternaam = voornaam;
         }
 
         private void zetGeboorteDatum(DateTime geboortedatum) {
@@ -89,7 +89,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
+            return $"Voornaam: {Voornaam}\nAchternaam: {Achternaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
     }
 }

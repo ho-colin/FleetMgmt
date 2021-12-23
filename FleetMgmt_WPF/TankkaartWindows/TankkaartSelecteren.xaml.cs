@@ -76,7 +76,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             SelecteerBestuurderWindow w = new SelecteerBestuurderWindow();
             if(w.ShowDialog() == true) {
                 this.Bestuurder = w.Bestuurder;
-                lbl_BestuurderNaam.Content = this.Bestuurder.Naam;
+                lbl_BestuurderNaam.Content = this.Bestuurder.Voornaam;
             }
         }
 

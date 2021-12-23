@@ -90,7 +90,7 @@
         <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TankkaartNavigatie_Click" />
         <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click" />
 
-            <!--Labels-->
+        <!--Labels-->
         <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="162"/>
         <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <Label x:Name="lbl_Rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="22,100,0,0" VerticalAlignment="Top" Height="25" Width="105"/>
@@ -103,20 +103,20 @@
         <Label x:Name="lbl_Rijbewijs" Style="{StaticResource HeaderStyle}"  Content="Rijbewijs:" Grid.Column="1" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
 
         <!--Button-->
-        <Button x:Name="btn_SelecteerTankkaart" Style="{StaticResource BestuurderStyle}" Content="Selecteer tankkaart" HorizontalAlignment="Left" Margin="358,84,0,0" VerticalAlignment="Top" 
+        <Button x:Name="btn_SelecteerTankkaart" Style="{StaticResource BestuurderStyle}" Content="Selecteer tankkaart" HorizontalAlignment="Left" Margin="347,82,0,0" VerticalAlignment="Top" 
                 Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerTankkaart_Click"/>
 
-        <Button x:Name="btn_SelecteerRijbewijs" Style="{StaticResource BestuurderStyle}" Content="Selecteer rijbewijs" HorizontalAlignment="Left" Margin="358,109,0,0" VerticalAlignment="Top" 
+        <Button x:Name="btn_SelecteerRijbewijs" Style="{StaticResource BestuurderStyle}" Content="Selecteer rijbewijs" HorizontalAlignment="Left" Margin="347,111,0,0" VerticalAlignment="Top" 
                 Height="20" Width="140" Grid.Column="1" Click="btn_SelecteerRijbewijs_Click"/>
 
 
 
         <!--Button rechts-->
-        <Button x:Name="btn_BestuurderToevegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="523,77,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1"
+        <Button x:Name="btn_BestuurderToevegen" Content="Bestuurder toevoegen" HorizontalAlignment="Left" Margin="503,77,0,0" VerticalAlignment="Top" Height="30" Width="139" Grid.Column="1"
                 Click="btn_BestuurderToevegen_Click" />
-        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="523,116,0,0" VerticalAlignment="Top" Height="30" Width="119" Grid.Column="1"
+        <Button x:Name="btn_BestuurderZoeken" Content="Bestuurder zoeken" HorizontalAlignment="Left" Margin="503,116,0,0" VerticalAlignment="Top" Height="30" Width="139" Grid.Column="1"
                 Click="btn_BestuurderZoeken_Click" />
-        <Button x:Name="btn_Reset" Content="Reset velden" HorizontalAlignment="Left" Margin="523,156,0,0" VerticalAlignment="Top" Height="30" Width="120" Grid.Column="1" Click="btn_Reset_Click" />
+        <Button x:Name="btn_Reset" Content="Reset velden" HorizontalAlignment="Left" Margin="503,156,0,0" VerticalAlignment="Top" Height="30" Width="140" Grid.Column="1" Click="btn_Reset_Click" />
 
 
         <!--Input + combox velden-->
@@ -131,8 +131,9 @@
                   Background="White" 
                   BorderBrush="LightGray" 
                   BorderThickness="5" 
+                  Foreground="Black"
                   Grid.Column="1" 
-                  Margin="0,250,0,0" Grid.ColumnSpan="2">
+                  Margin="0,217,0,0">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="btn_Update" Header="Update" Click="btn_Update_Click"/>

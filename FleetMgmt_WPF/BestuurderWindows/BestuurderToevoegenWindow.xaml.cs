@@ -34,6 +34,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public BestuurderToevoegenWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
@@ -87,13 +88,16 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
                 if (rijksregisternummer == null) 
                     MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
+
                 //Rijbewijs kan nog niet toegevoegd worden
+                //Lijst van categoriën met de datum die er bij hoort.
                 RijksregisterValidator.isGeldig(rijksregisternummer, tijd);
                 Bestuurder bestuurder = new Bestuurder(rijksregisternummer, Voornaam, Achternaam, tijd);
                 Bestuurder b2 = bm.voegBestuurderToe(bestuurder);
                 bestuurders.Add(b2);
                 lstVw_Bestuurders.ItemsSource = bestuurders;
-
+                MessageBox.Show($"Bestuurder: {bestuurder.Achternaam} {bestuurder.Voornaam} werd zonet toegevoegd!", "Bestuurder toevoegen", MessageBoxButton.OK);
+                reset();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }

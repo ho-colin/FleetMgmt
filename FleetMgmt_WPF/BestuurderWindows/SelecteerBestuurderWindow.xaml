@@ -65,11 +65,6 @@
 
 
         <!--Labels-->
-        <Label x:Name="lbl_Id" 
-               Content="Id:"
-               Grid.Column="0" 
-               Grid.Row="2"
-               Style="{StaticResource HeaderStyle}"/>
 
         <Label x:Name="lbl_Voornaam" 
                Content="Voornaam:" 
@@ -109,20 +104,12 @@
                Style="{StaticResource HeaderStyle}" />
 
         <!--Input velden + DatePicker-->
-        <TextBox x:Name="txtbx_Id" 
-                 Style="{StaticResource InputStyle}" 
-                 Grid.Column="1"
-                 Grid.Row="2"
-                 Margin="10"
-                 PreviewTextInput="txtbx_Id_PreviewTextInput"
-                 />
 
         <TextBox x:Name="txtbx_Naam" 
                  Style="{StaticResource InputStyle}" 
                  Grid.Column="1"
                  Grid.Row="3"
                  Margin="10"
-                 PreviewTextInput="txtbx_Naam_PreviewTextInput"
                  TextChanged="txtbx_Naam_TextChanged"
                  />
 
@@ -132,7 +119,6 @@
                  Grid.Column="1"
                  Grid.Row="4"
                  Margin="10"
-                 PreviewTextInput="txtbx_Achternaam_PreviewTextInput"
                  TextChanged="txtbx_Achternaam_TextChanged"/>
 
 
@@ -147,7 +133,7 @@
                  Grid.Column="1"
                  Grid.Row="6"
                  Margin="10"
-                 PreviewTextInput="txtbx_rijksregsterNummer_PreviewTextInput"
+    
                  />
 
 
@@ -191,9 +177,9 @@
 
 
         <!--Listview-->
-        <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" 
+        <ListView Foreground="Black" Background="White" BorderBrush="White" BorderThickness="5" 
         x:Name="lstVw_Bestuurders" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4"
-        Margin="5,75,5,0" IsEnabled="False" Grid.RowSpan="3"/>
+        Margin="5,75,5,0" IsEnabled="True" Grid.RowSpan="3"/>
 
 
     </Grid>
