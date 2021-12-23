@@ -65,7 +65,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 if(Voertuig.TypeVoertuig == null) {
                     lbl_NieuwTypeVoertuig.Content = "Geen TypeVoertuig";
                 } else {
-                    lbl_NieuwTypeVoertuig.Content = Voertuig.TypeVoertuig.ToString();
+                    lbl_NieuwTypeVoertuig.Content = Voertuig.TypeVoertuig.Type.ToString();
                 }
                 txtbx_Kleur.Text = Voertuig.Kleur;
                 txtbx_AantalDeuren.Text = Voertuig.AantalDeuren.ToString();
@@ -79,7 +79,10 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 txtbx_HuidigTypeVoertuig.Text = Voertuig.TypeVoertuig.ToString();
                 txtbx_HuidigKleur.Text = Voertuig.Kleur;
                 txtbx_HuidigAantalDeuren.Text = Voertuig.AantalDeuren.ToString();
-                txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Voornaam;
+                if (this.Bestuurder != null)
+                    txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Voornaam;
+                else
+                    txtbx_HuidigBestuurder.Text = "Geen Bestuurder";
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
@@ -95,8 +98,8 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
                 TypeVoertuig gevondenTypeVoertuig = this.TypeVoertuig;
                 string gevondenNummerplaat = string.IsNullOrWhiteSpace(txtbx_Nummerplaat.Text) ? null : txtbx_Nummerplaat.Text;
-
-                Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat);
+                Bestuurder gevondenBestuurder = this.Bestuurder;
+                Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat,gevondenBestuurder);
                 vm.updateVoertuig(geupdateVoertuig);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
