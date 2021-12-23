@@ -29,7 +29,7 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
         }
 
         private void btn_Selecteer_Click(object sender, RoutedEventArgs e) {
-            if (Rijbewijzen.Count < 1)
+            if (Rijbewijzen != null && Rijbewijzen.Count < 1)
                 MessageBox.Show("Lijst is leeg!", "Selecteer rijbewijs", MessageBoxButton.OK);
             else 
                 this.Rijbewijzen = lstbx_Rijbewijzen.SelectedItems.Cast<RijbewijsEnum>().ToList();

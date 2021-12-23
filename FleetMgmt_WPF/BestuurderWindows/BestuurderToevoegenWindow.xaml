@@ -112,8 +112,7 @@
                Grid.Column="1"
                Grid.Row="0"
                  Margin="10"
-               Foreground="LightGray"
-                 PreviewTextInput="txtbx_Voornaam_PreviewTextInput"
+               Foreground="Black"
                  TextChanged="txtbx_Voornaam_TextChanged"/>
 
 
@@ -122,8 +121,7 @@
                Grid.Column="1" 
                Grid.Row="1"
                    Margin="10"
-               Foreground="LightGray"
-                 PreviewTextInput="txtbx_AchterNaam_PreviewTextInput"
+               Foreground="Black"
                  TextChanged="txtbx_AchterNaam_TextChanged"/>
 
         <TextBox x:Name="txtbx_Rijksregisiternummer" 
@@ -131,8 +129,7 @@
                Grid.Column="1" 
                Grid.Row="2"
                Margin="10"
-               Foreground="LightGray"
-                 PreviewTextInput="txtbx_Rijksregisiternummer_PreviewTextInput"/>
+               Foreground="Black"/>
 
         <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
             <Grid.RowDefinitions>

@@ -38,7 +38,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
             if(stw.ShowDialog() == true) {
                 this.Bestuurder = stw.Bestuurder;
-                lbl_Bestuurder.Content = this.Bestuurder.Naam;
+                lbl_Bestuurder.Content = this.Bestuurder.Voornaam;
             }
         }
 
@@ -60,7 +60,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 if(this.Bestuurder == null) {
                     lbl_NieuwBestuurder.Content = "Geen Bestuurder";
                 } else {
-                    lbl_NieuwBestuurder.Content = this.Bestuurder.Naam;
+                    lbl_NieuwBestuurder.Content = this.Bestuurder.Voornaam;
                 }
                 if(Voertuig.TypeVoertuig == null) {
                     lbl_NieuwTypeVoertuig.Content = "Geen TypeVoertuig";
@@ -79,7 +79,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 txtbx_HuidigTypeVoertuig.Text = Voertuig.TypeVoertuig.ToString();
                 txtbx_HuidigKleur.Text = Voertuig.Kleur;
                 txtbx_HuidigAantalDeuren.Text = Voertuig.AantalDeuren.ToString();
-                txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Naam;
+                txtbx_HuidigBestuurder.Text = Voertuig.Bestuurder.Voornaam;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }

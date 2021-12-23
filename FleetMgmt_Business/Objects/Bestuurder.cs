@@ -9,12 +9,12 @@ using FleetMgmt_Business.Validators;
 
 namespace FleetMgmt_Business.Objects {
     public class Bestuurder {
-        public int Id { get; private set; }
+
         public string Rijksregisternummer { get; private set; }
 
-        public string Naam { get; private set; }
-
         public string Voornaam { get; private set; }
+
+        public string Achternaam { get; private set; }
 
         public DateTime GeboorteDatum { get; private set; }
 
@@ -23,10 +23,6 @@ namespace FleetMgmt_Business.Objects {
         public Voertuig Voertuig { get; private set; }
 
         public List<Rijbewijs> rijbewijzen = new List<Rijbewijs>();
-
-        public Bestuurder(int id, string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) : this(rijksregisternummer, naam, voornaam, geboortedatum, rijbewijzen) {
-            zetId(id);
-        }
 
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum, List<Rijbewijs> rijbewijzen) :this(rijksregisternummer,naam,voornaam,geboortedatum) {
             this.rijbewijzen = rijbewijzen;
@@ -39,11 +35,6 @@ namespace FleetMgmt_Business.Objects {
             zetGeboorteDatum(geboortedatum);
         }
 
-        private void zetId(int id) {
-            if (id <= 0) throw new BestuurderException("Bestuurder - zetId - Id is kleiner of gelijk aan 0");
-            this.Id = id;
-        }
-
         private void zetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {
             RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum);
             this.Rijksregisternummer = rijksregisternummer;
@@ -51,12 +42,12 @@ namespace FleetMgmt_Business.Objects {
 
         private void zetNaam(string naam) {
             if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("Bestuurder: naam mag niet leeg zijn!");
-            this.Naam = naam;
+            this.Voornaam = naam;
         }
 
         private void zetVoornaam(string voornaam) {
             if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: voornaam mag niet leeg zijn!");
-            this.Voornaam = voornaam;
+            this.Achternaam = voornaam;
         }
 
         private void zetGeboorteDatum(DateTime geboortedatum) {
@@ -98,7 +89,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"Naam: {Naam}\nVoornaam: {Voornaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
+            return $"Voornaam: {Voornaam}\nAchternaam: {Achternaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
         }
     }
 }
