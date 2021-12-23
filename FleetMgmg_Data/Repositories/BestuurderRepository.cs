@@ -88,12 +88,12 @@ namespace FleetMgmg_Data.Repositories {
                         komma = true;
                     }
 
-                    if (huidigieBestuurder.Naam != bestuurder.Naam) {
+                    if (huidigieBestuurder.Voornaam != bestuurder.Voornaam) {
                         if (komma) { queryBuilder.Append(","); } else komma = true;
                         queryBuilder.Append(" Naam=@naam ");
                     }
 
-                    if (huidigieBestuurder.Voornaam != bestuurder.Voornaam) {
+                    if (huidigieBestuurder.Achternaam != bestuurder.Achternaam) {
                         if (komma) { queryBuilder.Append(","); } else komma = true;
                         queryBuilder.Append(" voornaam=@voornaam");
                     }
@@ -122,11 +122,11 @@ namespace FleetMgmg_Data.Repositories {
                         }
 
                         if (queryBuilder.ToString().Contains("@naam")) {
-                            cmd.Parameters.AddWithValue("@naam", bestuurder.Naam == null ? DBNull.Value : bestuurder.Naam);
+                            cmd.Parameters.AddWithValue("@naam", bestuurder.Voornaam == null ? DBNull.Value : bestuurder.Voornaam);
                         }
 
                         if (queryBuilder.ToString().Contains("@voornaam")) {
-                            cmd.Parameters.AddWithValue("@voornaam", bestuurder.Voornaam == null ? DBNull.Value : bestuurder.Voornaam);
+                            cmd.Parameters.AddWithValue("@voornaam", bestuurder.Achternaam == null ? DBNull.Value : bestuurder.Achternaam);
                         }
 
                         if (queryBuilder.ToString().Contains("@geboorteDatum")) {
@@ -359,11 +359,8 @@ namespace FleetMgmg_Data.Repositories {
 
 
         public void verwijderBestuurder(string rijks) {
-            if (!bestaatBestuurder(rijks)) throw new BestuurderRepositoryException("BestuurderRepository: " +
-                "verwijderBestuurder - bestuurder bestaat niet!");
             SqlConnection conn = ConnectionClass.getConnection();
-            string query = "DELETE FROM Bestuurder WHERE Id=@rijksregisternummer";
-
+            string query = "DELETE FROM Bestuurder WHERE rijksregisternummer=@rijksregisternummer";
             using (SqlCommand cmd = conn.CreateCommand()) {
                 conn.Open();
                 try {
@@ -407,9 +404,9 @@ namespace FleetMgmg_Data.Repositories {
                     cmdOne.Parameters.Add(new SqlParameter("@Rijksregisternummer", SqlDbType.NVarChar));
                     cmdOne.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
                     cmdOne.Parameters.Add(new SqlParameter("@Naam", SqlDbType.NVarChar));
-                    cmdOne.Parameters["@Naam"].Value = bestuurder.Voornaam;
+                    cmdOne.Parameters["@Naam"].Value = bestuurder.Achternaam;
                     cmdOne.Parameters.Add(new SqlParameter("@Achternaam", SqlDbType.NVarChar));
-                    cmdOne.Parameters["@Achternaam"].Value = bestuurder.Naam;
+                    cmdOne.Parameters["@Achternaam"].Value = bestuurder.Voornaam;
                     cmdOne.Parameters.Add(new SqlParameter("@Geboortedatum", SqlDbType.Date));
                     cmdOne.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
                     if (queryOne.Contains("@TankkaartId")) {

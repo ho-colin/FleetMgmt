@@ -15,15 +15,15 @@ namespace FleetMgmt_xUnit.Objects
         public void Test_Alles_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
             Assert.Equal("90.02.01-999-02", b.Rijksregisternummer);
-            Assert.Equal("Gheysens", b.Naam);
-            Assert.Equal("Louis", b.Voornaam);
+            Assert.Equal("Gheysens", b.Voornaam);
+            Assert.Equal("Louis", b.Achternaam);
             Assert.Equal(new DateTime(1933, 12, 11), b.GeboorteDatum);
         }
 
         [Fact]
         public void Test_ZetNaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Gheysens", b.Naam);
+            Assert.Equal("Gheysens", b.Voornaam);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace FleetMgmt_xUnit.Objects
         [Fact]
         public void Test_ZetVoornaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Louis", b.Voornaam);
+            Assert.Equal("Louis", b.Achternaam);
         }
 
         [Fact]

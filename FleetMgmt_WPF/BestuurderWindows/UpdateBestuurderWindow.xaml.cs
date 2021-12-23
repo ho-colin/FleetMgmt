@@ -26,28 +26,29 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     public partial class UpdateBestuurderWindow : Window {
 
         BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
-
         Tankkaart Tankkaart { get; set; }
-
         private List<RijbewijsEnum> Rijbewijzen { get; set; }
-
-        Bestuurder bst { get; set; }
-
+        Bestuurder Bestuurder { get; set; }
         public UpdateBestuurderWindow(Bestuurder bestuurder) {
-            this.bst = bestuurder;
-
+            this.Bestuurder = bestuurder;
             InitializeComponent();
-
-
+            reset();
+            this.ResizeMode = ResizeMode.NoResize;
         }
+
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
             reset();
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e) {
             try {
-                DateTime dt = Convert.ToDateTime(DatePckr_Geboortedatum);
-                Bestuurder b = new Bestuurder(txtbx_RijksregisterNummer.Text, txtbx_Achternaam.Text, txtbx_Voornaam.Text, dt);
+                string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_RijksregisterNummer.Text) ? null : txtbx_RijksregisterNummer.Text;
+                string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
+                string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
+                DateTime geboortedatum =
+                    Convert.ToDateTime(DatePckr_Geboortedatum.SelectedDate.HasValue ?
+                    DatePckr_Geboortedatum.SelectedDate.Value : null);
+                Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, geboortedatum);
                 bm.bewerkBestuurder(b);
                 DialogResult = true;
                 Close();
@@ -101,24 +102,17 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             oldText = txtbx_Achternaam.Text;
         }
 
-        private void txtbx_Achternaam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
-        }
-
-        private void txtbx_Voornaam_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            if (!Regex.IsMatch(e.Text, @"/[a-z]/gi")) {
-                e.Handled = true;
-            }
-        }
-
         private void reset() {
+            //Velden leegmaken
             this.txtbx_Voornaam.Text = "";
             this.txtbx_Achternaam.Text = "";
             this.DatePckr_Geboortedatum.SelectedDate = null;
-            this.txtbx_Id.Text = "";
             this.txtbx_RijksregisterNummer.Text = "";
+            //Velden vullen met oude values
+            txtbx_RijksregisterNummeOud.Text = Bestuurder.Rijksregisternummer;
+            txtbx_VoornaamOud.Text = Bestuurder.Achternaam;
+            txtbx_AchternaamOud.Text = Bestuurder.Voornaam;
+            txtbx_GeboortedatumOud.Text = Bestuurder.GeboorteDatum.ToString();
         }
 
         public static bool isIdValid(string s) {

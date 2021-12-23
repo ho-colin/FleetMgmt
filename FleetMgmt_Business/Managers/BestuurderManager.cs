@@ -68,7 +68,7 @@ namespace FleetMgmt_Business.Managers {
             if (repo.bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             try {
                 return repo.voegBestuurderToe(bestuurder);
-                Console.Write($"{bestuurder.Naam} is toegevoegd!");
+                Console.Write($"{bestuurder.Voornaam} is toegevoegd!");
             }catch(Exception ex) {
                 throw new BestuurderException("BestuurderManager: VoegBestuurderToe - gefaald", ex);
             }

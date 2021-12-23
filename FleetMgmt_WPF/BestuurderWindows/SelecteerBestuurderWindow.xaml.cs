@@ -40,6 +40,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public SelecteerBestuurderWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {

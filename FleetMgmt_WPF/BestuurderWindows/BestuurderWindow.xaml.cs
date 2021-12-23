@@ -51,13 +51,12 @@ namespace FleetMgmt_WPF {
         private void btn_BestuurderZoeken_Click(object sender, RoutedEventArgs e) {
             try {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_Rijksregisternummer.Text) ? null : txtbx_Rijksregisternummer.Text;
-                string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
-                string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
-                string achternaam = txtbx_Achternaam.Text;
+                string gevondenAchterNaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
+                string gevondenVoornaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
                 DateTime? geboortedatum = 
                     Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? 
                     dtpckr_Geboortedatum.SelectedDate.Value : null);
-                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(gevondenRijks, gevondenNaam, gevondenAchternaam, geboortedatum).ToList());
+                bestuurdersLijst = new ObservableCollection<Bestuurder>(bm.toonBestuurders(gevondenRijks, gevondenAchterNaam, gevondenVoornaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurdersLijst;
             }
             catch (Exception ex) {
@@ -78,9 +77,9 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
-            TankkaartSelecteren rbs = new TankkaartSelecteren();
-            if (rbs.ShowDialog() == true)
-                this.Tankkaart = rbs.Tankkaart;
+            TankkaartSelecteren tks = new TankkaartSelecteren();
+            if (tks.ShowDialog() == true)
+                this.Tankkaart = tks.Tankkaart;
             lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
         }
 
@@ -131,8 +130,19 @@ namespace FleetMgmt_WPF {
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
                 Bestuurder bs = (Bestuurder)lstVw_Bestuurders.SelectedItem;
-                bm.verwijderBestuurder(bs.Rijksregisternummer);
-                btn_BestuurderZoeken_Click(sender, e);
+                MessageBoxResult result = MessageBox.Show($"Wenst u {bs.Voornaam} {bs.Achternaam} te verwijderen?", "Verwijder bestuurder",
+                    MessageBoxButton.YesNo);
+                switch (result) {
+                    case MessageBoxResult.Yes:
+                        bm.verwijderBestuurder(bs.Rijksregisternummer);
+                        btn_BestuurderZoeken_Click(sender, e);
+                        MessageBox.Show($"{bs.Voornaam} {bs.Achternaam} werd zonet verwijderd!");
+                        break;
+                    case MessageBoxResult.No:
+                        MessageBox.Show($"{bs.Voornaam} {bs.Achternaam} wordt niet verwijderd!", "Verwijder bestuurder", 
+                            MessageBoxButton.OK);
+                        break;
+                }
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);

@@ -34,6 +34,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public BestuurderToevoegenWindow() {
             InitializeComponent();
+            this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
@@ -95,7 +96,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 Bestuurder b2 = bm.voegBestuurderToe(bestuurder);
                 bestuurders.Add(b2);
                 lstVw_Bestuurders.ItemsSource = bestuurders;
-
+                MessageBox.Show($"Bestuurder: {bestuurder.Achternaam} {bestuurder.Voornaam} werd zonet toegevoegd!", "Bestuurder toevoegen", MessageBoxButton.OK);
+                reset();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
