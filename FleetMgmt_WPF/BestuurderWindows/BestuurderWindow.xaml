@@ -93,9 +93,9 @@
         <!--Labels-->
         <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="162"/>
         <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternummer:" Grid.Column="1" HorizontalAlignment="Left" Margin="22,100,0,0" VerticalAlignment="Top" Height="25" Width="105"/>
-        <Label x:Name="lbl_Voornaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
-        <Label x:Name="lbl_Achternaam" Style="{StaticResource HeaderStyle}"  Content="Achternaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternr:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,100,0,0" VerticalAlignment="Top" Height="25" Width="93"/>
+        <Label x:Name="lbl_Voornaam" Style="{StaticResource HeaderStyle}"  Content="Achternaam: " Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
+        <Label x:Name="lbl_Achternaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <Label x:Name="lbl_Geboortedatum" Style="{StaticResource HeaderStyle}"  Content="Geboortedatum:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,166,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
 
 
