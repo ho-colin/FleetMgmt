@@ -116,11 +116,13 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
             if(Bestuurder.rijbewijzen.Count > 0) {
                 txtbx_RijbewijsOud.Text = string.Join(',', Bestuurder.rijbewijzen.Select(x => x.ToString()));
+                lbl_AantalRijbewijzen.Content = Bestuurder.rijbewijzen.Count;
             } else { txtbx_RijbewijsOud.Text = "Geen rijbewijs!"; }
 
             if(Bestuurder.Tankkaart != null) {
                 txtbx_TankkaartOud.Text = string.Join(',', Bestuurder.Tankkaart.Brandstoffen.Select(x => x.ToString()));
-            }else { txtbx_TankkaartOud.Text = "Geen tankkaart!"; }
+                lbl_TankkaartNummer.Content = Bestuurder.Tankkaart.KaartNummer;
+            } else { txtbx_TankkaartOud.Text = "Geen tankkaart!"; }
             
         }
 
@@ -133,7 +135,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             RijbewijsSelecteren rbs = new RijbewijsSelecteren();
             if (rbs.ShowDialog() == true) {
                 this.Rijbewijzen = rbs.Rijbewijzen;
-                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+                lbl_AantalRijbewijzen.Content = this.Rijbewijzen.Count;
             }
         }
 
@@ -141,7 +143,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             TankkaartSelecteren rbs = new TankkaartSelecteren();
             if (rbs.ShowDialog() == true) {
                 this.Tankkaart = rbs.Tankkaart;
-                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+                lbl_TankkaartNummer.Content = this.Tankkaart.KaartNummer;
             }
         }
     }
