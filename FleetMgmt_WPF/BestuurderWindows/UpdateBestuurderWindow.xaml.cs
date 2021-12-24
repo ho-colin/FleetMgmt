@@ -103,7 +103,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         }
 
         private void reset() {
-            //Velden leegmaken
+            //Nieuwe velden vullen met huidige values
             this.txtbx_Voornaam.Text = Bestuurder.Voornaam;
             this.txtbx_Achternaam.Text = Bestuurder.Achternaam;
             this.DatePckr_Geboortedatum.SelectedDate = Bestuurder.GeboorteDatum;
