@@ -191,7 +191,7 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public IEnumerable<Voertuig> toonVoertuigen(string merk, string model, string typeVoertuig, string brandstof,
-             string kleur, int? aantalDeuren, string bestuurderId) {
+             string kleur, int? aantalDeuren, string bestuurderRijksregisternummer) {
             List<Voertuig> voertuigen = new List<Voertuig>();
             Bestuurder br = null;
             SqlConnection connection = getConnection();
@@ -235,7 +235,7 @@ namespace FleetMgmg_Data.Repositories {
                 if (AND) query += " AND "; else AND = true;
                 query += " v.AantalDeuren=@aantalDeuren";
             }
-            if (!string.IsNullOrWhiteSpace(bestuurderId)) {
+            if (!string.IsNullOrWhiteSpace(bestuurderRijksregisternummer)) {
                 if (!WHERE) query += "WHERE "; WHERE = true;
                 if (AND) query += " AND "; else AND = true;
                 query += " v.Bestuurder=@bestuurder";
@@ -266,9 +266,9 @@ namespace FleetMgmg_Data.Repositories {
                     command.Parameters.Add(new SqlParameter("@aantalDeuren", SqlDbType.Int));
                     command.Parameters["@aantalDeuren"].Value = aantalDeuren;
                 }
-                if (bestuurderId != null) {
+                if (bestuurderRijksregisternummer != null) {
                     command.Parameters.Add(new SqlParameter("@bestuurder", SqlDbType.Int));
-                    command.Parameters["@bestuurder"].Value = bestuurderId;
+                    command.Parameters["@bestuurder"].Value = bestuurderRijksregisternummer;
                 }
                 command.CommandText = query;
 
@@ -495,7 +495,7 @@ namespace FleetMgmg_Data.Repositories {
         public void bewerkVoertuig_BestuurderWisselen(Voertuig voertuig) {
             SqlConnection connection = getConnection();
             string queryV = "UPDATE Voertuig SET " +
-                "Merk=@Merk,Model=@Model,Nummerplaat=@Nummerplaat,Brandstof=@Brandstof,TypeVoertuig=@TypeVoertuig,Kleur=@Kleur,AantalDeuren=@AantalDeuren,Bestuurder=@BestuurderId " +
+                "Merk=@Merk,Model=@Model,Nummerplaat=@Nummerplaat,Brandstof=@Brandstof,TypeVoertuig=@TypeVoertuig,Kleur=@Kleur,AantalDeuren=@AantalDeuren,Bestuurder=@Rijksregisternummer " +
                 "WHERE Chassisnummer=@Chassisnummer";
             string queryBV = "UPDATE Bestuurder SET VoertuigChassisnummer=@LegeChassisnummer WHERE VoertuigChassisnummer=@Chassisnummer";
             string queryBN = "UPDATE Bestuurder SET VoertuigChassisnummer=@Chassisnummer WHERE Rijksregisternummer=@Rijksregisternummer";
@@ -527,7 +527,7 @@ namespace FleetMgmg_Data.Repositories {
                     else {
                         commandV.Parameters.AddWithValue("@Kleur", voertuig.Kleur);
                     }
-                    commandV.Parameters.AddWithValue("@BestuurderId", voertuig.Bestuurder.Rijksregisternummer);
+                    commandV.Parameters.AddWithValue("@Rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
                     commandV.CommandText = queryV;
                     //waardes voor bestuurdertabel chassinummer verwijderen bij vorige bestuurder
                     commandBV.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
