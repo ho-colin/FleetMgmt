@@ -104,15 +104,24 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void reset() {
             //Velden leegmaken
-            this.txtbx_Voornaam.Text = "";
-            this.txtbx_Achternaam.Text = "";
-            this.DatePckr_Geboortedatum.SelectedDate = null;
-            this.txtbx_RijksregisterNummer.Text = "";
+            this.txtbx_Voornaam.Text = Bestuurder.Voornaam;
+            this.txtbx_Achternaam.Text = Bestuurder.Achternaam;
+            this.DatePckr_Geboortedatum.SelectedDate = Bestuurder.GeboorteDatum;
+            this.txtbx_RijksregisterNummer.Text = Bestuurder.Rijksregisternummer;
             //Velden vullen met oude values
             txtbx_RijksregisterNummeOud.Text = Bestuurder.Rijksregisternummer;
             txtbx_VoornaamOud.Text = Bestuurder.Achternaam;
             txtbx_AchternaamOud.Text = Bestuurder.Voornaam;
-            txtbx_GeboortedatumOud.Text = Bestuurder.GeboorteDatum.ToString();
+            txtbx_GeboortedatumOud.Text = Bestuurder.GeboorteDatum.ToShortDateString();
+
+            if(Bestuurder.rijbewijzen.Count > 0) {
+                txtbx_RijbewijsOud.Text = string.Join(',', Bestuurder.rijbewijzen.Select(x => x.ToString()));
+            } else { txtbx_RijbewijsOud.Text = "Geen rijbewijs!"; }
+
+            if(Bestuurder.Tankkaart != null) {
+                txtbx_TankkaartOud.Text = string.Join(',', Bestuurder.Tankkaart.Brandstoffen.Select(x => x.ToString()));
+            }else { txtbx_TankkaartOud.Text = "Geen tankkaart!"; }
+            
         }
 
         public static bool isIdValid(string s) {
@@ -122,16 +131,18 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         private void btn_Rijbewijs_Click(object sender, RoutedEventArgs e) {
             RijbewijsSelecteren rbs = new RijbewijsSelecteren();
-            if (rbs.ShowDialog() == true)
+            if (rbs.ShowDialog() == true) {
                 this.Rijbewijzen = rbs.Rijbewijzen;
-            lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+            }
         }
 
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
             TankkaartSelecteren rbs = new TankkaartSelecteren();
-            if (rbs.ShowDialog() == true)
+            if (rbs.ShowDialog() == true) {
                 this.Tankkaart = rbs.Tankkaart;
-            lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+            }
         }
     }
 }
