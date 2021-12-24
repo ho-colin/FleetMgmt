@@ -89,7 +89,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"Voornaam: {Voornaam}\nAchternaam: {Achternaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum}";
+            return $"Voornaam: {Voornaam}\nAchternaam: {Achternaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum.ToShortDateString()}";
         }
     }
 }
