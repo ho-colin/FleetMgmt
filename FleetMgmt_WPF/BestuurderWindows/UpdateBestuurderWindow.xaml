@@ -107,6 +107,9 @@
                        Content="Tankkaart:" Grid.Column="1" 
                        Grid.Row="6" Margin="5"/>
 
+                <Label x:Name="lbl_AantalRijbewijzen" Style="{StaticResource HeaderStyle}" Grid.Column="2" Margin="217,11,238,3" Grid.Row="5" Grid.ColumnSpan="3"/>
+                <Label x:Name="lbl_TankkaartNummer" Style="{StaticResource HeaderStyle}" Grid.Column="2" Margin="217,4,238,10" Grid.Row="6" Grid.ColumnSpan="3"/>
+
                 <!-- Textboxen -->
 
                 <TextBox x:Name="txtbx_Voornaam" Grid.Row="1" Grid.Column="2" Margin="5" 
@@ -154,8 +157,8 @@
             <!--Buttons-->
             <Button Click="btn_Reset_Click" x:Name="btn_Reset" Content="Reset Velden" Margin="150,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Margin="50,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Button Click="btn_Rijbewijs_Click"  x:Name="btn_Rijbewijs" Content="Rijbewijs selecteren" Margin="225,130,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-            <Button Click="btn_Tankkaart_Click" x:Name="btn_Tankkaart" Content="Tankkaart selecteren" Margin="225,165,0,0" Height="20" Width="220" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+            <Button Click="btn_Rijbewijs_Click"  x:Name="btn_Rijbewijs" Content="Rijbewijs selecteren" Margin="225,137,0,0" Height="20" Width="204" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+            <Button Click="btn_Tankkaart_Click" x:Name="btn_Tankkaart" Content="Tankkaart selecteren" Margin="225,165,0,0" Height="20" Width="204" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
 
         </Grid>
     </Grid>
