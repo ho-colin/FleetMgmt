@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="FleetMgmt_Business.Repos.IBestuurderRepository">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAEACAAAAAAAAAAgAAAABBAA=</HashCode>
+      <FileName>Repos\IBestuurderRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FleetMgmt_Business.Repos.ITankkaartRepository">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQEBAAEAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\ITankkaartRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FleetMgmt_Business.Repos.ITypeVoertuigRepository">
+    <Position X="7" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAgAAAAEAAAAAiAAAAAAAAAA=</HashCode>
+      <FileName>Repos\ITypeVoertuigRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FleetMgmt_Business.Repos.IVoertuigRepository">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAQAAACAACAAAAAAIAAAiBAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repos\IVoertuigRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

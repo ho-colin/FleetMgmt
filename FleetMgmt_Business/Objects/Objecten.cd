@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FleetMgmt_Business.Objects.Bestuurder">
+    <Position X="1.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AKAAAAAwAAAoQEAEAAAgBAAAAEAAEAAAAAgAAAAAAIA=</HashCode>
+      <FileName>Objects\Bestuurder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Objects.Rijbewijs">
+    <Position X="3.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAgAAAAAgAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Objects\Rijbewijs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Objects.Tankkaart">
+    <Position X="6" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAQAMIBABFgAIAAAAAAAAAAIAACgAAAAAASBA=</HashCode>
+      <FileName>Objects\Tankkaart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Objects.TypeVoertuig">
+    <Position X="8.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAEAAAAAAAAAAAAAAAQAQAgAAAAABA=</HashCode>
+      <FileName>Objects\TypeVoertuig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Objects.Voertuig">
+    <Position X="11.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAGABCAAAQCACAAEAAAEABACQAACBABhgAgAAAAAgAA=</HashCode>
+      <FileName>Objects\Voertuig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
