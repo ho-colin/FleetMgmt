@@ -61,14 +61,12 @@ namespace FleetMgmt_Business.Managers {
             if (!repo.bestaatBestuurder(rijks)) throw new BestuurderException("BestuurderManager: verwijderBestuurder - Bestuurder bestaat niet");
             else
                 repo.verwijderBestuurder(rijks);
-            Console.Write("Id werd verwijderd!");
         }
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             if (repo.bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderException("BestuurderManager: voegBestuurderToe - Bestuurder bestaat reeds");
             try {
                 return repo.voegBestuurderToe(bestuurder);
-                Console.Write($"{bestuurder.Voornaam} is toegevoegd!");
             }catch(Exception ex) {
                 throw new BestuurderException("BestuurderManager: VoegBestuurderToe - gefaald", ex);
             }
