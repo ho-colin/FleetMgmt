@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Enum Name="FleetMgmt_Business.Enums.BrandstofEnum">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACCAAAAAAAQAAAwAAAAABBSAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\BrandstofEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FleetMgmt_Business.Enums.RijbewijsEnum">
+    <Position X="7" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAADCAAAAABAAAAACAAAAAEAJAAAArAEAAAA=</HashCode>
+      <FileName>Enums\RijbewijsEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FleetMgmt_Business.Enums.TankkaartBrandstof">
+    <Position X="8.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAwAAAAABBSAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\TankkaartBrandstof.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

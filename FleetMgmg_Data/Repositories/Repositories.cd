@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FleetMgmg_Data.Repositories.BestuurderRepository" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAEACAAAAAAAAAAgAAAABBAA=</HashCode>
+      <FileName>Repositories\BestuurderRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmg_Data.Repositories.TankkaartRepository" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQEBAAEAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\TankkaartRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmg_Data.Repositories.TypeVoertuigRepository" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAgAAAAEAAAAAiAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\TypeVoertuigRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmg_Data.Repositories.VoertuigRepository" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>EAAgAQAAACAACAAAAAAIAAAiBAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\VoertuigRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

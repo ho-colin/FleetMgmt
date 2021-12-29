@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FleetMgmt_Business.Exceptions.BestuurderException">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\BestuurderException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.BestuurderManagerException">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\BestuurderManagerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.ChassisnummerException">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ChassisnummerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.NummerplaatException">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\NummerplaatException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.RijbewijsException">
+    <Position X="2.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\RijbewijsException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.RijksregisterException">
+    <Position X="4.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\RijksregisterException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.TankkaartException">
+    <Position X="6" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TankkaartException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.TypeVoertuigException">
+    <Position X="7.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TypeVoertuigException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.VoertuigException">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\VoertuigException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmt_Business.Exceptions.VoertuigManagerException">
+    <Position X="4.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\VoertuigManagerException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

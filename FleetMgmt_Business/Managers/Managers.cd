@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FleetMgmt_Business.Managers.BestuurderManager" BaseTypeListCollapsed="true">
+    <Position X="3" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEEAAEACAAAAAAAAAAgAAAABBAA=</HashCode>
+      <FileName>Managers\BestuurderManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmt_Business.Managers.TankkaartManager" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQEBAAEAAAEAAMAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\TankkaartManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmt_Business.Managers.TypeVoertuigManager" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAEAAgAAAAEAAAAAiAAAAAAAAAA=</HashCode>
+      <FileName>Managers\TypeVoertuigManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FleetMgmt_Business.Managers.VoertuigManager">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQAABCAACAAAAAEIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Managers\VoertuigManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

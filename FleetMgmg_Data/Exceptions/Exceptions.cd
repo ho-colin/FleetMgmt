@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FleetMgmg_Data.Exceptions.BestuurderRepositoryException">
+    <Position X="4" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\BestuurderRepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmg_Data.Exceptions.ConnectionException">
+    <Position X="6.5" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ConnectionException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmg_Data.Exceptions.TankkaartRepositoryException">
+    <Position X="8.75" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TankkaartRepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmg_Data.Exceptions.TypeVoertuigRepositoryException">
+    <Position X="6.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TypeVoertuigRepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FleetMgmg_Data.Exceptions.VoertuigRepositoryException">
+    <Position X="8.75" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\VoertuigRepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
