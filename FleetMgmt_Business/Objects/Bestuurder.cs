@@ -89,7 +89,22 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"Voornaam: {Voornaam}\nAchternaam: {Achternaam}\nRijksregisternummer: {Rijksregisternummer}\nGeboortedatum: {GeboorteDatum.ToShortDateString()}";
+            string bestuurdersInfo = $"Rijksregisternummer: {Rijksregisternummer}\nVoornaam: {Voornaam}\nAchternaam: {Achternaam}\nGeboortedatum: " +
+                $"{GeboorteDatum.ToShortDateString()}" +
+             $"\nTankkaart: {Tankkaart}\nVoertuig: {Voertuig}\n" +
+             $"Rijbewijzen" +
+             $"...........";
+            if (rijbewijzen.Count > 0) {
+                foreach (var rijbewijs in rijbewijzen) {
+                    bestuurdersInfo += $"\n{rijbewijs}";
+                }
+            }
+            else {
+                bestuurdersInfo += "0";
+            }
+            return bestuurdersInfo;
         }
+
+
     }
 }

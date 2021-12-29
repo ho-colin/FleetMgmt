@@ -147,12 +147,7 @@ namespace FleetMgmg_Data.Repositories {
 
                 }
                 catch (Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - Rollback gefaald", ex);
-                    try {
                         transaction.Rollback();
-                    }catch(Exception e) {
-                        throw new BestuurderRepositoryException("BestuurderRepository: bewerkBestuurder - gefaald", e);
-                    }
                 }
                 finally {
                     conn.Close();
@@ -443,7 +438,6 @@ namespace FleetMgmg_Data.Repositories {
                 }
                 catch (Exception ex) {
                     trans.Rollback();
-                    Console.WriteLine(ex.Message);
                 }
                 finally {
                     conn.Close();
