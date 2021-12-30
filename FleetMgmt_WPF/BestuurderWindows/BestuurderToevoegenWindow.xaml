@@ -65,12 +65,12 @@
         </Grid.RowDefinitions>
 
         <!--Labels-->
-        <Label x:Name="lbl_Naam" Style="{StaticResource HeaderStyle}"  
-               Content="Voornaam:" Grid.Column="0" 
+        <Label x:Name="lbl_ActerNaam" Style="{StaticResource HeaderStyle}"  
+               Content="Achternaam:" Grid.Column="0" 
                HorizontalAlignment="Left" Margin="5" 
                Height="20"/>
         <Label x:Name="lbl_Achternaam" Style="{StaticResource HeaderStyle}" 
-               Content="Achternaam:" Grid.Column="0" Grid.Row="1" 
+               Content="Voornaam:" Grid.Column="0" Grid.Row="1" 
                HorizontalAlignment="Left" Margin="5" 
                Height="20"/>
         <Label x:Name="lbl_Rijksregisternummer" 
@@ -116,7 +116,7 @@
                  TextChanged="txtbx_Voornaam_TextChanged"/>
 
 
-        <TextBox x:Name="txtbx_AchterNaam" 
+        <TextBox x:Name="txtbx_Naam" 
                Style="{StaticResource InputStyle}"
                Grid.Column="1" 
                Grid.Row="1"

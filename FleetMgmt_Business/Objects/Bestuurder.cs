@@ -30,7 +30,7 @@ namespace FleetMgmt_Business.Objects {
 
         public Bestuurder(string rijksregisternummer, string naam, string voornaam, DateTime geboortedatum) {
             zetRijksRegisternummer(rijksregisternummer, geboortedatum);
-            zetNaam(naam);
+            zetAchternaam(naam);
             zetVoornaam(voornaam);
             zetGeboorteDatum(geboortedatum);
         }
@@ -40,14 +40,14 @@ namespace FleetMgmt_Business.Objects {
             this.Rijksregisternummer = rijksregisternummer;
         }
 
-        private void zetNaam(string naam) {
-            if (string.IsNullOrWhiteSpace(naam)) throw new BestuurderException("Bestuurder: naam mag niet leeg zijn!");
-            this.Voornaam = naam;
+        private void zetAchternaam(string achternaam) {
+            if (string.IsNullOrWhiteSpace(achternaam)) throw new BestuurderException("Bestuurder: Achternaam mag niet leeg zijn!");
+            this.Achternaam = achternaam;
         }
 
         private void zetVoornaam(string voornaam) {
-            if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: voornaam mag niet leeg zijn!");
-            this.Achternaam = voornaam;
+            if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: Voornaam mag niet leeg zijn!");
+            this.Voornaam = voornaam;
         }
 
         private void zetGeboorteDatum(DateTime geboortedatum) {
@@ -92,15 +92,14 @@ namespace FleetMgmt_Business.Objects {
             string bestuurdersInfo = $"Rijksregisternummer: {Rijksregisternummer}\nVoornaam: {Voornaam}\nAchternaam: {Achternaam}\nGeboortedatum: " +
                 $"{GeboorteDatum.ToShortDateString()}" +
              $"\nTankkaart: {Tankkaart}\nVoertuig: {Voertuig}\n" +
-             $"Rijbewijzen" +
-             $"...........";
+             $"Rijbewijzen";
             if (rijbewijzen.Count > 0) {
                 foreach (var rijbewijs in rijbewijzen) {
                     bestuurdersInfo += $"\n{rijbewijs}";
                 }
             }
             else {
-                bestuurdersInfo += "0";
+                bestuurdersInfo += " 0";
             }
             return bestuurdersInfo;
         }

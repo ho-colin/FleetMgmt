@@ -21,7 +21,6 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
 
         public List<RijbewijsEnum> Rijbewijzen { get; set; }
 
-
         public RijbewijsSelecteren() {
             InitializeComponent();
 
@@ -38,13 +37,11 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
         }
 
         private void lstbx_Rijbewijzen_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            switch (lstbx_Rijbewijzen.SelectedIndex) {
-                case -1:
-                    btn_Selecteer.IsEnabled = false;
-                    break;
-                default:
-                    btn_Selecteer.IsEnabled = true;
-                    break;
+            if(lstbx_Rijbewijzen.SelectedItem == null) {
+                btn_Selecteer.IsEnabled = false;
+            }
+            else {
+                btn_Selecteer.IsEnabled = true;
             }
 
         }
