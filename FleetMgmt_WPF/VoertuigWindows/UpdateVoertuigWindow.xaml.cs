@@ -29,7 +29,8 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         Bestuurder Bestuurder = null;
         public UpdateVoertuigWindow(Voertuig v) {
             this.Voertuig = v;
-            if(this.Bestuurder != null) { this.Bestuurder = Voertuig.Bestuurder; }
+            this.Bestuurder = Voertuig.Bestuurder;
+            this.TypeVoertuig = Voertuig.TypeVoertuig;
             InitializeComponent();
             resetVelden();
         }
@@ -38,7 +39,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
             if(stw.ShowDialog() == true) {
                 this.Bestuurder = stw.Bestuurder;
-                lbl_Bestuurder.Content = this.Bestuurder.Voornaam;
+                lbl_NieuwBestuurder.Content = this.Bestuurder.Voornaam;
             }
         }
 
@@ -57,16 +58,13 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 txtbx_Model.Text = Voertuig.Model;
                 txtbx_Nummerplaat.Text = Voertuig.Nummerplaat;
                 combobx_Brandstof.ItemsSource = Enum.GetValues(typeof(BrandstofEnum));
+                combobx_Brandstof.SelectedIndex = combobx_Brandstof.Items.IndexOf(Voertuig.Brandstof);
                 if(this.Bestuurder == null) {
                     lbl_NieuwBestuurder.Content = "Geen Bestuurder";
                 } else {
                     lbl_NieuwBestuurder.Content = this.Bestuurder.Voornaam;
                 }
-                if(Voertuig.TypeVoertuig == null) {
-                    lbl_NieuwTypeVoertuig.Content = "Geen TypeVoertuig";
-                } else {
-                    lbl_NieuwTypeVoertuig.Content = Voertuig.TypeVoertuig.Type.ToString();
-                }
+                lbl_NieuwTypeVoertuig.Content = Voertuig.TypeVoertuig.Type.ToString();
                 txtbx_Kleur.Text = Voertuig.Kleur;
                 txtbx_AantalDeuren.Text = Voertuig.AantalDeuren.ToString();
 
@@ -101,6 +99,8 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 Bestuurder gevondenBestuurder = this.Bestuurder;
                 Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat,gevondenBestuurder);
                 vm.updateVoertuig(geupdateVoertuig);
+                DialogResult = true;
+                Close();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }

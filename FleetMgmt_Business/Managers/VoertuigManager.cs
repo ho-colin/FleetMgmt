@@ -44,13 +44,8 @@ namespace FleetMgmt_Business.Managers {
             try {
                 if(chassisnummer != null) {
                     if (repo.bestaatVoertuig(chassisnummer)) voertuigen.Add(repo.geefVoertuig(chassisnummer));
-                } else {
-                    if (!string.IsNullOrWhiteSpace(merk) || !string.IsNullOrWhiteSpace(model)
-                        || !string.IsNullOrWhiteSpace(typeVoertuig) || !string.IsNullOrWhiteSpace(brandstof)
-                        || !string.IsNullOrWhiteSpace(kleur) || aantalDeuren.HasValue
-                        || !string.IsNullOrWhiteSpace(bestuurderId))  {
-                        voertuigen.AddRange(repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, bestuurderId));
-                    } else throw new VoertuigManagerException("ZoekVoertuigen, geen zoekcriteria");
+                } else {                   
+                        voertuigen.AddRange(repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, bestuurderId));                 
                 }
                 return voertuigen;
 
