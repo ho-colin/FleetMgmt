@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data.Repositories {
+    //COLIN MEERSCHMAN
     public class TypeVoertuigRepository : ITypeVoertuigRepository {
         
         //Update vereistRijbewijs, verkrijgt via type

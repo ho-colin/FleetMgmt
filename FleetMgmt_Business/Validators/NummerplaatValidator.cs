@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Validators {
+    //COLIN MEERSCHMAN
     public static class NummerplaatValidator {
 
         private static int nummerplaatLengte = 9;

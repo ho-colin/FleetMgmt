@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Managers {
+    //COLIN MEERSCHMAN
     public class TypeVoertuigManager : ITypeVoertuigRepository {
 
         private ITypeVoertuigRepository repo;

@@ -7,6 +7,7 @@ using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Exceptions;
 
 namespace FleetMgmt_Business.Objects {
+    //COLIN MEERSCHMAN
     public class Rijbewijs {
 
         public RijbewijsEnum Categorie { get; private set; }

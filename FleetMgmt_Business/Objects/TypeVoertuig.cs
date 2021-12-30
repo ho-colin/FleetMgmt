@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Objects {
+    //COLIN MEERSCHMAN
     public class TypeVoertuig {
 
         //Unique Identifier

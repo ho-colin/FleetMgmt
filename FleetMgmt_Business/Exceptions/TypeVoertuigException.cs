@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Exceptions {
+    //COLIN MEERSCHMAN
     public class TypeVoertuigException : Exception {
         public TypeVoertuigException(string message) : base(message) {
         }

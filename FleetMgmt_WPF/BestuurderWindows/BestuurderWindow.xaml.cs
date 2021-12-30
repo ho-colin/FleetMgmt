@@ -62,6 +62,7 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
+
             TankkaartSelecteren tankkaartSelecteren = new TankkaartSelecteren();
             if (tankkaartSelecteren.ShowDialog() == true)
                 this.tankkaart = tankkaartSelecteren.Tankkaart;
@@ -73,6 +74,21 @@ namespace FleetMgmt_WPF {
             if (rijbewijsSelecteren.ShowDialog() == true)
                 this.rijbewijzen = rijbewijsSelecteren.Rijbewijzen;
             lbl_Rijbewijs.Content = this.rijbewijzen.Count;
+
+            TankkaartSelecteren tks = new TankkaartSelecteren();
+            if (tks.ShowDialog() == true) {
+                this.Tankkaart = tks.Tankkaart;
+                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+            }
+        }
+
+        private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
+            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
+            if (rbs.ShowDialog() == true) {
+                this.Rijbewijzen = rbs.Rijbewijzen;
+                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+            }
+
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {

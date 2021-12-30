@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FleetMgmt_Business.Exceptions
-{
-    public class VoertuigException : Exception
-    {
+namespace FleetMgmt_Business.Exceptions{
+    public class VoertuigException : Exception{
+        //PIETER COLPAERT
         public VoertuigException(string message) : base(message)
         {
         }

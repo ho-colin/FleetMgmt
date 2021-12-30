@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Exceptions {
     public class VoertuigManagerException : Exception {
+        //PIETER COLPAERT
         public VoertuigManagerException(string message) : base(message) {
         }
 
