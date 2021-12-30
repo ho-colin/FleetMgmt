@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Exceptions {
+    //COLIN MEERSCHMAN
     public class RijksregisterException : Exception {
 
         public RijksregisterException(string message) : base(message) { }

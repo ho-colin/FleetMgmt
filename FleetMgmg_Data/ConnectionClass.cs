@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data {
+    //COLIN MEERSCHMAN
     public static class ConnectionClass {
 
         public static SqlConnection getConnection() {

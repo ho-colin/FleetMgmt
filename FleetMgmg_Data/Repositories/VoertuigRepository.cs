@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data.Repositories {
+    //PIETER COLPAERT
     public class VoertuigRepository : IVoertuigRepository {
 
         private SqlConnection getConnection() {

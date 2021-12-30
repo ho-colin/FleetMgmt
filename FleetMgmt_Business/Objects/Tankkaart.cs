@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FleetMgmt_Business.Enums;
 
 namespace FleetMgmt_Business.Objects {
+    //COLIN MEERSCHMAN
     public class Tankkaart {
 
         public int KaartNummer { get; private set; }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data.Exceptions {
+    //COLIN MEERSCHMAN
     public class VoertuigRepositoryException : Exception {
         public VoertuigRepositoryException(string message) : base(message) {
         }

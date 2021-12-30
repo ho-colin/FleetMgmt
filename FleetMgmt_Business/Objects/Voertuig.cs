@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmt_Business.Objects {
+    //PIETER COLPAERT
     public class Voertuig {
 
         public BrandstofEnum Brandstof { get; private set; }

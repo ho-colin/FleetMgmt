@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FleetMgmg_Data.Repositories {
+    //COLIN MEERSCHMAN
     public class TankkaartRepository : ITankkaartRepository {
 
         public bool bestaatTankkaart(int id) {
