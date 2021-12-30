@@ -145,7 +145,7 @@
                Style="{StaticResource InputStyle}"
                Grid.Column="3"
                Grid.Row="1" Margin="5"
-               Foreground="LightGray"/>
+               Foreground="Black"/>
 
         <TextBox x:Name="txtbx_AantalDeuren" 
                Style="{StaticResource InputStyle}"
@@ -170,12 +170,9 @@
             <Button Click="btn_ResetVelden_Click" 
                     x:Name="btn_ResetVelden" 
                     Content="Reset Velden" Margin="5" 
-                    Grid.Column="1" Grid.Row="1"/>
-            <ListView Foreground="Black" BorderBrush="LightGray" 
-                      BorderThickness="5" x:Name="lstVw_Voertuigen" 
-                      Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" 
-                      Margin="5" IsEnabled="False"/>
-
+                    Grid.Row="1"/>            
         </Grid>
+        <ListView Foreground="Black" BorderBrush="LightGray" BorderThickness="5" x:Name="lstVw_Voertuigen" 
+                  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5" Margin="5,5,5,0" Grid.RowSpan="5"/>
     </Grid>
 </Window>

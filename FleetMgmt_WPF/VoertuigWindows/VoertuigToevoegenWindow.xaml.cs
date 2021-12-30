@@ -46,7 +46,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
             if(w.ShowDialog()== true) {
                 this.typeVoertuig = w.TypeVoertuig;
-                lbl_TypeVoertuig.Content = this.typeVoertuig.Type;
+                lbl_GeselecteerdeTypeVoertuig.Content = this.typeVoertuig.Type.ToString();
             }
         }
 
