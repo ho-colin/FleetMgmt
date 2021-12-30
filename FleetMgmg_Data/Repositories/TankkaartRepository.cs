@@ -271,7 +271,7 @@ namespace FleetMgmg_Data.Repositories {
 
                 if (query.ToString().Contains("@id")) cmd.Parameters.AddWithValue("@id", id.Value);
                 if (query.ToString().Contains("@geldigheidsDatum")) cmd.Parameters.AddWithValue("@geldigheidsDatum", geldigheidsDatum.Value.ToString("yyyy-MM-dd"));
-                if (query.ToString().Contains("@bestuurderId")) cmd.Parameters.AddWithValue("@bestuurder", bestuurder);
+                if (query.ToString().Contains("@bestuurder")) cmd.Parameters.AddWithValue("@bestuurder", bestuurder);
                 if (query.ToString().Contains("@geblokkeerd")) cmd.Parameters.AddWithValue("@geblokkeerd", geblokkeerd.Value);
                 if (query.ToString().Contains("@brandstof")) cmd.Parameters.AddWithValue("@brandstof", brandstof.ToString());
 
@@ -409,7 +409,7 @@ namespace FleetMgmg_Data.Repositories {
             }
 
             if (!string.IsNullOrWhiteSpace(inbezitvan)) {
-                query.Append(", BestuurderId ");
+                query.Append(", Bestuurder ");
             }
             #endregion
             query.Append(") OUTPUT inserted.Id VALUES (@geldigdatum,@geblokkeerd");
@@ -420,7 +420,7 @@ namespace FleetMgmg_Data.Repositories {
             }
 
             if (!string.IsNullOrWhiteSpace(inbezitvan)) {
-                query.Append(",@bestuurderid");
+                query.Append(",@bestuurder");
             }
             #endregion
             query.Append(")");
@@ -437,7 +437,7 @@ namespace FleetMgmg_Data.Repositories {
                     cmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd);
 
                     if (query.ToString().Contains("@pincode")) cmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
-                    if (query.ToString().Contains("@bestuurderid")) cmd.Parameters.AddWithValue("@bestuurderid", tankkaart.InBezitVan.Rijksregisternummer);
+                    if (query.ToString().Contains("@bestuurder")) cmd.Parameters.AddWithValue("@bestuurder", tankkaart.InBezitVan.Rijksregisternummer);
 
                    insertedId = (int)cmd.ExecuteScalar();
                     tankkaart.zetKaartnummer(insertedId);

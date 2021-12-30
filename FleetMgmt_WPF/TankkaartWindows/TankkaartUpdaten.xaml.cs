@@ -33,7 +33,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         public TankkaartUpdaten(FleetMgmt_Business.Objects.Tankkaart tk) {
             this.Tankkaart = tk;
 
-            if (this.Bestuurder != null) { this.Bestuurder = Tankkaart.InBezitVan; }
+            if (tk.InBezitVan != null) { this.Bestuurder = Tankkaart.InBezitVan; }
             this.Brandstoffen = Tankkaart.Brandstoffen;
 
             InitializeComponent();
@@ -77,9 +77,9 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 lbl_NieuwBrandstoffen.Content = this.Brandstoffen.Count + " Brandstof(fen)";
                
                 if(this.Bestuurder == null) {
-                    lbl_Bestuurder.Content = "Geen Bestuurder";
+                    lbl_nieuwBestuurderNaam.Content = "Geen Bestuurder";
                 } else {
-                    lbl_Bestuurder.Content = this.Bestuurder.Voornaam;
+                    lbl_nieuwBestuurderNaam.Content = this.Bestuurder.Voornaam;
                 }
 
                 if (string.IsNullOrWhiteSpace(Tankkaart.Pincode)) {

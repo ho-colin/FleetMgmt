@@ -78,16 +78,18 @@ namespace FleetMgmt_WPF {
 
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
             TankkaartSelecteren tks = new TankkaartSelecteren();
-            if (tks.ShowDialog() == true)
+            if (tks.ShowDialog() == true) {
                 this.Tankkaart = tks.Tankkaart;
-            lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+            }
         }
 
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
             RijbewijsSelecteren rbs = new RijbewijsSelecteren();
-            if (rbs.ShowDialog() == true)
+            if (rbs.ShowDialog() == true) {
                 this.Rijbewijzen = rbs.Rijbewijzen;
-            lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
+            }
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {

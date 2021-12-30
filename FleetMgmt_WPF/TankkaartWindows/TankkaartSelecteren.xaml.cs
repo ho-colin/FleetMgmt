@@ -38,11 +38,13 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             List<string> brandstoffen = new List<string>(Enum.GetNames(typeof(BrandstofEnum)).ToList());
             brandstoffen.Insert(0, "< Geen Brandstof >");
             cmbbx_Brandstof.ItemsSource = brandstoffen;
+            cmbbx_Brandstof.SelectedIndex = 0;
             
 
             //Geblokkeerd box populaten
             string[] gKeuzes = { "< Geen Keuze >", "Ja", "Nee" };
             cmbbx_Geblokkeerd.ItemsSource = gKeuzes;
+            cmbbx_Geblokkeerd.SelectedIndex = 0;
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
