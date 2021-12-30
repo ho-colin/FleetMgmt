@@ -116,20 +116,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             if (tankkaartSelecteren.ShowDialog() == true)
                 this.tankkaart = tankkaartSelecteren.Tankkaart;
             lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
-
-            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
-            if (rbs.ShowDialog() == true) {
-                this.Rijbewijzen = rbs.Rijbewijzen;
-                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
-            }
-        }
-
-        private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
-            TankkaartSelecteren rbs = new TankkaartSelecteren();
-            if (rbs.ShowDialog() == true) {
-                this.Tankkaart = rbs.Tankkaart;
-                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
-            }
         }
     }
 }

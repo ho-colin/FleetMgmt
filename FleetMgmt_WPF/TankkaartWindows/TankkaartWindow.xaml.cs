@@ -42,7 +42,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow w = new SelecteerBestuurderWindow();
             if(w.ShowDialog() == true) {
-                this.b = w.Bestuurder;
+                this.b = w.bestuurder;
                 lbl_BestuurderNaam.Content = b.Voornaam + " " + b.Achternaam;
             }
         }

@@ -77,18 +77,9 @@ namespace FleetMgmt_WPF {
 
             TankkaartSelecteren tks = new TankkaartSelecteren();
             if (tks.ShowDialog() == true) {
-                this.Tankkaart = tks.Tankkaart;
-                lbl_Tankkaart.Content = this.Tankkaart.KaartNummer;
+                this.tankkaart = tks.Tankkaart;
+                lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
             }
-        }
-
-        private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
-            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
-            if (rbs.ShowDialog() == true) {
-                this.Rijbewijzen = rbs.Rijbewijzen;
-                lbl_Rijbewijs.Content = this.Rijbewijzen.Count;
-            }
-
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
