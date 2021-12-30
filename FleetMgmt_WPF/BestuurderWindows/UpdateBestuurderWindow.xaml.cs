@@ -7,17 +7,9 @@ using FleetMgmt_WPF.TankkaartWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FleetMgmt_WPF.BestuurderWindows {
     /// <summary>
@@ -25,19 +17,20 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     /// </summary>
     public partial class UpdateBestuurderWindow : Window {
 
-        BestuurderManager bm = new BestuurderManager(new BestuurderRepository());
-        Tankkaart Tankkaart { get; set; }
-        private List<RijbewijsEnum> Rijbewijzen { get; set; }
-        Bestuurder Bestuurder { get; set; }
+        private BestuurderManager _bestuurderManager = new BestuurderManager(new BestuurderRepository());
+        public Tankkaart tankkaart { get; set; }
+        public List<RijbewijsEnum> rijbewijzen { get; set; }
+        public Bestuurder bestuurder { get; set; }
+
         public UpdateBestuurderWindow(Bestuurder bestuurder) {
-            this.Bestuurder = bestuurder;
+            this.bestuurder = bestuurder;
             InitializeComponent();
-            reset();
+            Reset();
             this.ResizeMode = ResizeMode.NoResize;
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
-            reset();
+            Reset();
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e) {
@@ -49,7 +42,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                     Convert.ToDateTime(DatePckr_Geboortedatum.SelectedDate.HasValue ?
                     DatePckr_Geboortedatum.SelectedDate.Value : null);
                 Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, geboortedatum);
-                bm.bewerkBestuurder(b);
+                _bestuurderManager.bewerkBestuurder(b);
                 DialogResult = true;
                 Close();
             }catch(Exception ex) {
@@ -57,23 +50,15 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             }
         }
 
-        private void txtbx_Id_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
-        }
-
         private void txtbx_Voornaam_TextChanged(object sender, TextChangedEventArgs e) {
-            startVoorNaamMetHoofdletter();
+            AutoCapitalCasingVoornaam();
         }
 
         private void txtbx_Achternaam_TextChanged(object sender, TextChangedEventArgs e) {
-            startAchterNaamMetHoofdletter();
+            AutoCapitalCasingAchternaam();
         }
 
-        private void txtbx_RijksregisterNummer_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            e.Handled = !isIdValid(((TextBox)sender).Text + e.Text);
-        }
-
-        private void startVoorNaamMetHoofdletter() {
+        private void AutoCapitalCasingVoornaam() {
             string oldText = "";
             if ((txtbx_Voornaam.SelectionStart <= txtbx_Voornaam.Text.Length - oldText.Length
                 || txtbx_Voornaam.SelectionStart == 0) &&
@@ -88,7 +73,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             oldText = txtbx_Voornaam.Text;
         }
 
-        private void startAchterNaamMetHoofdletter() {
+        private void AutoCapitalCasingAchternaam() {
             string oldText = "";
             if ((txtbx_Achternaam.SelectionStart <= txtbx_Achternaam.Text.Length - oldText.Length
                 || txtbx_Achternaam.SelectionStart == 0) &&
@@ -102,48 +87,39 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             oldText = txtbx_Achternaam.Text;
         }
 
-        private void reset() {
-            //Nieuwe velden vullen met huidige values
-            this.txtbx_Voornaam.Text = Bestuurder.Voornaam;
-            this.txtbx_Achternaam.Text = Bestuurder.Achternaam;
-            this.DatePckr_Geboortedatum.SelectedDate = Bestuurder.GeboorteDatum;
-            this.txtbx_RijksregisterNummer.Text = Bestuurder.Rijksregisternummer;
-            //Velden vullen met oude values
-            txtbx_RijksregisterNummeOud.Text = Bestuurder.Rijksregisternummer;
-            txtbx_VoornaamOud.Text = Bestuurder.Achternaam;
-            txtbx_AchternaamOud.Text = Bestuurder.Voornaam;
-            txtbx_GeboortedatumOud.Text = Bestuurder.GeboorteDatum.ToShortDateString();
-
-            if(Bestuurder.rijbewijzen.Count > 0) {
-                txtbx_RijbewijsOud.Text = string.Join(',', Bestuurder.rijbewijzen.Select(x => x.ToString()));
-                lbl_AantalRijbewijzen.Content = Bestuurder.rijbewijzen.Count;
+        private void Reset() {
+            this.txtbx_Voornaam.Text = bestuurder.Voornaam;
+            this.txtbx_Achternaam.Text = bestuurder.Achternaam;
+            this.DatePckr_Geboortedatum.SelectedDate = bestuurder.GeboorteDatum;
+            this.txtbx_RijksregisterNummer.Text = bestuurder.Rijksregisternummer;
+            txtbx_RijksregisterNummeOud.Text = bestuurder.Rijksregisternummer;
+            txtbx_VoornaamOud.Text = bestuurder.Achternaam;
+            txtbx_AchternaamOud.Text = bestuurder.Voornaam;
+            txtbx_GeboortedatumOud.Text = bestuurder.GeboorteDatum.ToShortDateString();
+            if(bestuurder.rijbewijzen.Count > 0) {
+                txtbx_RijbewijsOud.Text = string.Join(',', bestuurder.rijbewijzen.Select(x => x.ToString()));
+                lbl_AantalRijbewijzen.Content = bestuurder.rijbewijzen.Count;
             } else { txtbx_RijbewijsOud.Text = "Geen rijbewijs!"; }
-
-            if(Bestuurder.Tankkaart != null) {
-                txtbx_TankkaartOud.Text = string.Join(',', Bestuurder.Tankkaart.Brandstoffen.Select(x => x.ToString()));
-                lbl_TankkaartNummer.Content = Bestuurder.Tankkaart.KaartNummer;
+            if(bestuurder.Tankkaart != null) {
+                txtbx_TankkaartOud.Text = string.Join(',', bestuurder.Tankkaart.Brandstoffen.Select(x => x.ToString()));
+                lbl_TankkaartNummer.Content = bestuurder.Tankkaart.KaartNummer;
             } else { txtbx_TankkaartOud.Text = "Geen tankkaart!"; }
             
         }
 
-        public static bool isIdValid(string s) {
-            int i;
-            return int.TryParse(s, out i) && i >= 0 && i <= int.MaxValue;
-        }
-
         private void btn_Rijbewijs_Click(object sender, RoutedEventArgs e) {
-            RijbewijsSelecteren rbs = new RijbewijsSelecteren();
-            if (rbs.ShowDialog() == true) {
-                this.Rijbewijzen = rbs.Rijbewijzen;
-                lbl_AantalRijbewijzen.Content = this.Rijbewijzen.Count;
+            RijbewijsSelecteren rijbewijsSelectereb = new RijbewijsSelecteren();
+            if (rijbewijsSelectereb.ShowDialog() == true) {
+                this.rijbewijzen = rijbewijsSelectereb.Rijbewijzen;
+                lbl_AantalRijbewijzen.Content = this.rijbewijzen.Count;
             }
         }
 
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
-            TankkaartSelecteren rbs = new TankkaartSelecteren();
-            if (rbs.ShowDialog() == true) {
-                this.Tankkaart = rbs.Tankkaart;
-                lbl_TankkaartNummer.Content = this.Tankkaart.KaartNummer;
+            TankkaartSelecteren tankkaartSelecteren = new TankkaartSelecteren();
+            if (tankkaartSelecteren.ShowDialog() == true) {
+                this.tankkaart = tankkaartSelecteren.Tankkaart;
+                lbl_TankkaartNummer.Content = this.tankkaart.KaartNummer;
             }
         }
     }

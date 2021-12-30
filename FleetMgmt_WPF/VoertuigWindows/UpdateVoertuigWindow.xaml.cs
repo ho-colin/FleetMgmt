@@ -38,7 +38,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         private void btn_Bestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
             if(stw.ShowDialog() == true) {
-                this.Bestuurder = stw.Bestuurder;
+                this.Bestuurder = stw.bestuurder;
                 lbl_NieuwBestuurder.Content = this.Bestuurder.Voornaam;
             }
         }

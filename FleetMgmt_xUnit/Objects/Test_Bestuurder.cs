@@ -15,33 +15,33 @@ namespace FleetMgmt_xUnit.Objects
         public void Test_Alles_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
             Assert.Equal("90.02.01-999-02", b.Rijksregisternummer);
-            Assert.Equal("Gheysens", b.Voornaam);
-            Assert.Equal("Louis", b.Achternaam);
+            Assert.Equal("Gheysens", b.Achternaam);
+            Assert.Equal("Louis", b.Voornaam);
             Assert.Equal(new DateTime(1933, 12, 11), b.GeboorteDatum);
         }
 
         [Fact]
-        public void Test_ZetNaam_Valid() {
+        public void Test_ZetAchterNaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Gheysens", b.Voornaam);
+            Assert.Equal("Gheysens", b.Achternaam);
         }
 
         [Fact]
-        public void Test_ZetNaam_InValid() {
+        public void Test_ZetAchterNaam_InValid() {
             var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", null, "Louis", new DateTime(1996, 06, 05)));
-            Assert.Equal("Bestuurder: naam mag niet leeg zijn!", exc.Message);
+            Assert.Equal("Bestuurder: Achternaam mag niet leeg zijn!", exc.Message);
         }
 
         [Fact]
         public void Test_ZetVoornaam_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            Assert.Equal("Louis", b.Achternaam);
+            Assert.Equal("Louis", b.Voornaam);
         }
 
         [Fact]
         public void Test_ZetVoornaam_InValid() {
            var exc =  Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", null, new DateTime(1996, 06, 05)));
-           Assert.Equal("Bestuurder: voornaam mag niet leeg zijn!", exc.Message);
+           Assert.Equal("Bestuurder: Voornaam mag niet leeg zijn!", exc.Message);
         }
 
         [Fact]

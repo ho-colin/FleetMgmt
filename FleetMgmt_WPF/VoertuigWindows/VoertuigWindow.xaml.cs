@@ -103,7 +103,7 @@ namespace FleetMgmt_WPF {
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
             SelecteerBestuurderWindow stw = new SelecteerBestuurderWindow();
             if (stw.ShowDialog() == true) {
-                this.Bestuurder = stw.Bestuurder;
+                this.Bestuurder = stw.bestuurder;
                 lbl_Bestuurder.Content = this.Bestuurder.Voornaam;
             }
         }

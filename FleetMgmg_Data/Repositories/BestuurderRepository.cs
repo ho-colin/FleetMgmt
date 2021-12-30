@@ -89,14 +89,14 @@ namespace FleetMgmg_Data.Repositories {
                         komma = true;
                     }
 
-                    if (huidigieBestuurder.Voornaam != bestuurder.Voornaam) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" Naam=@naam ");
-                    }
-
                     if (huidigieBestuurder.Achternaam != bestuurder.Achternaam) {
                         if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" voornaam=@voornaam");
+                        queryBuilder.Append(" Achternaam=@Achternaam ");
+                    }
+
+                    if (huidigieBestuurder.Voornaam != bestuurder.Voornaam) {
+                        if (komma) { queryBuilder.Append(","); } else komma = true;
+                        queryBuilder.Append(" Naam=@Naam");
                     }
 
                     if (huidigieBestuurder.GeboorteDatum != bestuurder.GeboorteDatum) {
@@ -126,8 +126,8 @@ namespace FleetMgmg_Data.Repositories {
                             cmd.Parameters.AddWithValue("@naam", bestuurder.Voornaam == null ? DBNull.Value : bestuurder.Voornaam);
                         }
 
-                        if (queryBuilder.ToString().Contains("@voornaam")) {
-                            cmd.Parameters.AddWithValue("@voornaam", bestuurder.Achternaam == null ? DBNull.Value : bestuurder.Achternaam);
+                        if (queryBuilder.ToString().Contains("@Achternaam")) {
+                            cmd.Parameters.AddWithValue("@Achternaam", bestuurder.Achternaam == null ? DBNull.Value : bestuurder.Achternaam);
                         }
 
                         if (queryBuilder.ToString().Contains("@geboorteDatum")) {
@@ -186,8 +186,8 @@ namespace FleetMgmg_Data.Repositories {
                     using(SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
                             if(b == null) {
-                                b = new Bestuurder((string)reader["Bestuurder"], (string)reader["naam"], 
-                                    (string)reader["voornaam"], (DateTime)reader["geboortedatum"]);
+                                b = new Bestuurder((string)reader["Rijksregisternuller"], (string)reader["naam"], 
+                                    (string)reader["Achternaam"], (DateTime)reader["geboortedatum"]);
                             }
 
                             if(t == null  && !reader.IsDBNull(reader.GetOrdinal("Tankkaart"))) {
@@ -249,7 +249,7 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string voornaam, DateTime? geboortedatum) {
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string achterNaam, string voorNaam, DateTime? geboortedatum) {
             List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
             SqlConnection conn = ConnectionClass.getConnection();
             StringBuilder query = new StringBuilder(" SELECT b.*, tb.Brandstof, tk.Id, tk.Pincode,"+
@@ -272,13 +272,13 @@ namespace FleetMgmg_Data.Repositories {
                 query.Append(" b.Rijksregisternummer=@rijksregisternummer");
             }
 
-            if (naam != null) {
+            if (achterNaam != null) {
                 if (!where) query.Append(" WHERE "); where = true;
                 if (and) query.Append(" AND "); else and = true;
                 query.Append(" b.Naam=@naam");
             }
 
-            if (voornaam != null) {
+            if (voorNaam != null) {
                 if (!where) query.Append(" WHERE "); where = true;
                 if (and) query.Append(" AND "); else and = true;
                 query.Append(" b.Achternaam=@achternaam ");
@@ -292,8 +292,8 @@ namespace FleetMgmg_Data.Repositories {
                 cmd.CommandText = query.ToString();
                 if (query.ToString().Contains("@rijksregisternummer")) cmd.Parameters.AddWithValue
                         ("@rijksregisternummer", rijksregisternummer);
-                if (query.ToString().Contains("@naam")) cmd.Parameters.AddWithValue("@naam", naam);
-                if (query.ToString().Contains("@achternaam")) cmd.Parameters.AddWithValue("@achternaam", voornaam);
+                if (query.ToString().Contains("@naam")) cmd.Parameters.AddWithValue("@naam", achterNaam);
+                if (query.ToString().Contains("@achternaam")) cmd.Parameters.AddWithValue("@achternaam", voorNaam);
                 if (query.ToString().Contains("@geboortedatum")) cmd.Parameters.AddWithValue
                         ("@geboortedatum", geboortedatum.Value.ToString("yyyy-MM-dd"));
                 conn.Open();
@@ -400,9 +400,9 @@ namespace FleetMgmg_Data.Repositories {
                     cmdOne.Parameters.Add(new SqlParameter("@Rijksregisternummer", SqlDbType.NVarChar));
                     cmdOne.Parameters["@Rijksregisternummer"].Value = bestuurder.Rijksregisternummer;
                     cmdOne.Parameters.Add(new SqlParameter("@Naam", SqlDbType.NVarChar));
-                    cmdOne.Parameters["@Naam"].Value = bestuurder.Achternaam;
+                    cmdOne.Parameters["@Naam"].Value = bestuurder.Voornaam;
                     cmdOne.Parameters.Add(new SqlParameter("@Achternaam", SqlDbType.NVarChar));
-                    cmdOne.Parameters["@Achternaam"].Value = bestuurder.Voornaam;
+                    cmdOne.Parameters["@Achternaam"].Value = bestuurder.Achternaam;
                     cmdOne.Parameters.Add(new SqlParameter("@Geboortedatum", SqlDbType.Date));
                     cmdOne.Parameters["@Geboortedatum"].Value = bestuurder.GeboorteDatum;
                     if (queryOne.Contains("@TankkaartId")) {

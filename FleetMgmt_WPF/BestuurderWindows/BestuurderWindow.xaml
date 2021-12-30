@@ -92,7 +92,6 @@
 
         <!--Labels-->
         <Label Grid.Column="1" Content="Bestuurder" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="162"/>
-        <Label x:Name="lbl_Id" Style="{StaticResource HeaderStyle}"  Content="Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,76,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <Label x:Name="lbl_Rijksregisternummer" Style="{StaticResource HeaderStyle}"  Content="Rijksregisternr:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,100,0,0" VerticalAlignment="Top" Height="25" Width="93"/>
         <Label x:Name="lbl_Voornaam" Style="{StaticResource HeaderStyle}"  Content="Achternaam: " Grid.Column="1" HorizontalAlignment="Left" Margin="34,125,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
         <Label x:Name="lbl_Achternaam" Style="{StaticResource HeaderStyle}"  Content="Voornaam:" Grid.Column="1" HorizontalAlignment="Left" Margin="34,146,0,0" VerticalAlignment="Top" Height="20" Width="105"/>
@@ -120,7 +119,6 @@
 
 
         <!--Input + combox velden-->
-        <TextBox x:Name="txtbw_Id" IsEnabled="False" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,80,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
         <TextBox x:Name="txtbx_Rijksregisternummer" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
         <TextBox x:Name="txtbx_Voornaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,125,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <TextBox x:Name="txtbx_Achternaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,148,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>

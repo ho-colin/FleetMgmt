@@ -127,8 +127,7 @@
 
 
                 <TextBox x:Name="txtbx_RijksregisterNummer" Grid.Row="4" Grid.Column="2" Margin="10,5,10,10" 
-                         Style="{StaticResource InputStyle}"
-                         PreviewTextInput="txtbx_RijksregisterNummer_PreviewTextInput"/>
+                         Style="{StaticResource InputStyle}"/>
 
                 <!--Nieuwe waarden invullen aan de hand van textboxen-->
 

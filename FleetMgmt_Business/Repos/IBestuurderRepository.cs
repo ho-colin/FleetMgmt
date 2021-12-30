@@ -11,7 +11,7 @@ namespace FleetMgmt_Business.Repos {
         Bestuurder voegBestuurderToe(Bestuurder bestuurder);
         void verwijderBestuurder(string rijks);
         IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, 
-            string naam, string voornamam, DateTime? geboortedatum);
+            string achterNaam, string voorNaam, DateTime? geboortedatum);
         Bestuurder selecteerBestuurder(string rijks);
         void bewerkBestuurder(Bestuurder bestuurder);
         bool bestaatBestuurder(string rijks);
