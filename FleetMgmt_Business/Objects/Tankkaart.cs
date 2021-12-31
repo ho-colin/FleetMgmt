@@ -111,7 +111,11 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"[Tankkaart] {this.KaartNummer},{this.Geblokkeerd},{this.GeldigheidsDatum.ToString("dd/MM/yyyy")},{this.Brandstoffen.Count}";
+            string naarString = $"[Tankkaart] {this.KaartNummer},{this.Geblokkeerd},{this.GeldigheidsDatum.ToString("dd/MM/yyyy")},{this.Brandstoffen.Count}";
+            if (this.InBezitVan != null) {
+                naarString += $", {this.InBezitVan.Voornaam} {this.InBezitVan.Achternaam}";
+            }
+            return naarString;
         }
 
         public override bool Equals(object obj) {

@@ -124,6 +124,33 @@ namespace FleetMgmg_Data.Repositories {
                         #endregion
                     }
                     #endregion
+                    #region BestuurderUpdate
+                    if(tankkaart.InBezitVan != null) {
+                        // Als de bestuurder al een tankkaart zou hebben wordt deze overschreven met deze tankkaart.
+                        string query = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
+                        using (SqlCommand cmd = new SqlCommand()) {
+                            cmd.Transaction = transaction;
+
+                            cmd.CommandText = query;
+                            cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
+                            cmd.Parameters.AddWithValue("@rijksregisternummer", tankkaart.InBezitVan.Rijksregisternummer);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    } else {
+                        //Als de bestuurder NULL is wordt het veld met verkregen tankkaartid op null gezet in de bestuurderskollom
+                        string query = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
+                        using(SqlCommand cmd = new SqlCommand()) {
+                            cmd.Transaction = transaction;
+
+                            cmd.CommandText = query;
+                            cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    
+                    #endregion
                     transaction.Commit();
                 } catch (Exception ex) {
                     try {
@@ -401,80 +428,104 @@ namespace FleetMgmg_Data.Repositories {
             }
 
             SqlConnection conn = ConnectionClass.getConnection();
-            StringBuilder query = new StringBuilder("INSERT INTO Tankkaart (GeldigDatum, Geblokkeerd");
+            conn.Open();
+            SqlTransaction transaction = conn.BeginTransaction();
 
-            #region Optionele Te Vullen Velden
-            if (!string.IsNullOrWhiteSpace(tankkaart.Pincode)) {
-                query.Append(", Pincode ");
-            }
+            try {
+                StringBuilder query = new StringBuilder("INSERT INTO Tankkaart (GeldigDatum, Geblokkeerd");
 
-            if (!string.IsNullOrWhiteSpace(inbezitvan)) {
-                query.Append(", Bestuurder ");
-            }
-            #endregion
-            query.Append(") OUTPUT inserted.Id VALUES (@geldigdatum,@geblokkeerd");
-
-            #region Opionele Te vullen Velden Parameter variabels
-            if (!string.IsNullOrWhiteSpace(tankkaart.Pincode)) {
-                query.Append(",@pincode");
-            }
-
-            if (!string.IsNullOrWhiteSpace(inbezitvan)) {
-                query.Append(",@bestuurder");
-            }
-            #endregion
-            query.Append(")");
-
-
-            using (SqlCommand cmd = conn.CreateCommand()) {
-                conn.Open();
-
-                try {
-                    cmd.CommandText = query.ToString();
-                    Console.WriteLine(query.ToString());
-
-                    cmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd);
-
-                    if (query.ToString().Contains("@pincode")) cmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
-                    if (query.ToString().Contains("@bestuurder")) cmd.Parameters.AddWithValue("@bestuurder", tankkaart.InBezitVan.Rijksregisternummer);
-
-                   insertedId = (int)cmd.ExecuteScalar();
-                    tankkaart.zetKaartnummer(insertedId);
-                } catch (Exception ex) {
-
-                    throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een fout voorgedaan!",ex);
-                } finally { conn.Close(); }
-            }
-
-            //Als er brandstoffen zijn toegevoegd bij het aanmaken van de tankkaart!
-            if(tankkaart.Brandstoffen != null) {
-
-                string tankkaartBrandstofQuery = "INSERT INTO TankkaartBrandstof (TankkaartId,Brandstof) VALUES (@tankkaartid,@brandstof)";
-
-                using(SqlCommand cmd2 = conn.CreateCommand()) {
-                    conn.Open();
-                    try {
-
-                        cmd2.CommandText = tankkaartBrandstofQuery;
-                        cmd2.Parameters.Add(new SqlParameter("@tankkaartId", SqlDbType.Int));
-                        cmd2.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
-                        cmd2.Parameters["@tankkaartId"].Value = insertedId;
-                        foreach (TankkaartBrandstof brandstof in tankkaart.Brandstoffen) {
-                            cmd2.Parameters["@brandstof"].Value = brandstof.ToString();
-                            cmd2.ExecuteNonQuery();
-                        }
-                    } catch (Exception ex) {
-                        throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een probleem voorgedaan!", ex);
-                    } finally { conn.Close(); }
+                #region Optionele Te Vullen Velden
+                if (!string.IsNullOrWhiteSpace(tankkaart.Pincode)) {
+                    query.Append(", Pincode ");
                 }
 
-            }
-            return tankkaart;
-            
+                if (!string.IsNullOrWhiteSpace(inbezitvan)) {
+                    query.Append(", Bestuurder ");
+                }
+                #endregion
+                query.Append(") OUTPUT inserted.Id VALUES (@geldigdatum,@geblokkeerd");
+
+                #region Opionele Te vullen Velden Parameter variabels
+                if (!string.IsNullOrWhiteSpace(tankkaart.Pincode)) {
+                    query.Append(",@pincode");
+                }
+
+                if (!string.IsNullOrWhiteSpace(inbezitvan)) {
+                    query.Append(",@bestuurder");
+                }
+                #endregion
+                query.Append(")");
 
 
+                using (SqlCommand cmd = conn.CreateCommand()) {
+                    cmd.Transaction = transaction;
 
+                    try {
+                        cmd.CommandText = query.ToString();
+                        Console.WriteLine(query.ToString());
+
+                        cmd.Parameters.AddWithValue("@geldigdatum", tankkaart.GeldigheidsDatum.ToString("yyyy-MM-dd"));
+                        cmd.Parameters.AddWithValue("@geblokkeerd", tankkaart.Geblokkeerd);
+
+                        if (query.ToString().Contains("@pincode")) cmd.Parameters.AddWithValue("@pincode", tankkaart.Pincode);
+                        if (query.ToString().Contains("@bestuurder")) cmd.Parameters.AddWithValue("@bestuurder", tankkaart.InBezitVan.Rijksregisternummer);
+
+                        insertedId = (int)cmd.ExecuteScalar();
+                        tankkaart.zetKaartnummer(insertedId);
+                    } catch (Exception ex) {
+                        throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een fout voorgedaan!", ex);
+                    }
+                }
+
+                //Als er brandstoffen zijn toegevoegd bij het aanmaken van de tankkaart!
+                if (tankkaart.Brandstoffen != null) {
+
+                    string tankkaartBrandstofQuery = "INSERT INTO TankkaartBrandstof (TankkaartId,Brandstof) VALUES (@tankkaartid,@brandstof)";
+
+                    using (SqlCommand cmd2 = conn.CreateCommand()) {
+                        cmd2.Transaction = transaction;
+                        try {
+
+                            cmd2.CommandText = tankkaartBrandstofQuery;
+                            cmd2.Parameters.Add(new SqlParameter("@tankkaartId", SqlDbType.Int));
+                            cmd2.Parameters.Add(new SqlParameter("@brandstof", SqlDbType.NVarChar));
+                            cmd2.Parameters["@tankkaartId"].Value = insertedId;
+                            foreach (TankkaartBrandstof brandstof in tankkaart.Brandstoffen) {
+                                cmd2.Parameters["@brandstof"].Value = brandstof.ToString();
+                                cmd2.ExecuteNonQuery();
+                            }
+                        } catch (Exception ex) {
+                            throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een probleem voorgedaan!", ex);
+                        }
+                    }
+
+                }
+                if (tankkaart.InBezitVan != null) {
+                    string bestuurderQuery = "UPDATE Bestuurder SET TankkaartId = @tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
+                    using (SqlCommand cmd3 = conn.CreateCommand()) {
+                        cmd3.Transaction = transaction;
+
+                        cmd3.CommandText = bestuurderQuery;
+                        cmd3.Parameters.AddWithValue("@rijksregisternummer", tankkaart.InBezitVan.Rijksregisternummer);
+                        cmd3.Parameters.AddWithValue("@tankkaartid", insertedId);
+
+                        try {
+                            cmd3.ExecuteNonQuery();
+                        } catch (Exception ex) {
+                            throw new TankkaartRepositoryException("TankkaartRepository : voegTankkaartToe - Er heeft zich een probleem voorgedaan!", ex);
+                        }
+                    }
+                }
+                transaction.Commit();
+                return tankkaart;
+            } catch (Exception ex) {
+                try {
+                    transaction.Rollback();
+                } catch (Exception ex2) {
+                    throw new TankkaartRepositoryException("TankkaartRepository : bewerkTankkaart - Rollback failed!!!", ex2);
+                }
+                throw new TankkaartRepositoryException(ex.Message, ex);
+            } finally { transaction.Dispose(); conn.Close(); }
         }
     }
 }
