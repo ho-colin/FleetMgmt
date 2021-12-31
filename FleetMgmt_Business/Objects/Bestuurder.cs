@@ -91,16 +91,27 @@ namespace FleetMgmt_Business.Objects {
 
         public override string ToString() {
             string bestuurdersInfo = $"Rijksregisternummer: {Rijksregisternummer}\nVoornaam: {Voornaam}\nAchternaam: {Achternaam}\nGeboortedatum: " +
-                $"{GeboorteDatum.ToShortDateString()}" +
-             $"\nTankkaart: {Tankkaart}\nVoertuig: {Voertuig}\n" +
-             $"Rijbewijzen";
+                $"{GeboorteDatum.ToShortDateString()}";
             if (rijbewijzen.Count > 0) {
                 foreach (var rijbewijs in rijbewijzen) {
-                    bestuurdersInfo += $"\n{rijbewijs}";
+                    bestuurdersInfo += $"\nRijbewijzen: {rijbewijs}";
                 }
             }
             else {
-                bestuurdersInfo += " 0";
+                bestuurdersInfo += "\nRijbewijzen: Geen";
+            }
+            if(Tankkaart != null) {
+                bestuurdersInfo += $" \nTankkaart: {Tankkaart.KaartNummer.ToString()}";
+            }
+            else {
+                bestuurdersInfo += $" \nTankkaart: Geen";
+            }
+
+            if (Voertuig != null) {
+                bestuurdersInfo += $" \nVoertuig: {Voertuig.Chassisnummer.ToString()}";
+            }
+            else {
+                bestuurdersInfo += $" \nVoertuig: Geen";
             }
             return bestuurdersInfo;
         }
