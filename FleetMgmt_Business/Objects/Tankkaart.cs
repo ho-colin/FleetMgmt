@@ -111,10 +111,14 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            string naarString = $"[Tankkaart] {this.KaartNummer},{this.Geblokkeerd},{this.GeldigheidsDatum.ToString("dd/MM/yyyy")},{this.Brandstoffen.Count}";
-            if (this.InBezitVan != null) {
-                naarString += $", {this.InBezitVan.Voornaam} {this.InBezitVan.Achternaam}";
-            }
+
+            string inBezitVan = this.InBezitVan == null ? "Niemand" : $"{this.InBezitVan.Voornaam} {this.InBezitVan.Achternaam}";
+
+            string naarString = $"[Tankkaart] Id: {this.KaartNummer} " +
+                $"\n Geblokkeerd: {this.Geblokkeerd}" +
+                $"\n Geldig tot: {this.GeldigheidsDatum.ToString("dd/MM/yyyy")}" +
+                $"\n Brandstoffen: {string.Join(',', this.Brandstoffen)}" +
+                $"\n Gebruikt door: {inBezitVan}";
             return naarString;
         }
 
