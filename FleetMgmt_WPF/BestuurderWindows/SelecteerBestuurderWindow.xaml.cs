@@ -117,5 +117,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 this.tankkaart = tankkaartSelecteren.Tankkaart;
             lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
         }
+
+        private void lstVw_Bestuurders_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if(lstVw_Bestuurders.SelectedItem == null) {
+                btn_Selecteren.IsEnabled = false;
+            }else { btn_Selecteren.IsEnabled = true; }
+        }
     }
 }

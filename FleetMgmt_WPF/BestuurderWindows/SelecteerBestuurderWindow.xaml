@@ -69,31 +69,36 @@
         <Label x:Name="lbl_Voornaam" 
                Content="Voornaam:" 
                Grid.Column="0" 
-               Grid.Row="3" 
+               Grid.Row="3"
+               VerticalAlignment="Center"
                 Style="{StaticResource HeaderStyle}" />
 
         <Label x:Name="lbl_Achternaam" 
                Content="Achternaam:" 
                Grid.Column="0" 
                Grid.Row="4"
+               VerticalAlignment="Center"
               Style="{StaticResource HeaderStyle}"  />
 
         <Label x:Name="lbl_Geboortedatum"
                Content="Geboortedatum:" 
                Grid.Column="0" 
                Grid.Row="5"
+               VerticalAlignment="Center"
                Style="{StaticResource HeaderStyle}" />
 
         <Label x:Name="lbl_RijksRegisterNummer" 
                Content="Rijksregisternummer"
                Grid.Column="0" 
                Grid.Row="6"
+               VerticalAlignment="Center"
                Style="{StaticResource HeaderStyle}" />
 
         <Label x:Name="lbl_Rijbewijs" 
                Content="Rijbewijs"
                Grid.Column="0" 
                Grid.Row="7"
+               VerticalAlignment="Center"
                Style="{StaticResource HeaderStyle}" />
 
 
@@ -101,6 +106,7 @@
                Content="Tankkaart"
                Grid.Column="0" 
                Grid.Row="8"
+               VerticalAlignment="Center"
                Style="{StaticResource HeaderStyle}" />
 
         <!--Input velden + DatePicker-->
@@ -140,45 +146,49 @@
         <Button x:Name="btn_Zoeken"
                 Content="Zoeken"
                 Grid.Column="3"
-                Grid.Row="2" Click="btn_Zoeken_Click"
+                Grid.Row="3" 
+                Click="btn_Zoeken_Click"
                 Margin="5"/>
 
         <Button x:Name="btn_Selecteren"
                 Content="Selecteren"
                 Grid.Column="3"
-                Grid.Row="3" Click="btn_Selecteren_Click"
-                Margin="5,5,5,5"/>
+                Grid.Row="4" 
+                Click="btn_Selecteren_Click"
+                Margin="5"
+                IsEnabled="False"
+                />
 
         <Button x:Name="btn_Reset"
                Content="Reset"
                 Grid.Column="3"
-                Grid.Row="4" 
+                Grid.Row="5" 
                 Height="26" 
-                Margin="5,0,5,0" 
+                Margin="5" 
                 VerticalAlignment="Center" />
 
         <Button x:Name="btn_SelecteerRijbewijs"
-               Content="Selecter rijbewijs"
+               Content="Selecteer rijbewijs"
                 Grid.Column="1"
                 Grid.Row="7" 
                 Height="26" 
-                Margin="5,0,5,0" 
+                Margin="5" 
                 VerticalAlignment="Center" Click="btn_SelecteerRijbewijs_Click" />
 
         <Button x:Name="btn_SelecteerTankkaart"
-               Content="Selecter Tankkaaart"
+               Content="Selecteer Tankkaaart"
                 Grid.Column="1"
                 Grid.Row="8" 
                 Height="26" 
-                Margin="5,0,5,0" 
+                Margin="5" 
                 VerticalAlignment="Center"
                 Click="btn_SelecteerTankkaart_Click"/>
 
 
         <!--Listview-->
         <ListView Foreground="Black" Background="White" BorderBrush="White" BorderThickness="5" 
-        x:Name="lstVw_Bestuurders" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="4"
-        Margin="5,75,5,0" IsEnabled="True" Grid.RowSpan="3"/>
+        x:Name="lstVw_Bestuurders" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4"
+        Margin="5,75,5,0" IsEnabled="True" Grid.RowSpan="4" SelectionChanged="lstVw_Bestuurders_SelectionChanged"/>
 
 
     </Grid>
