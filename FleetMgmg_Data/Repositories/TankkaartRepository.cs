@@ -128,10 +128,7 @@ namespace FleetMgmg_Data.Repositories {
                     if(tankkaart.InBezitVan != null) {
                         // Als de bestuurder al een tankkaart zou hebben wordt deze overschreven met deze tankkaart.
                         string query = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
-                        using (SqlCommand cmd = new SqlCommand()) {
-                            cmd.Transaction = transaction;
-
-                            cmd.CommandText = query;
+                        using (SqlCommand cmd = new SqlCommand(query,conn,transaction)) {
                             cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
                             cmd.Parameters.AddWithValue("@rijksregisternummer", tankkaart.InBezitVan.Rijksregisternummer);
 
@@ -140,10 +137,7 @@ namespace FleetMgmg_Data.Repositories {
                     } else {
                         //Als de bestuurder NULL is wordt het veld met verkregen tankkaartid op null gezet in de bestuurderskollom
                         string query = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
-                        using(SqlCommand cmd = new SqlCommand()) {
-                            cmd.Transaction = transaction;
-
-                            cmd.CommandText = query;
+                        using(SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
                             cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
 
                             cmd.ExecuteNonQuery();

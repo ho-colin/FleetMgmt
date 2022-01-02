@@ -2,6 +2,7 @@
 using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
+using FleetMgmt_WPF.BestuurderWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         private void resetVelden() {
             try {
                 this.Brandstoffen = Tankkaart.Brandstoffen;
+                this.Bestuurder = Tankkaart.InBezitVan;
 
                 //Nieuwe waarden kollom//
                 txtbx_NieuwId.Text = Tankkaart.KaartNummer.ToString();
@@ -122,6 +124,14 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         private void txtbx_NieuwPincode_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^\d+$")) {
                 e.Handled = true;
+            }
+        }
+
+        private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
+            SelecteerBestuurderWindow w = new SelecteerBestuurderWindow();
+            if(w.ShowDialog() == true) {
+                this.Bestuurder = w.bestuurder;
+                lbl_nieuwBestuurderNaam.Content = this.Bestuurder.Voornaam;
             }
         }
     }

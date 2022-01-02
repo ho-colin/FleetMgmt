@@ -142,7 +142,7 @@
                         <ColumnDefinition Width="68.283"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btn_SelecteerBestuurder" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5,7,5,6" Height="20" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btn_SelecteerBestuurder" Click="btn_SelecteerBestuurder_Click" Style="{StaticResource BestuurderStyle}" Content="Selecteer bestuurder" Margin="5,7,5,6" Height="20" Grid.ColumnSpan="2"/>
                     <Label x:Name="lbl_nieuwBestuurderNaam" Content="Geen bestuurder" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource HeaderStyle}" Grid.Column="2"/>
                 </Grid>
 

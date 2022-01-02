@@ -138,5 +138,22 @@ namespace FleetMgmg_Data.Repositories {
                 } finally { conn.Close(); }
             }
         }
+
+        //Checkt of het typevoertuig wel degelijk gebruikt wordt bij de voertuigen tabel
+        public bool wordtTypeGebruikt(string type) {
+            SqlConnection conn = ConnectionClass.getConnection();
+            conn.Open();
+            string query = "SELECT Count(*) FROM Voertuig WHERE TypeVoertuig=@typevoertuig";
+            using(SqlCommand cmd = conn.CreateCommand()) {
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@typevoertuig", type);
+                try {
+                    int count = (int)cmd.ExecuteScalar();
+                    if (count > 0) return true; return false;
+                } catch (Exception ex) {
+                    throw new TypeVoertuigException("TypeVoertuigRepository : wordtTypeGebruikt",ex);
+                } finally { conn.Close(); }
+            }
+        }
     }
 }

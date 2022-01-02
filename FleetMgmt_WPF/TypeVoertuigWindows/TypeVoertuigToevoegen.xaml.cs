@@ -49,8 +49,8 @@ namespace FleetMgmt_WPF.TypeVoertuigWindows {
                 tvm.voegTypeVoertuigToe(tv);
                 MessageBox.Show($"{tv.Type} met rijbewijs {tv.vereistRijbewijs.ToString()} toegevoegd!");
 
-                txtbx_TypeVoertuig.Text = "";
-                combobx_Rijbewijs.SelectedIndex = 0;
+                DialogResult = true;
+                this.Close();
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);

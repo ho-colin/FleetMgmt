@@ -112,7 +112,7 @@ namespace FleetMgmt_Business.Objects {
 
         public override string ToString() {
 
-            string inBezitVan = this.InBezitVan == null ? "Niemand" : $"{this.InBezitVan.Voornaam} {this.InBezitVan.Achternaam}";
+            string inBezitVan = this.InBezitVan == null ? "Vrij" : $"{this.InBezitVan.Voornaam} {this.InBezitVan.Achternaam}";
 
             string naarString = $"[Tankkaart] Id: {this.KaartNummer} " +
                 $"\n Geblokkeerd: {this.Geblokkeerd}" +

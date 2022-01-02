@@ -81,7 +81,9 @@ namespace FleetMgmt_WPF {
 
         private void btn_TypeVoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
             TypeVoertuigToevoegen w = new TypeVoertuigToevoegen();
-            w.Show();
+            if(w.ShowDialog() == true) {
+                this.btn_TypeVoertuigZoeken_Click(sender, e);
+            }
         }
 
         private void populateRijbewijzen() {
