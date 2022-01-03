@@ -44,7 +44,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_rijksregsterNummer.Text) ? null : txtbx_rijksregsterNummer.Text;
                 string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Naam.Text) ? null : txtbx_Naam.Text;
                 string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
-                string achternaam = txtbx_Achternaam.Text;
                 DateTime? geboortedatum =
                     Convert.ToDateTime(Date_Pckr_Geboortedatum.SelectedDate.HasValue ?
                     Date_Pckr_Geboortedatum.SelectedDate.Value : null);

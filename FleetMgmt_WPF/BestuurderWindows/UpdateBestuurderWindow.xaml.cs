@@ -38,10 +38,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_RijksregisterNummer.Text) ? null : txtbx_RijksregisterNummer.Text;
                 string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
                 string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
-                DateTime geboortedatum =
-                    Convert.ToDateTime(DatePckr_Geboortedatum.SelectedDate.HasValue ?
-                    DatePckr_Geboortedatum.SelectedDate.Value : null);
-                Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, geboortedatum);
+                Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, bestuurder.GeboorteDatum);
                 _bestuurderManager.bewerkBestuurder(b);
                 DialogResult = true;
                 Close();
@@ -90,7 +87,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         private void Reset() {
             this.txtbx_Voornaam.Text = bestuurder.Voornaam;
             this.txtbx_Achternaam.Text = bestuurder.Achternaam;
-            this.DatePckr_Geboortedatum.SelectedDate = bestuurder.GeboorteDatum;
+            this.txtbx_Geboortedatum.Text = bestuurder.GeboorteDatum.ToShortDateString();
             this.txtbx_RijksregisterNummer.Text = bestuurder.Rijksregisternummer;
             txtbx_RijksregisterNummeOud.Text = bestuurder.Rijksregisternummer;
             txtbx_VoornaamOud.Text = bestuurder.Achternaam;
