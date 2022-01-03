@@ -92,6 +92,7 @@ namespace FleetMgmt_WPF {
             combobx_Brandstof.SelectedItem = null;
             txtbx_Kleur.Text = "";
             txtbx_AantalDeuren.Text = "";
+            dtgd_Voertuigen.ItemsSource = null;
         }
         private void btn_SelecteerTypeVoertuig_Click(object sender, RoutedEventArgs e) {
             TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
