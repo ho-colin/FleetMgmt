@@ -154,7 +154,7 @@
                 Content="Selecteren"
                 Grid.Column="3"
                 Grid.Row="4" 
-                Click="btn_Selecteren_Click"
+                Click="btn_Selecteren_Click_1"
                 Margin="5"
                 IsEnabled="False"
                 />
@@ -165,7 +165,8 @@
                 Grid.Row="5" 
                 Height="26" 
                 Margin="5" 
-                VerticalAlignment="Center" />
+                VerticalAlignment="Center"
+                Click="btn_Reset_Click_1"/>
 
         <Button x:Name="btn_SelecteerRijbewijs"
                Content="Selecteer rijbewijs"
