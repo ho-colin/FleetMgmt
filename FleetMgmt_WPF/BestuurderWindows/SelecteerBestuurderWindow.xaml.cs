@@ -31,15 +31,12 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             this.ResizeMode = ResizeMode.NoResize;
         }
 
-        private void btn_Reset_Click(object sender, RoutedEventArgs e) {
-            Reset();
-        }
-
         private void Reset() {
             this.txtbx_Naam.Text = "";
             this.txtbx_Achternaam.Text = "";
             this.Date_Pckr_Geboortedatum.Text = "";
             this.txtbx_rijksregsterNummer.Text = "";
+            this.lstVw_Bestuurders.ItemsSource = null;
         }
 
         private void btn_Zoeken_Click(object sender, RoutedEventArgs e) {
@@ -47,7 +44,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_rijksregsterNummer.Text) ? null : txtbx_rijksregsterNummer.Text;
                 string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Naam.Text) ? null : txtbx_Naam.Text;
                 string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
-                string achternaam = txtbx_Achternaam.Text;
                 DateTime? geboortedatum =
                     Convert.ToDateTime(Date_Pckr_Geboortedatum.SelectedDate.HasValue ?
                     Date_Pckr_Geboortedatum.SelectedDate.Value : null);
@@ -97,12 +93,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             oldText = txtbx_Achternaam.Text;
         }
 
-        private void btn_Selecteren_Click(object sender, RoutedEventArgs e) {
-            this.bestuurder = (Bestuurder)lstVw_Bestuurders.SelectedItem;
-            DialogResult = true;
-            this.Close();
-        }
-
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
 
             RijbewijsSelecteren rijbewijsSelecteren = new RijbewijsSelecteren();
@@ -122,6 +112,16 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             if(lstVw_Bestuurders.SelectedItem == null) {
                 btn_Selecteren.IsEnabled = false;
             }else { btn_Selecteren.IsEnabled = true; }
+        }
+
+        private void btn_Selecteren_Click_1(object sender, RoutedEventArgs e) {
+            this.bestuurder = (Bestuurder)lstVw_Bestuurders.SelectedItem;
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void btn_Reset_Click_1(object sender, RoutedEventArgs e) {
+            Reset();
         }
     }
 }
