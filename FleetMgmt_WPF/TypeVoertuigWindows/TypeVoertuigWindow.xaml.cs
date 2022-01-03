@@ -110,5 +110,9 @@ namespace FleetMgmt_WPF {
             tw.Show();
             this.Close();
         }
+
+        private void btn_TypeVoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show("U begeeft zich momenteel in dit venster!", "TypeVoertuig", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
