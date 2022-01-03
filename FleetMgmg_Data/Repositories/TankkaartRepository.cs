@@ -229,7 +229,7 @@ namespace FleetMgmg_Data.Repositories {
                         tk.updateInBezitVan(b);
                         tk.zetBrandstoffen(tankkaartBrandstof);
                         if (b != null && bestuurderRijbewijs != null) { b.rijbewijzen = bestuurderRijbewijs; }
-                        if(b!=null) v.updateBestuurder(b);
+                        if(b!=null && v != null) v.updateBestuurder(b);
 
                         return tk;
                     }
