@@ -124,27 +124,43 @@ namespace FleetMgmg_Data.Repositories {
                         #endregion
                     }
                     #endregion
+
                     #region BestuurderUpdate
-                    if(tankkaart.InBezitVan != null) {
-                        // Als de bestuurder al een tankkaart zou hebben wordt deze overschreven met deze tankkaart.
-                        string query = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
-                        using (SqlCommand cmd = new SqlCommand(query,conn,transaction)) {
-                            cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
+                    //Checken of beide geen null zijn
+                    if(huidigeKaart.InBezitVan != null && tankkaart.InBezitVan != null) {
+                        // Als nieuwe eigenaar en oude eigenaar beide andere zijn.
+                        if (!huidigeKaart.InBezitVan.Equals(tankkaart.InBezitVan)) {
+                            //Als huidige bezitter niet dezelfde is als nieuwe bezitter
+                            string q1 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@id";
+                            string q2 = "UPDATE Bestuurder SET TankkaartId=@id WHERE Rijksregisternummer=@rijksregisternummer";
+                            using(SqlCommand cmd1 = new SqlCommand(q1, conn, transaction)) {
+                                cmd1.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
+                                cmd1.ExecuteNonQuery();
+                            }
+                            using (SqlCommand cmd2 = new SqlCommand(q2, conn, transaction)) {
+                                cmd2.Parameters.AddWithValue("@rijksregisternummer",tankkaart.InBezitVan.Rijksregisternummer);
+                                cmd2.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    // Als huidige eigenaar NULL is maar nieuwe eigenaar is toegekent
+                    }else if (huidigeKaart.InBezitVan == null && tankkaart.InBezitVan != null) {
+                        string query = "UPDATE Bestuurder SET TankkaartId=@id WHERE Rijksregisternummer=@rijksregisternummer";
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                            cmd.Parameters.AddWithValue("@id", tankkaart.KaartNummer);
                             cmd.Parameters.AddWithValue("@rijksregisternummer", tankkaart.InBezitVan.Rijksregisternummer);
-
                             cmd.ExecuteNonQuery();
                         }
-                    } else {
-                        //Als de bestuurder NULL is wordt het veld met verkregen tankkaartid op null gezet in de bestuurderskollom
-                        string query = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
+                    // Als huidige eigenaar gekent is maar nieuwe eigenaar NULL is
+                    }else if(huidigeKaart.InBezitVan != null && tankkaart.InBezitVan == null) {
+                        string query = "UPDATE Bestuurder SET TankkaartId=NULL WHERE Rijksregisternummer=@rijksregisternummer";
                         using(SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
-                            cmd.Parameters.AddWithValue("@tankkaartid", tankkaart.KaartNummer);
-
+                            cmd.Parameters.AddWithValue("@rijksregisternummer", huidigeKaart.InBezitVan.Rijksregisternummer);
                             cmd.ExecuteNonQuery();
                         }
-                    }
-                    
+                    }                 
                     #endregion
+
                     transaction.Commit();
                 } catch (Exception ex) {
                     try {
