@@ -55,8 +55,8 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public void verwijderBestuurder(string rijksegisterNummer) {
-            repo.verwijderBestuurder(rijksegisterNummer);
+        public void verwijderBestuurder(Bestuurder bestuurder) {
+            repo.verwijderBestuurder(bestuurder);
         }
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {

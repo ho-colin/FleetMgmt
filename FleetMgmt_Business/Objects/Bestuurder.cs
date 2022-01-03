@@ -90,9 +90,10 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            string bestuurdersInfo = $"Rijksregisternummer: {Rijksregisternummer}\nVoornaam: {Voornaam}\nAchternaam: {Achternaam}\nGeboortedatum: " +
-                $"{GeboorteDatum.ToShortDateString()}";
-            if (rijbewijzen.Count > 0) {
+            string bestuurdersInfo = $"Rijksregisternummer: {this.Rijksregisternummer}\nVoornaam: {this.Voornaam}\nAchternaam: " +
+                $"{this.Achternaam}\nGeboortedatum: " +
+                $"{this.GeboorteDatum.ToShortDateString()}";
+            if (this.rijbewijzen.Count > 0) {
                 foreach (var rijbewijs in rijbewijzen) {
                     bestuurdersInfo += $"\nRijbewijzen: {rijbewijs}";
                 }
@@ -100,15 +101,15 @@ namespace FleetMgmt_Business.Objects {
             else {
                 bestuurdersInfo += "\nRijbewijzen: Geen";
             }
-            if(Tankkaart != null) {
-                bestuurdersInfo += $" \nTankkaart: {Tankkaart.KaartNummer.ToString()}";
+            if(this.Tankkaart != null) {
+                bestuurdersInfo += $" \nTankkaart: {this.Tankkaart.KaartNummer.ToString()}";
             }
             else {
                 bestuurdersInfo += $" \nTankkaart: Geen";
             }
 
-            if (Voertuig != null) {
-                bestuurdersInfo += $" \nVoertuig: {Voertuig.Chassisnummer.ToString()}";
+            if (this.Voertuig != null) {
+                bestuurdersInfo += $" \nVoertuig: {this.Voertuig.Chassisnummer.ToString()}";
             }
             else {
                 bestuurdersInfo += $" \nVoertuig: Geen";
