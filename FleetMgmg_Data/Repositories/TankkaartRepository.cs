@@ -199,9 +199,9 @@ namespace FleetMgmg_Data.Repositories {
                             }
                             if (bestuurderRijbewijs == null) {
                                 if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
-                                    if (bestuurderRijbewijs == null) { bestuurderRijbewijs = new List<FleetMgmt_Business.Objects.Rijbewijs>(); }
-                                    if (!bestuurderRijbewijs.Contains(new FleetMgmt_Business.Objects.Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]))) {
-                                        bestuurderRijbewijs.Add(new FleetMgmt_Business.Objects.Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
+                                    if (bestuurderRijbewijs == null) { bestuurderRijbewijs = new List<Rijbewijs>(); }
+                                    if (!bestuurderRijbewijs.Contains(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]))) {
+                                        bestuurderRijbewijs.Add(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
                                     }
                                 }
                             }

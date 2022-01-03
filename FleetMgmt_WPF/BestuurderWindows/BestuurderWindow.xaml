@@ -132,6 +132,7 @@
                   Foreground="Black"
                   Grid.Column="1" 
                   Margin="0,217,0,0">
+
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="btn_Update" Header="Update" Click="btn_Update_Click"/>

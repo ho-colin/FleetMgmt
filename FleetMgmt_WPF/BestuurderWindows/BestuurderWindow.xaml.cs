@@ -74,12 +74,6 @@ namespace FleetMgmt_WPF {
             if (rijbewijsSelecteren.ShowDialog() == true)
                 this.rijbewijzen = rijbewijsSelecteren.Rijbewijzen;
             lbl_Rijbewijs.Content = this.rijbewijzen.Count;
-
-            TankkaartSelecteren tks = new TankkaartSelecteren();
-            if (tks.ShowDialog() == true) {
-                this.tankkaart = tks.Tankkaart;
-                lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
-            }
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
@@ -127,7 +121,7 @@ namespace FleetMgmt_WPF {
                     MessageBoxButton.YesNo);
                 switch (result) {
                     case MessageBoxResult.Yes:
-                        _bestuurdersManager.verwijderBestuurder(bestuurder.Rijksregisternummer);
+                        _bestuurdersManager.verwijderBestuurder(bestuurder);
                         btn_BestuurderZoeken_Click(sender, e);
                         MessageBox.Show($"{bestuurder.Voornaam} {bestuurder.Achternaam} werd zonet verwijderd!");
                         break;

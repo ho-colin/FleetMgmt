@@ -9,7 +9,7 @@ namespace FleetMgmt_Business.Repos {
     //LOUIS GHEYSENS
     public interface IBestuurderRepository {
         Bestuurder voegBestuurderToe(Bestuurder bestuurder);
-        void verwijderBestuurder(string rijks);
+        void verwijderBestuurder(Bestuurder bestuurder);
         IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, 
             string achterNaam, string voorNaam, DateTime? geboortedatum);
         Bestuurder selecteerBestuurder(string rijks);
