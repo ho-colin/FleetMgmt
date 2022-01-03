@@ -34,13 +34,13 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void verwijderTypeVoertuig(TypeVoertuig type) {
-            if(repo.verkrijgTypeVoertuig(type.Type,type.vereistRijbewijs) == null) { throw new TypeVoertuigException("TypeVoertuigManager : Voertuig niet gevonden!"); }
+            if(repo.verkrijgTypeVoertuig(type.Type,type.vereistRijbewijs) == null) { throw new TypeVoertuigException("TypeVoertuigManager : TypeVoertuig niet gevonden!"); }
             if(repo.wordtTypeGebruikt(type.Type)) { throw new TypeVoertuigException("TypeVoertuigManager : Type is nog in gebruik!"); }
             repo.verwijderTypeVoertuig(type);
         }
 
         public void voegTypeVoertuigToe(TypeVoertuig type) {
-            if(repo.verkrijgTypeVoertuig(type.Type, type.vereistRijbewijs) != null) { throw new TypeVoertuigException("TypeVoertuigManager: Voertuig bestaat al!"); } 
+            if(repo.verkrijgTypeVoertuig(type.Type, type.vereistRijbewijs) != null) { throw new TypeVoertuigException("TypeVoertuigManager: TypeVoertuig bestaat al!"); } 
             repo.voegTypeVoertuigToe(type);
         }
 
