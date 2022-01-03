@@ -87,6 +87,8 @@ namespace FleetMgmg_Data.Repositories {
                                     DateTime geboortedatumDB = (DateTime)reader["Geboortedatum"];
 
                                     bestuurder = new Bestuurder(rijksregisterDB, achternaamDB, voornaamDB, geboortedatumDB);
+                                    //TODO: FIX RIJBEWIJS SYSTEE<
+                                    bestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                                     voertuig.updateBestuurder(bestuurder);
                                 }
                             }
@@ -400,7 +402,65 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public void bewerkVoertuig(Voertuig voertuig) {
-            throw new NotImplementedException();
+            Voertuig huidigVoertuig = this.geefVoertuig(voertuig.Chassisnummer);
+            string query1 = "UPDATE Voertuig SET Merk=@merk,Model=@model,Brandstof=@brandstof,TypeVoertuig=@typevoertuig,Kleur=@kleur,AantalDeuren=@aantaldeuren,Bestuurder=@bestuurder WHERE Chassisnummer=@chassisnummer";
+            SqlTransaction transaction = null;
+            using (SqlConnection conn = ConnectionClass.getConnection()) {
+                try {
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
+
+                    #region Voertuig
+                    using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                        cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                        cmd1.Parameters.AddWithValue("@merk", voertuig.Merk);
+                        cmd1.Parameters.AddWithValue("@model", voertuig.Model);
+                        cmd1.Parameters.AddWithValue("@brandstof", voertuig.Brandstof.ToString());
+                        cmd1.Parameters.AddWithValue("@typevoertuig", voertuig.TypeVoertuig.Type);
+                        cmd1.Parameters.AddWithValue("@kleur", string.IsNullOrWhiteSpace(voertuig.Kleur) ? DBNull.Value : voertuig.Kleur);
+                        cmd1.Parameters.AddWithValue("@aantaldeuren", voertuig.AantalDeuren.HasValue ? voertuig.AantalDeuren : DBNull.Value);
+                        cmd1.Parameters.AddWithValue("@bestuurder", voertuig.Bestuurder == null ? DBNull.Value : voertuig.Bestuurder.Rijksregisternummer);
+
+                        cmd1.ExecuteNonQuery();
+                    }
+                    #endregion
+
+                    #region Bestuurder
+                    if (huidigVoertuig.Bestuurder != null && voertuig.Bestuurder != null) {
+                        if (!huidigVoertuig.Bestuurder.Equals(voertuig.Bestuurder)) {
+                            string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
+                            using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                                cmd.Parameters.AddWithValue("@chassisnummer",voertuig.Chassisnummer);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            string nieuwQuery = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
+                            using (SqlCommand cmd1 = new SqlCommand(nieuwQuery, conn, transaction)) {
+                                cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                                cmd1.Parameters.AddWithValue("@rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
+
+                                cmd1.ExecuteNonQuery();
+                            }
+                        }
+                    }else if(voertuig.Bestuurder == null) {
+                        string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                            cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    #endregion
+
+                    transaction.Commit();
+                } catch (Exception ex) {
+                    try {
+                        transaction.Rollback();
+                    } catch (Exception ex2) {
+                        throw new VoertuigRepositoryException("VoertuigRepository : bewerkVoertuig - Transaction rollback failed!!!",ex2);
+                    }
+                    throw new VoertuigRepositoryException(ex.Message,ex);
+                } finally { transaction.Dispose(); conn.Close(); }
+            }
         }
     }
 }
