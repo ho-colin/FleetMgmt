@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="VoertuigToevoegenWindow" Height="300" Width="600">
+        Title="VoertuigToevoegenWindow" Height="300" Width="700">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White" />
