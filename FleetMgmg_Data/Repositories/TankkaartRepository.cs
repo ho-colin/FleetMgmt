@@ -394,18 +394,41 @@ namespace FleetMgmg_Data.Repositories {
         public void verwijderTankkaart(int id) {
             if (!bestaatTankkaart(id)) throw new TankkaartRepositoryException("TankkaartRepository : verwijderTankkaart - Tankkaart bestaat niet! ");
 
-            SqlConnection conn = ConnectionClass.getConnection();
-            string query = "DELETE FROM Tankkaart WHERE Id=@id";
+            Tankkaart tk = this.selecteerTankkaart(id);
 
-            using(SqlCommand cmd = conn.CreateCommand()) {
-                conn.Open();
+            using(SqlConnection conn = ConnectionClass.getConnection()) {
+                SqlTransaction transaction = null;
                 try {
-                    cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@id",id);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
+
+                    #region Zet TKId van user naar null
+                    if(tk.InBezitVan != null) {
+                        string uQuery = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@id";
+                        using(SqlCommand cmd = new SqlCommand(uQuery, conn, transaction)) {
+                            cmd.Parameters.AddWithValue("@id",id);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    #endregion
+
+                    #region Verwijder TK
+                    string query = "DELETE FROM Tankkaart WHERE Id=@id";
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                    #endregion
+                    transaction.Commit();
                 } catch (Exception ex) {
-                    throw new TankkaartRepositoryException("TankkaartRepository : verwijderTankkaart - Er is iets misgelopen!",ex);
-                } finally { conn.Close(); }
+                    try {
+                        transaction.Rollback();
+                    } catch (Exception ex2) {
+                        throw new TankkaartRepositoryException("TankkaartRepository : verwijderTankkaart - Rollback failed!!!",ex2);
+                    }
+                    throw new TankkaartRepositoryException("TankkaartRepository : verwijderTankkaart", ex);
+                } finally { conn.Close(); transaction.Dispose(); }
             }
         }
 
