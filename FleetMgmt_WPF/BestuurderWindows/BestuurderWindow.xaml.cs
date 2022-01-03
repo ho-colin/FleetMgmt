@@ -55,6 +55,7 @@ namespace FleetMgmt_WPF {
             this.txtbx_Achternaam.Text = "";
             this.txtbx_Rijksregisternummer.Text = "";
             this.dtpckr_Geboortedatum.SelectedDate = null;
+            this.lstVw_Bestuurders.ItemsSource = null;
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -64,16 +65,18 @@ namespace FleetMgmt_WPF {
         private void btn_SelecteerTankkaart_Click(object sender, RoutedEventArgs e) {
 
             TankkaartSelecteren tankkaartSelecteren = new TankkaartSelecteren();
-            if (tankkaartSelecteren.ShowDialog() == true)
+            if (tankkaartSelecteren.ShowDialog() == true) {
                 this.tankkaart = tankkaartSelecteren.Tankkaart;
-            lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
+                lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
+            }
         }
 
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
             RijbewijsSelecteren rijbewijsSelecteren = new RijbewijsSelecteren();
-            if (rijbewijsSelecteren.ShowDialog() == true)
+            if (rijbewijsSelecteren.ShowDialog() == true) {
                 this.rijbewijzen = rijbewijsSelecteren.Rijbewijzen;
-            lbl_Rijbewijs.Content = this.rijbewijzen.Count;
+                lbl_Rijbewijs.Content = this.rijbewijzen.Count;
+            }
         }
 
         private void btn_VoertuigNavigatie_Click(object sender, RoutedEventArgs e) {
@@ -126,8 +129,6 @@ namespace FleetMgmt_WPF {
                         MessageBox.Show($"{bestuurder.Voornaam} {bestuurder.Achternaam} werd zonet verwijderd!");
                         break;
                     case MessageBoxResult.No:
-                        MessageBox.Show($"{bestuurder.Voornaam} {bestuurder.Achternaam} wordt niet verwijderd!", "Verwijder bestuurder", 
-                            MessageBoxButton.OK);
                         break;
                 }
             }

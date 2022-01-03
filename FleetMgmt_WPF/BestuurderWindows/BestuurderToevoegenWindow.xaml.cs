@@ -88,14 +88,11 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (tijd.GetHashCode() == 0) MessageBox.Show("Gelieve een geldige datum te kiezen!", "ERROR", MessageBoxButton.OK);
                 if (rijksregisternummer == null) 
                     MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
-
-                //Rijbewijs kan nog niet toegevoegd worden
-                //Lijst van categoriën met de datum die er bij hoort.
-                RijksregisterValidator.isGeldig(rijksregisternummer, tijd);
                 Bestuurder bestuurder = new Bestuurder(rijksregisternummer, naam1, naam2, tijd);
                 Bestuurder besuurderTwee = _bestuurderManager.voegBestuurderToe(bestuurder);
                 bestuurders.Add(besuurderTwee);
                 lstVw_Bestuurders.ItemsSource = bestuurders;
+
                 MessageBox.Show($"Bestuurder: {bestuurder.Achternaam} {bestuurder.Voornaam} werd zonet toegevoegd!", "Bestuurder toevoegen", MessageBoxButton.OK);
                 Reset();
             } catch (Exception ex) {

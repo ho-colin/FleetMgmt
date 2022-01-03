@@ -185,11 +185,11 @@ namespace FleetMgmg_Data.Repositories {
 
                 conn.Open();
                 try {
-                    using(SqlDataReader reader = cmd.ExecuteReader()) {
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
 
                             //Bestuurder
-                            if (!reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
+                            if (!reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer"))) {
                                 b = new((string)reader["Rijksregisternummer"],
                                     (string)reader["Naam"],
                                     (string)reader["Achternaam"],
@@ -252,7 +252,7 @@ namespace FleetMgmg_Data.Repositories {
                         reader.Close();
 
                         if (b != null && r != null) { b.rijbewijzen = r; }
-                        if (b != null) v.updateBestuurder(b);
+                        if (v != null) { b.updateVoertuig(v); }
 
 
                         return b;
@@ -377,22 +377,27 @@ namespace FleetMgmg_Data.Repositories {
 
         //Verijder een bestuurder
         public void verwijderBestuurder(Bestuurder bestuurder) {
-            if (!bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderRepositoryException("BestuurderRepository: verwijderBestuurder - Bestuurder " +
+            if (!bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new 
+                    BestuurderRepositoryException("BestuurderRepository: verwijderBestuurder - Bestuurder " +
                 "bestaat niet!");
-            string queryTankkaart = "UPDATE TANKKAART SET Id = NULL WHERE Id = @Id";
+            string queryTankkaart = "UPDATE TANKKAART SET Bestuurder = NULL WHERE Id = @Id";
             string queryBestuurder = "DELETE FROM Bestuurder WHERE rijksregisternummer=@rijksregisternummer";
             SqlConnection conn = ConnectionClass.getConnection();
             using SqlCommand cmdBestuurder = new(queryBestuurder, conn);
             using SqlCommand cmdTankkaart = new(queryTankkaart, conn);
-            SqlTransaction transaction = conn.BeginTransaction();
             conn.Open();
+            SqlTransaction transaction = conn.BeginTransaction();
             try {
+                if(bestuurder.Tankkaart != null) {
+                    cmdTankkaart.Transaction = transaction;
+                    cmdTankkaart.Parameters.AddWithValue("@Id", bestuurder.Tankkaart.KaartNummer);
+                    cmdTankkaart.ExecuteNonQuery();
+                }
 
+                cmdBestuurder.Transaction = transaction;
                 cmdBestuurder.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
                 cmdBestuurder.ExecuteNonQuery();
 
-                cmdTankkaart.Parameters.AddWithValue("@Id", bestuurder.Tankkaart.KaartNummer);
-                cmdTankkaart.ExecuteNonQuery();
                 transaction.Commit();
 
             }catch(Exception ex) {

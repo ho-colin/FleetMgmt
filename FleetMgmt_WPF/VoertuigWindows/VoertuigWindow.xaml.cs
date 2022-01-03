@@ -89,7 +89,7 @@ namespace FleetMgmt_WPF {
             txtbx_Model.Text = "";
             lbl_GeselecteerdTypeVoertuig.Content = "";
             lbl_BestuurderNaam.Content = "";
-            combobx_Brandstof.SelectedIndex = 0;
+            combobx_Brandstof.SelectedItem = null;
             txtbx_Kleur.Text = "";
             txtbx_AantalDeuren.Text = "";
         }

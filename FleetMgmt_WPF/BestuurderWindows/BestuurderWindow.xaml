@@ -122,7 +122,7 @@
         <TextBox x:Name="txtbx_Rijksregisternummer" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
         <TextBox x:Name="txtbx_Voornaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,105,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
         <TextBox x:Name="txtbx_Achternaam" Style="{StaticResource InputStyle}" Grid.Column="1" HorizontalAlignment="Left" Margin="127,131,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" RenderTransformOrigin="0.505,0.106"/>
-        <DatePicker x:Name="dtpckr_Geboortedatum" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="247,159,0,0" />
+        <DatePicker x:Name="dtpckr_Geboortedatum" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="217,157,0,0" />
 
         <!--Listview-->
         <ListView x:Name="lstVw_Bestuurders" 
