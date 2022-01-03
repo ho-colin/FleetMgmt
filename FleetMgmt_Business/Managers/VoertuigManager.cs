@@ -41,9 +41,9 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
-        public IEnumerable<Voertuig> toonVoertuigen(string merk, string model, string typeVoertuig, string brandstof, string kleur, int? aantalDeuren, string bestuurderId) {
+        public IEnumerable<Voertuig> toonVoertuigen(string chassisnummer, string merk, string model, string typeVoertuig, string brandstof, string kleur, int? aantalDeuren, string bestuurderId, string nummerplaat) {
             try {
-                return repo.toonVoertuigen(merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, bestuurderId);
+                return repo.toonVoertuigen(chassisnummer, merk, model, typeVoertuig, brandstof, kleur, aantalDeuren, bestuurderId, nummerplaat);
             } catch (Exception ex) {
                 throw new VoertuigManagerException(ex.Message, ex);
             }

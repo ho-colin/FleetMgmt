@@ -98,7 +98,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 string gevondenNummerplaat = string.IsNullOrWhiteSpace(txtbx_Nummerplaat.Text) ? null : txtbx_Nummerplaat.Text;
                 Bestuurder gevondenBestuurder = this.Bestuurder;
                 Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat,gevondenBestuurder);
-                vm.updateVoertuig(geupdateVoertuig);
+                vm.bewerkVoertuig(geupdateVoertuig);
                 DialogResult = true;
                 Close();
             } catch (Exception ex) {

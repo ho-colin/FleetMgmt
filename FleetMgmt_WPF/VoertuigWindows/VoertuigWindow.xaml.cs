@@ -124,8 +124,8 @@ namespace FleetMgmt_WPF {
                 string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
                 int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
                 string gevondenBestuurder = (this.Bestuurder != null) ? this.Bestuurder.Rijksregisternummer : null;
-                gevondenVoertuigen = new ObservableCollection<Voertuig>(vm.zoekVoertuigen(
-                    gevondenChassis, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenBrandstof, gevondenKleur, gevondenAantalDeuren,gevondenBestuurder));
+                string gevondenNummerplaat = string.IsNullOrWhiteSpace(txtbx_Nummerplaat.Text) ? null : txtbx_Nummerplaat.Text;
+                gevondenVoertuigen = new ObservableCollection<Voertuig>(vm.toonVoertuigen(gevondenChassis, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenBrandstof, gevondenKleur, gevondenAantalDeuren,gevondenBestuurder,gevondenNummerplaat));
                 dtgd_Voertuigen.ItemsSource = gevondenVoertuigen;
             } catch (Exception ex) {
 
