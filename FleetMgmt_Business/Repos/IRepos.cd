@@ -8,21 +8,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="FleetMgmt_Business.Repos.ITankkaartRepository">
-    <Position X="4.75" Y="2" Width="1.5" />
+    <Position X="4.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQEBAAEAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repos\ITankkaartRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FleetMgmt_Business.Repos.ITypeVoertuigRepository">
-    <Position X="7" Y="2" Width="1.75" />
+    <Position X="6" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAAAgAAAAEAAAAAiAAAAAAAAAA=</HashCode>
       <FileName>Repos\ITypeVoertuigRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FleetMgmt_Business.Repos.IVoertuigRepository">
-    <Position X="9.75" Y="2" Width="1.5" />
+    <Position X="8" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAQAAACAACAAAAAAIAAAiBAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repos\IVoertuigRepository.cs</FileName>
