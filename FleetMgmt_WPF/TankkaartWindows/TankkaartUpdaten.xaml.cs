@@ -79,7 +79,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 lbl_NieuwBrandstoffen.Content = this.Brandstoffen.Count + " Brandstof(fen)";
                
                 if(this.Bestuurder == null) {
-                    lbl_nieuwBestuurderNaam.Content = "Geen Bestuurder";
+                    lbl_nieuwBestuurderNaam.Content = "Geen";
                 } else {
                     lbl_nieuwBestuurderNaam.Content = this.Bestuurder.Voornaam;
                 }
@@ -100,7 +100,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 textbx_HuidigPincode.Text = string.IsNullOrWhiteSpace(Tankkaart.Pincode) ? "Geen Pincode" : Tankkaart.Pincode;
 
                 if (this.Bestuurder == null) {
-                    textbx_HuidigBestuurder.Text = "Geen Bestuurder";
+                    textbx_HuidigBestuurder.Text = "Geen";
                 } else {
                     textbx_HuidigBestuurder.Text = this.Bestuurder.Voornaam;
                 }
@@ -133,6 +133,13 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 this.Bestuurder = w.bestuurder;
                 lbl_nieuwBestuurderNaam.Content = this.Bestuurder.Voornaam;
             }
+        }
+
+        private void btn_verwijderBestuurder_Click(object sender, RoutedEventArgs e) {
+            if (this.Bestuurder != null) {
+                this.Bestuurder = null;
+                lbl_nieuwBestuurderNaam.Content = "Geen";
+            } else { MessageBox.Show("Er is geen bestuurder om te verwijderen!","Error!",MessageBoxButton.OK,MessageBoxImage.Error); }
         }
     }
 }
