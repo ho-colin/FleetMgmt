@@ -92,7 +92,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 Bestuurder besuurderTwee = _bestuurderManager.voegBestuurderToe(bestuurder);
                 bestuurders.Add(besuurderTwee);
                 lstVw_Bestuurders.ItemsSource = bestuurders;
-
                 MessageBox.Show($"Bestuurder: {bestuurder.Achternaam} {bestuurder.Voornaam} werd zonet toegevoegd!", "Bestuurder toevoegen", MessageBoxButton.OK);
                 Reset();
             } catch (Exception ex) {

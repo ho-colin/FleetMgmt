@@ -318,18 +318,36 @@ namespace FleetMgmg_Data.Repositories {
                 conn.Open();
                 try {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        string laatstGebruikteRijksregisternummer = null;
                         List<TankkaartBrandstof> brandstoffen = null;
                         Tankkaart dbTankkaart = null;
                         List<Rijbewijs> dbRijbewijzen = null;
                         Voertuig dbVoertuig = null;
+                        Bestuurder dbBestuurder = null;
                         while (reader.Read()) {
                             //Bestuurder
-                            Bestuurder dbBestuurder = new Bestuurder(
-                            (string)reader["Rijksregisternummer"],
-                            (string)reader["Achternaam"],
-                            (string)reader["Naam"],
-                            (DateTime)reader["Geboortedatum"]);
-
+                            if (reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer")))
+                                throw new BestuurderRepositoryException("BestuurderRepository: " +
+                                    "toonBestuurders - Geen bestuurder gevonden!");
+                            if (laatstGebruikteRijksregisternummer !=
+                                (string)reader["Rijksregisternummer"]) {
+                                if (dbBestuurder != null) {
+                                    if (dbRijbewijzen != null && dbBestuurder != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
+                                    if (dbVoertuig != null && dbBestuurder != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                                    if (dbTankkaart != null && dbBestuurder != null) { dbBestuurder.updateTankkaart(dbTankkaart); }
+                                    lijstbestuurder.Add(dbBestuurder);
+                                    dbBestuurder = null;
+                                    dbRijbewijzen = null;
+                                    dbTankkaart = null;
+                                    dbVoertuig = null;
+                                }
+                                laatstGebruikteRijksregisternummer = (string)reader["Rijksregisternummer"];
+                                dbBestuurder = new Bestuurder(
+                                 (string)reader["Rijksregisternummer"],
+                                 (string)reader["Achternaam"],
+                                 (string)reader["Naam"],
+                                 (DateTime)reader["Geboortedatum"]);
+                            }
                             //Tankkaart
                             if (!reader.IsDBNull(reader.GetOrdinal("TankkaartId"))) {
                                 string pincode = null;
@@ -360,7 +378,6 @@ namespace FleetMgmg_Data.Repositories {
                                 dbBestuurder.updateVoertuig(dbVoertuig);
 
                             }
-                            lijstbestuurder.Add(dbBestuurder);
                         } 
                         reader.Close();
                     }
