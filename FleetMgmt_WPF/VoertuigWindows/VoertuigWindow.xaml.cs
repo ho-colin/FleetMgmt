@@ -150,7 +150,7 @@ namespace FleetMgmt_WPF {
             try {
                 Voertuig v = (Voertuig)dtgd_Voertuigen.SelectedItem;
                 vm.verwijderVoertuig(v);
-                btn_VoertuigToevoegen_Click(sender, e);
+                btn_VoertuigZoeken_Click(sender, e);
             } catch (Exception ex) {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);

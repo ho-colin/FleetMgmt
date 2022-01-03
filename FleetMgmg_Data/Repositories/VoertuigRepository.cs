@@ -250,6 +250,7 @@ namespace FleetMgmg_Data.Repositories {
                                 DateTime geboortedtmDB = (DateTime)reader["Geboortedatum"];
                                 bestuurder = new Bestuurder(rijksregisternmrDB, achternaamDB, voornaamDB, geboortedtmDB);
 
+                                //TODO: FIX VOEGRIJBEWIJSTOE SYSTEEM
                                 bestuurder.voegRijbewijsToe(new Rijbewijs("B", geboortedtmDB));
                                 bestuurder.updateVoertuig(voertuig);                               
                             }
@@ -289,23 +290,46 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public void verwijderVoertuig(Voertuig voertuig) {
-            SqlConnection connection = ConnectionClass.getConnection();
-            string query = "DELETE FROM Voertuig WHERE Chassisnummer=@chassisnummer";
-            using (SqlCommand command = connection.CreateCommand()) {
-                connection.Open();
+            using (SqlConnection conn = ConnectionClass.getConnection()) {
+                SqlTransaction transaction = null;
                 try {
-                    command.CommandText = query;
-                    command.Parameters.Add(new SqlParameter("@chassisnummer", SqlDbType.NVarChar));
-                    command.Parameters["@chassisnummer"].Value = voertuig.Chassisnummer;
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex) {
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
 
-                    throw new VoertuigRepositoryException("VoertuigRepository: verwijderVoertuig", ex);
-                }
-                finally {
-                    connection.Close();
-                }
+                    #region zetBestuurder NULL in eigen tabel en BestuurderTabel
+                    if(voertuig.Bestuurder != null) {
+                        string query1 = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
+                        string query2 = "UPDATE Voertuig SET Bestuurder=NULL WHERE Chassisnummer=@chassisnummer";
+
+                        using(SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                            cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, transaction)) {
+                            cmd2.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                            cmd2.ExecuteNonQuery();
+                        }
+                    }
+                    #endregion
+
+                    #region verwijderVoertuig
+                    string query = "DELETE FROM Voertuig WHERE Chassisnummer=@chassisnummer";
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                        cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                        cmd.ExecuteNonQuery();
+                    }
+                    #endregion
+
+                    transaction.Commit();
+                } catch (Exception ex) {
+                    try {
+                        transaction.Rollback();
+                    } catch (Exception ex2) {
+                        throw new VoertuigRepositoryException("VoertuigRepository : verwijderVoertuig - Transaction rollback failed!!",ex2);
+                    }
+                    throw new VoertuigRepositoryException(ex.Message, ex);
+                } finally { transaction.Dispose(); conn.Close(); }
             }
         }
 
