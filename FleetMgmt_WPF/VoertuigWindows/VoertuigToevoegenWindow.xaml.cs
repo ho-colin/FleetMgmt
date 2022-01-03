@@ -32,6 +32,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
         public VoertuigToevoegenWindow() {
             InitializeComponent();
             combobx_Brandstof.ItemsSource = Enum.GetValues(typeof(BrandstofEnum));
+            combobx_Brandstof.SelectedIndex = 0;
         }
 
         private void btn_SelecteerBestuurder_Click(object sender, RoutedEventArgs e) {
@@ -64,8 +65,8 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
                 Bestuurder gevondenBestuurder = bestuurder == null ? null : bestuurder;
 
-                voertuig = new Voertuig((BrandstofEnum)combobx_Brandstof.SelectedItem, txtbx_Chassisnummer.Text, gevondenKleur, gevondenAantalDeuren,
-                    txtbx_Merk.Text, txtbx_Model.Text, typeVoertuig, txtbx_Nummerplaat.Text);
+                voertuig = new Voertuig((BrandstofEnum)combobx_Brandstof.SelectedItem, txtbx_Chassisnummer.Text, gevondenKleur, gevondenAantalDeuren, txtbx_Merk.Text, txtbx_Model.Text, typeVoertuig, txtbx_Nummerplaat.Text);
+                if (bestuurder != null) { bestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));  voertuig.updateBestuurder(gevondenBestuurder); }
                 Voertuig voertuigNew = vm.voegVoertuigToe(voertuig);
                 voertuigen.Add(voertuigNew);
             } catch (Exception ex) {

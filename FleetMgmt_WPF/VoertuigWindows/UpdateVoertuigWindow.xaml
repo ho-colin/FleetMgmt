@@ -117,7 +117,7 @@
 
                 <!-- Textboxen -->
                 <TextBox x:Name="txtbx_Chassisnummer" Grid.Row="0" Grid.Column="2" Margin="5,4,5,5"
-                         Style="{StaticResource InputStyle}"
+                         Style="{StaticResource InputStyle}" IsEnabled="False"
                          />
 
                 <TextBox x:Name="txtbx_Merk" Grid.Row="1" Grid.Column="2" Margin="5" 
@@ -128,7 +128,7 @@
                          Style="{StaticResource InputStyle}" />
                 
                 <TextBox x:Name="txtbx_Nummerplaat" Grid.Row="3" Grid.Column="2" Margin="5" 
-                         Style="{StaticResource InputStyle}" />
+                         Style="{StaticResource InputStyle}" IsEnabled="False"/>
 
                 <ComboBox x:Name="combobx_Brandstof" Grid.Row="4" Grid.Column="2" Margin="5"
                           Style="{StaticResource ComboStyle}" />

@@ -112,8 +112,10 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return $"Merk {Merk}\nModel: {Model}\nChassisnummer: {Chassisnummer}\nNummerplaat: {Nummerplaat}\n" +
+            string teReturnen = $"Merk {Merk}\nModel: {Model}\nChassisnummer: {Chassisnummer}\nNummerplaat: {Nummerplaat}\n" +
                 $"Brandstof: {Brandstof}\nType wagen: {TypeVoertuig}\nKleur: {Kleur}\nAantal deuren: {AantalDeuren}";
+            if(this.Bestuurder != null) { teReturnen += $"\nBestuurder: {this.Bestuurder.Voornaam} {this.Bestuurder.Achternaam}"; } else { teReturnen += "\nBestuurder: Geen"; }
+            return teReturnen;
         }
 
     }

@@ -91,14 +91,14 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 BrandstofEnum gevondenBrandstof = (BrandstofEnum)combobx_Brandstof.SelectedItem;
                 string gevondenChassisnummer = txtbx_Chassisnummer.Text;
                 string gevondenKleur = string.IsNullOrWhiteSpace(txtbx_Kleur.Text) ? null : txtbx_Kleur.Text;
-                int? gevondenAantalDeuren = txtbx_AantalDeuren.Text == null ? null : int.Parse(txtbx_AantalDeuren.Text);
+                int? gevondenAantalDeuren = string.IsNullOrWhiteSpace(txtbx_AantalDeuren.Text) ? null : int.Parse(txtbx_AantalDeuren.Text);
                 string gevondenMerk = string.IsNullOrWhiteSpace(txtbx_Merk.Text) ? null : txtbx_Merk.Text;
                 string gevondenModel = string.IsNullOrWhiteSpace(txtbx_Model.Text) ? null : txtbx_Model.Text;
                 TypeVoertuig gevondenTypeVoertuig = this.TypeVoertuig;
                 string gevondenNummerplaat = string.IsNullOrWhiteSpace(txtbx_Nummerplaat.Text) ? null : txtbx_Nummerplaat.Text;
                 Bestuurder gevondenBestuurder = this.Bestuurder;
                 Voertuig geupdateVoertuig = new Voertuig(gevondenBrandstof, gevondenChassisnummer, gevondenKleur, gevondenAantalDeuren, gevondenMerk, gevondenModel, gevondenTypeVoertuig, gevondenNummerplaat,gevondenBestuurder);
-                vm.updateVoertuig(geupdateVoertuig);
+                vm.bewerkVoertuig(geupdateVoertuig);
                 DialogResult = true;
                 Close();
             } catch (Exception ex) {
