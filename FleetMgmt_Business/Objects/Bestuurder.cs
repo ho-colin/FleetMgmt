@@ -37,8 +37,9 @@ namespace FleetMgmt_Business.Objects {
         }
 
         private void zetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {
-            RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum);
-            this.Rijksregisternummer = rijksregisternummer;
+            if(RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum)) {
+                this.Rijksregisternummer = rijksregisternummer;
+            }
         }
 
         private void zetAchternaam(string achternaam) {
@@ -90,9 +91,12 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            string bestuurdersInfo = $"Rijksregisternummer: {this.Rijksregisternummer}\nVoornaam: {this.Voornaam}\nAchternaam: " +
+            string bestuurdersInfo = $"Rijksregisternummer: " +
+                $"{this.Rijksregisternummer}\nVoornaam: " +
+                $"{this.Voornaam}\nAchternaam: " +
                 $"{this.Achternaam}\nGeboortedatum: " +
                 $"{this.GeboorteDatum.ToShortDateString()}";
+
             if (this.rijbewijzen.Count > 0) {
                 foreach (var rijbewijs in rijbewijzen) {
                     bestuurdersInfo += $"\nRijbewijzen: {rijbewijs}";
@@ -101,7 +105,7 @@ namespace FleetMgmt_Business.Objects {
             else {
                 bestuurdersInfo += "\nRijbewijzen: Geen";
             }
-            if(this.Tankkaart != null) {
+            if (this.Tankkaart != null) {
                 bestuurdersInfo += $" \nTankkaart: {this.Tankkaart.KaartNummer.ToString()}";
             }
             else {
