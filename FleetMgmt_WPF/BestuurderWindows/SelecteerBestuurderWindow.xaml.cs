@@ -16,6 +16,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
     /// <summary>
     /// Interaction logic for SelecteerBestuurderWindow.xaml
     /// </summary>
+
     public partial class SelecteerBestuurderWindow : Window {
 
         public List<Bestuurder> bestuurders { get; set; }
@@ -24,6 +25,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         public List<RijbewijsEnum> rijbewijzen = new List<RijbewijsEnum>();
         private BestuurderManager _bestuurderManager = new BestuurderManager(new BestuurderRepository());
         public  ObservableCollection<Bestuurder> bestuurdersLijst = new ObservableCollection<Bestuurder>();
+
 
 
         public SelecteerBestuurderWindow() {

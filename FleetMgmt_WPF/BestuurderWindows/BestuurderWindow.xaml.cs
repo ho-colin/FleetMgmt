@@ -42,7 +42,8 @@ namespace FleetMgmt_WPF {
                     Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? 
                     dtpckr_Geboortedatum.SelectedDate.Value : null);
                 bestuurders = new ObservableCollection<Bestuurder>
-                    (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, gevondenVoornaam, geboortedatum).ToList());
+                    (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, 
+                    gevondenVoornaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurders;
             }
             catch (Exception ex) {

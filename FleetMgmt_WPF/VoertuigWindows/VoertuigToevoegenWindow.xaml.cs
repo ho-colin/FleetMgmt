@@ -83,7 +83,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             txtbx_Nummerplaat.Text = "";
             this.bestuurder = null;
             this.typeVoertuig = null;
-            combobx_Brandstof.SelectedIndex = 0;
+            combobx_Brandstof.SelectedItem = null;
             txtbx_AantalDeuren.Text = "";
             txtbx_Kleur.Text = "";
         }

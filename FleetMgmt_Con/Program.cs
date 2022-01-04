@@ -39,8 +39,8 @@ namespace FleetMgmt_Con {
             //repo.voegTankkaartToe(nieuweTankkaart);
 
             ////Voeg Bestuurder Toe
-            Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            bm.voegBestuurderToe(b);
+            //Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
+            //bm.voegBestuurderToe(b)
 
 
             ////Verwijder Bestuurder
@@ -49,6 +49,8 @@ namespace FleetMgmt_Con {
             //Update bestuurder
 
             //Zoek Bestuurder
+
+
 
 
 

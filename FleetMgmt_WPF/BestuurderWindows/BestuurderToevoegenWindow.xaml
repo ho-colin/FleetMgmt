@@ -107,13 +107,13 @@
                     Margin="5"
                     VerticalAlignment="Top"/>
 
-        <TextBox x:Name="txtbx_Voornaam" 
+        <TextBox x:Name="txtbx_achterNaam" 
                Style="{StaticResource InputStyle}"
                Grid.Column="1"
                Grid.Row="0"
                  Margin="10"
                Foreground="Black"
-                 TextChanged="txtbx_Voornaam_TextChanged"/>
+                 TextChanged="txtbx_achterNaam_TextChanged" />
 
 
         <TextBox x:Name="txtbx_Naam" 
@@ -121,8 +121,9 @@
                Grid.Column="1" 
                Grid.Row="1"
                    Margin="10"
-               Foreground="Black"
-                 TextChanged="txtbx_AchterNaam_TextChanged"/>
+               Foreground="Black" 
+                 TextChanged="txtbx_Naam_TextChanged"/>
+
 
         <TextBox x:Name="txtbx_Rijksregisiternummer" 
                Style="{StaticResource InputStyle}"
@@ -166,8 +167,8 @@
         <ListView Foreground="Black" BorderBrush="LightGray" 
                   BorderThickness="5" x:Name="lstVw_Bestuurders" 
                   Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" 
-                  Margin="5,23,5,0" 
-                  IsEnabled="False" Grid.RowSpan="3"/>
+                  Margin="5,23,5,0"  ScrollViewer.CanContentScroll="False"
+                  IsEnabled="True" Grid.RowSpan="3"/>
 
 
     </Grid>
