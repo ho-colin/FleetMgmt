@@ -57,8 +57,8 @@ namespace FleetMgmt_WPF {
             this.txtbx_Rijksregisternummer.Text = "";
             this.dtpckr_Geboortedatum.SelectedDate = null;
             this.lstVw_Bestuurders.ItemsSource = null;
-            this.lbl_Tankkaart.Content = "Tankkaart";
-            this.lbl_Rijbewijs.Content = "Rijbewijs";
+            this.lbl_GeselecteerdeTankkaart.Content = "";
+            this.lbl_GeslecteerdeRijbewijs.Content = "";
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -70,7 +70,7 @@ namespace FleetMgmt_WPF {
             TankkaartSelecteren tankkaartSelecteren = new TankkaartSelecteren();
             if (tankkaartSelecteren.ShowDialog() == true) {
                 this.tankkaart = tankkaartSelecteren.Tankkaart;
-                lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
+                lbl_GeselecteerdeTankkaart.Content = this.tankkaart.KaartNummer;
             }
         }
 
@@ -78,7 +78,7 @@ namespace FleetMgmt_WPF {
             RijbewijsSelecteren rijbewijsSelecteren = new RijbewijsSelecteren();
             if (rijbewijsSelecteren.ShowDialog() == true) {
                 this.rijbewijzen = rijbewijsSelecteren.Rijbewijzen;
-                lbl_Rijbewijs.Content = this.rijbewijzen.Count;
+                lbl_GeslecteerdeRijbewijs.Content = this.rijbewijzen.Count;
             }
         }
 
@@ -137,5 +137,6 @@ namespace FleetMgmt_WPF {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
         }
+        }
     }
-}
+
