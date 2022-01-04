@@ -60,7 +60,7 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 combobx_Brandstof.ItemsSource = Enum.GetValues(typeof(BrandstofEnum));
                 combobx_Brandstof.SelectedIndex = combobx_Brandstof.Items.IndexOf(Voertuig.Brandstof);
                 if(this.Bestuurder == null) {
-                    lbl_NieuwBestuurder.Content = "Geen Bestuurder";
+                    lbl_NieuwBestuurder.Content = "Geen";
                 } else {
                     lbl_NieuwBestuurder.Content = this.Bestuurder.Voornaam;
                 }
@@ -108,6 +108,13 @@ namespace FleetMgmt_WPF.VoertuigWindows {
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
             resetVelden();
+        }
+
+        private void btn_VerwijderBestuurder_Click(object sender, RoutedEventArgs e) {
+            if(this.Bestuurder != null) {
+                this.Bestuurder = null;
+                lbl_NieuwBestuurder.Content = "Geen";
+            }else { MessageBox.Show("Er is geen bestuurder aanwezig!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
     }
 }

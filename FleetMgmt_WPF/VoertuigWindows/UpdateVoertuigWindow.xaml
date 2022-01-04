@@ -151,6 +151,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="btn_Bestuurder" Style="{StaticResource BestuurderStyle}" 
                         Content="Selecteer Bestuurder" Grid.Column="0" Margin="5" Height="20" 
@@ -158,7 +159,9 @@
                     <Label x:Name="lbl_NieuwBestuurder" Grid.Column="1" 
                        Style="{StaticResource HeaderStyle}" 
                        VerticalAlignment="Center" HorizontalAlignment="Left" 
-                       Content="Geen bestuurder"/>
+                       Content="Geen"/>
+
+                    <Button x:Name="btn_VerwijderBestuurder" Click="btn_VerwijderBestuurder_Click" Grid.Column="2" Content="X" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
 
                 <!-- Huidige Waarden -->

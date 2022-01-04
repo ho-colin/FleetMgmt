@@ -452,6 +452,13 @@ namespace FleetMgmg_Data.Repositories {
                             cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
                             cmd.ExecuteNonQuery();
                         }
+                    }else if(voertuig.Bestuurder != null) {
+                        string query = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
+                            cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                            cmd.Parameters.AddWithValue("@rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                     #endregion
 

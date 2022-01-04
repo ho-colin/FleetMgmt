@@ -93,10 +93,12 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             txtbx_VoornaamOud.Text = bestuurder.Achternaam;
             txtbx_AchternaamOud.Text = bestuurder.Voornaam;
             txtbx_GeboortedatumOud.Text = bestuurder.GeboorteDatum.ToShortDateString();
+
             if(bestuurder.rijbewijzen.Count > 0) {
                 txtbx_RijbewijsOud.Text = string.Join(',', bestuurder.rijbewijzen.Select(x => x.ToString()));
                 lbl_AantalRijbewijzen.Content = bestuurder.rijbewijzen.Count;
             } else { txtbx_RijbewijsOud.Text = "Geen rijbewijs!"; }
+
             if(bestuurder.Tankkaart != null) {
                 txtbx_TankkaartOud.Text = string.Join(',', bestuurder.Tankkaart.Brandstoffen.Select(x => x.ToString()));
                 lbl_TankkaartNummer.Content = bestuurder.Tankkaart.KaartNummer;
