@@ -19,7 +19,7 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
     /// </summary>
     public partial class SingleRijbewijsSelecteren : Window {
 
-        RijbewijsEnum? Rijbewijs = null;
+        public RijbewijsEnum? Rijbewijs = null;
 
         public SingleRijbewijsSelecteren() {
             InitializeComponent();

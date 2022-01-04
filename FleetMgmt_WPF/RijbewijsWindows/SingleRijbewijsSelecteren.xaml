@@ -100,6 +100,6 @@
         <Button x:Name="btn_Selecteer"
                 Grid.Row="2" 
                 Content="Selecteer" 
-                Margin="5" Click="btn_Selecteer_Click"/>
+                Margin="5" Click="btn_Selecteer_Click" IsEnabled="False"/>
     </Grid>
 </Window>

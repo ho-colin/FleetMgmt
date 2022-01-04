@@ -20,7 +20,7 @@ namespace FleetMgmt_WPF {
 
         private BestuurderManager _bestuurdersManager = new BestuurderManager(new BestuurderRepository());
         public Tankkaart tankkaart { get; set; }
-        public List<RijbewijsEnum> rijbewijzen { get; set; }
+        public RijbewijsEnum? rijbewijs { get; set; }
         public ObservableCollection<Bestuurder> bestuurders = new ObservableCollection<Bestuurder>();
 
         public BestuurderWindow() {
@@ -38,12 +38,9 @@ namespace FleetMgmt_WPF {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_Rijksregisternummer.Text) ? null : txtbx_Rijksregisternummer.Text;
                 string gevondenAchterNaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
                 string gevondenVoornaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
-                DateTime? geboortedatum = 
-                    Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? 
-                    dtpckr_Geboortedatum.SelectedDate.Value : null);
-                bestuurders = new ObservableCollection<Bestuurder>
-                    (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, 
-                    gevondenVoornaam, geboortedatum).ToList());
+                DateTime? geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? dtpckr_Geboortedatum.SelectedDate.Value : null);
+                RijbewijsEnum? gevondenRijbewijs = this.rijbewijs == null ? null : this.rijbewijs;
+                bestuurders = new ObservableCollection<Bestuurder> (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, gevondenVoornaam, geboortedatum).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurders;
             }
             catch (Exception ex) {
@@ -59,6 +56,9 @@ namespace FleetMgmt_WPF {
             this.lstVw_Bestuurders.ItemsSource = null;
             this.lbl_GeselecteerdeTankkaart.Content = "";
             this.lbl_GeslecteerdeRijbewijs.Content = "";
+
+            this.tankkaart = null;
+            this.rijbewijs = null;
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -75,10 +75,10 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_SelecteerRijbewijs_Click(object sender, RoutedEventArgs e) {
-            RijbewijsSelecteren rijbewijsSelecteren = new RijbewijsSelecteren();
-            if (rijbewijsSelecteren.ShowDialog() == true) {
-                this.rijbewijzen = rijbewijsSelecteren.Rijbewijzen;
-                lbl_GeslecteerdeRijbewijs.Content = this.rijbewijzen.Count;
+            SingleRijbewijsSelecteren w = new SingleRijbewijsSelecteren();
+            if (w.ShowDialog() == true) {
+                this.rijbewijs = w.Rijbewijs.Value;
+                lbl_GeslecteerdeRijbewijs.Content = this.rijbewijs.ToString();
             }
         }
 
