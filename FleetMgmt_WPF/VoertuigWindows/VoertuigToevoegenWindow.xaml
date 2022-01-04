@@ -140,7 +140,7 @@
 
         <Button x:Name="btn_SelecteerTypeVoertuig" Style="{StaticResource BestuurderStyle}" 
                    Grid.Column="3" Content="Selecteer TypeVoertuig" Margin="5" VerticalAlignment="Center" Height="20"
-                Click="btn_SelecteerTypeVoertuig_Click"/>
+                Click="btn_SelecteerTypeVoertuig_Click_1"/>
         <TextBox x:Name="txtbx_Kleur" 
                Style="{StaticResource InputStyle}"
                Grid.Column="3"

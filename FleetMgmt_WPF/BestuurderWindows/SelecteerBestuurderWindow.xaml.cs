@@ -39,6 +39,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             this.Date_Pckr_Geboortedatum.Text = "";
             this.txtbx_rijksregsterNummer.Text = "";
             this.lstVw_Bestuurders.ItemsSource = null;
+            this.lbl_Rijbewijs.Content = "Rijbewijs";
+            this.lbl_Tankkaart.Content = "Tankkaart";
         }
 
         private void btn_Zoeken_Click(object sender, RoutedEventArgs e) {

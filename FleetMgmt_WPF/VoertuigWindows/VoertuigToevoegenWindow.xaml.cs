@@ -42,15 +42,6 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 lbl_GeselecteerdeBestuurder.Content = this.bestuurder.Voornaam;
             }
         }
-
-        private void btn_SelecteerTypeVoertuig_Click(object sender, RoutedEventArgs e) {
-            TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
-            if(w.ShowDialog()== true) {
-                this.typeVoertuig = w.TypeVoertuig;
-                lbl_GeselecteerdeTypeVoertuig.Content = this.typeVoertuig.Type.ToString();
-            }
-        }
-
         private void btn_VoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
             
             try {
@@ -86,6 +77,15 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             combobx_Brandstof.SelectedItem = null;
             txtbx_AantalDeuren.Text = "";
             txtbx_Kleur.Text = "";
+        }
+
+        private void btn_SelecteerTypeVoertuig_Click_1(object sender, RoutedEventArgs e) {
+            TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
+            if (w.ShowDialog() == true) {
+                this.typeVoertuig = w.TypeVoertuig;
+                lbl_GeselecteerdeTypeVoertuig.Content = this.typeVoertuig.Type.ToString();
+                this.Close();
+            }
         }
     }
 }
