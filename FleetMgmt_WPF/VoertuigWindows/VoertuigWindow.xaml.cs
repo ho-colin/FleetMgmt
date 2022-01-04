@@ -96,7 +96,7 @@ namespace FleetMgmt_WPF {
         }
         private void btn_SelecteerTypeVoertuig_Click(object sender, RoutedEventArgs e) {
             TypeVoertuigSelecteren w = new TypeVoertuigSelecteren();
-            if (ShowDialog() == true) {
+            if (w.ShowDialog() == true) {
                 this.TypeVoertuig = w.TypeVoertuig;
                 lbl_GeselecteerdTypeVoertuig.Content = this.TypeVoertuig.Type;
             }

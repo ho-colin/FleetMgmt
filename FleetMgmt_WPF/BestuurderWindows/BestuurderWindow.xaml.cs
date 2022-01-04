@@ -57,6 +57,8 @@ namespace FleetMgmt_WPF {
             this.txtbx_Rijksregisternummer.Text = "";
             this.dtpckr_Geboortedatum.SelectedDate = null;
             this.lstVw_Bestuurders.ItemsSource = null;
+            this.lbl_Tankkaart.Content = "Tankkaart";
+            this.lbl_Rijbewijs.Content = "Rijbewijs";
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -87,9 +89,7 @@ namespace FleetMgmt_WPF {
         }
 
         private void btn_BestuurderNavigatie_Click(object sender, RoutedEventArgs e) {
-            BestuurderWindow bestuurderWindow = new BestuurderWindow();
-            bestuurderWindow.Show();
-            this.Close();
+            MessageBox.Show("U begeeft zich momenteel in dit venster!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void btn_TankkaartNavigatie_Click(object sender, RoutedEventArgs e) {
