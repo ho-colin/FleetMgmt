@@ -36,5 +36,8 @@ namespace FleetMgmt_Business.Objects {
             this.BehaaldOp = behaaldop;
         }
 
+        public override string ToString() {
+            return this.Categorie.ToString();
+        }
     }
 }

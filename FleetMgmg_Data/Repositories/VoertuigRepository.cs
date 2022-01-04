@@ -72,7 +72,7 @@ namespace FleetMgmg_Data.Repositories {
                                 string nummerplaatDB = (string)reader["Nummerplaat"];
 
                                 int? aantalDeurenDB = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("AantalDeuren"))) { aantalDeurenDB = int.Parse((string)reader["AantalDeuren"]); }
+                                if (!reader.IsDBNull(reader.GetOrdinal("AantalDeuren"))) { aantalDeurenDB = (int)reader["AantalDeuren"]; }
 
                                 voertuig = new Voertuig(brandstofDB, chassisnummerDB, kleurDB, aantalDeurenDB, merkDB, modelDB, typeVoertuigDB, nummerplaatDB);
                             }
@@ -403,6 +403,7 @@ namespace FleetMgmg_Data.Repositories {
 
         public void bewerkVoertuig(Voertuig voertuig) {
             Voertuig huidigVoertuig = this.geefVoertuig(voertuig.Chassisnummer);
+            if (voertuig.Equals(huidigVoertuig)) throw new VoertuigRepositoryException("VoertuigRepository : bewerkVoertuig - Er is niks verandert!"); 
             string query1 = "UPDATE Voertuig SET Merk=@merk,Model=@model,Brandstof=@brandstof,TypeVoertuig=@typevoertuig,Kleur=@kleur,AantalDeuren=@aantaldeuren,Bestuurder=@bestuurder WHERE Chassisnummer=@chassisnummer";
             SqlTransaction transaction = null;
             using (SqlConnection conn = ConnectionClass.getConnection()) {
@@ -426,7 +427,9 @@ namespace FleetMgmg_Data.Repositories {
                     #endregion
 
                     #region Bestuurder
+                    // Huidige bestuurder niet null, nieuwe bestuurder niet null
                     if (huidigVoertuig.Bestuurder != null && voertuig.Bestuurder != null) {
+                        // huidige bestuurder niet gelijk aan nieuwe bestuurder
                         if (!huidigVoertuig.Bestuurder.Equals(voertuig.Bestuurder)) {
                             string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
                             using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
@@ -442,6 +445,7 @@ namespace FleetMgmg_Data.Repositories {
                                 cmd1.ExecuteNonQuery();
                             }
                         }
+                    //nieuwe bestuurder is null
                     }else if(voertuig.Bestuurder == null) {
                         string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
                         using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {

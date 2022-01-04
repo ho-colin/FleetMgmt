@@ -98,9 +98,7 @@ namespace FleetMgmt_Business.Objects {
                 $"{this.GeboorteDatum.ToShortDateString()}";
 
             if (this.rijbewijzen.Count > 0) {
-                foreach (var rijbewijs in rijbewijzen) {
-                    bestuurdersInfo += $"\nRijbewijzen: {rijbewijs}";
-                }
+                bestuurdersInfo += "\nRijbewijzen: "+String.Join(',', this.rijbewijzen);
             }
             else {
                 bestuurdersInfo += "\nRijbewijzen: Geen";

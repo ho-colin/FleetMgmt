@@ -349,8 +349,8 @@ namespace FleetMgmg_Data.Repositories {
                                 (string)reader["Rijksregisternummer"]) {
                                 if (dbBestuurder != null) {
                                     if (dbRijbewijzen != null && dbBestuurder != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
-                                    if (dbVoertuig != null && dbBestuurder != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
-                                    if (dbTankkaart != null && dbBestuurder != null) { dbBestuurder.updateTankkaart(dbTankkaart); }
+                                    //if (dbVoertuig != null && dbBestuurder != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
+                                    //if (dbTankkaart != null && dbBestuurder != null) { dbBestuurder.updateTankkaart(dbTankkaart); }
                                     lijstbestuurder.Add(dbBestuurder);
                                     dbBestuurder = null;
                                     dbRijbewijzen = null;
@@ -363,6 +363,8 @@ namespace FleetMgmg_Data.Repositories {
                                  (string)reader["Achternaam"],
                                  (string)reader["Naam"],
                                  (DateTime)reader["Geboortedatum"]);
+                                //TODO: FIX RIJBEWIJS SYSTEEM
+                                dbBestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                             }
                             #endregion
 
