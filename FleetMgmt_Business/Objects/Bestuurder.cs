@@ -37,7 +37,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         private void zetRijksRegisternummer(string rijksregisternummer, DateTime rijksgeboortedatum) {
-            if(RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum)) {
+            if (RijksregisterValidator.isGeldig(rijksregisternummer, rijksgeboortedatum)) {
                 this.Rijksregisternummer = rijksregisternummer;
             }
         }

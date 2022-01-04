@@ -285,7 +285,7 @@ namespace FleetMgmg_Data.Repositories {
 
                     return voertuigen;
                 }catch (Exception ex) {
-                    throw new VoertuigRepositoryException("VoertuigRepository : toonVoertuigen", ex);
+                    throw new VoertuigRepositoryException("VoertuigRepository : toonVoertuigen - "+ex.Message, ex);
                 }finally { conn.Close(); }
             }
 

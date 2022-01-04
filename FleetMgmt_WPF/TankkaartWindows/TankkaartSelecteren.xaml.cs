@@ -26,7 +26,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
     public partial class TankkaartSelecteren : Window {
 
         TankkaartManager tm = new TankkaartManager(new TankkaartRepository());
-        public ObservableCollection<Tankkaart> tankkaarten { get; set; } = new ObservableCollection<Tankkaart>();
+        private ObservableCollection<Tankkaart> tankkaarten { get; set; } = new ObservableCollection<Tankkaart>();
         Bestuurder Bestuurder { get; set; }
 
         public Tankkaart Tankkaart { get; set; }

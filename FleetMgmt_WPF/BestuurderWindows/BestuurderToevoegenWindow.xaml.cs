@@ -21,7 +21,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         private BestuurderManager _bestuurderManager = new BestuurderManager(new BestuurderRepository());
         public List<Bestuurder> bestuurders = new List<Bestuurder>();
         public List<RijbewijsEnum> rijbewijzen = new List<RijbewijsEnum>();
-        public ObservableCollection<Tankkaart> tankkaarten = new ObservableCollection<Tankkaart>();
+        public Tankkaart tankkaart = null;
 
         public BestuurderToevoegenWindow() {
             InitializeComponent();
@@ -90,6 +90,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 if (rijksregisternummer == null) 
                     MessageBox.Show("Gelieve een rijksregisternummer in te geven!", "ERROR3", MessageBoxButton.OK);
                 Bestuurder bestuurder = new Bestuurder(rijksregisternummer, naam1, naam2, tijd);
+                if(tankkaart != null) { bestuurder.updateTankkaart(tankkaart); }
                 Bestuurder besuurderTwee = _bestuurderManager.voegBestuurderToe(bestuurder);
                 bestuurders.Add(besuurderTwee);
                 lstVw_Bestuurders.ItemsSource = bestuurders;
@@ -103,8 +104,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
         private void btn_Tankkaart_Click(object sender, RoutedEventArgs e) {
             TankkaartSelecteren tankaartSelecteren = new TankkaartSelecteren();
             if(tankaartSelecteren.ShowDialog() == true) {
-                this.tankkaarten = tankaartSelecteren.tankkaarten;
-                lbl_Tankkaart.Content = this.tankkaarten.Count;
+                this.tankkaart = tankaartSelecteren.Tankkaart;
+                lbl_Tankkaart.Content = this.tankkaart.KaartNummer;
             }
         }
 

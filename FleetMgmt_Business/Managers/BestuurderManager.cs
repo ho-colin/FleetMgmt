@@ -42,7 +42,7 @@ namespace FleetMgmt_Business.Managers {
                 return repo.toonBestuurders(rijksregisterNummer, achterNaam, voorNaam, geboortedatum);
             }
             catch (Exception ex) {
-                throw new BestuurderManagerException("BestuurderManager: toonBestuurders - gefaald", ex);
+                throw new BestuurderManagerException("BestuurderManager: toonBestuurders - "+ex.Message, ex);
             }
         }
 

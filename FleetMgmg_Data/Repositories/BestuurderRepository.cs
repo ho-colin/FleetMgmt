@@ -341,12 +341,11 @@ namespace FleetMgmg_Data.Repositories {
                         Voertuig dbVoertuig = null;
                         Bestuurder dbBestuurder = null;
                         while (reader.Read()) {
+
+
                             #region Bestuurder
-                            if (reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer")))
-                                throw new BestuurderRepositoryException("BestuurderRepository: " +
-                                    "toonBestuurders - Geen bestuurder gevonden!");
-                            if (laatstGebruikteRijksregisternummer !=
-                                (string)reader["Rijksregisternummer"]) {
+                            if (reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer")))throw new BestuurderRepositoryException("BestuurderRepository: toonBestuurders - Geen bestuurder gevonden!");
+                            if (laatstGebruikteRijksregisternummer != (string)reader["Rijksregisternummer"]) {
                                 if (dbBestuurder != null) {
                                     if (dbRijbewijzen != null && dbBestuurder != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
                                     //if (dbVoertuig != null && dbBestuurder != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
@@ -403,14 +402,15 @@ namespace FleetMgmg_Data.Repositories {
                         }
                         #endregion
                         reader.Close();
+                        if (dbBestuurder != null && !lijstbestuurder.Contains(dbBestuurder)) { lijstbestuurder.Add(dbBestuurder); }
+                        return lijstbestuurder;
                     }
                 }catch(Exception ex) {
-                    throw new BestuurderRepositoryException("BestuurderRepository: toonBestuurders - gefaald", ex);
+                    throw new BestuurderRepositoryException(ex.Message, ex);
                 }
                 finally {
                     conn.Close();
                 }
-                return lijstbestuurder;
             }
         }
 
@@ -465,7 +465,7 @@ namespace FleetMgmg_Data.Repositories {
             string queryTwo="INSERT INTO BestuurderRijbewijs(Bestuurder, Categorie, Behaald)" +
                 "OUTPUT INSERTED.Id VALUES(@Bestuurder," +
                 "@Categorie, @Behaald";
-            string queryThree = "UPDATE TANKAART SET id=@BestuurderId WHERE TankkaartId=@id";
+            string queryThree = "UPDATE TANKKAART SET Bestuurder=@Rijksregisternummer WHERE Id=@TankkaartId";
 
             if (bestuurder.Tankkaart != null && !string.IsNullOrWhiteSpace(bestuurder.Tankkaart.KaartNummer.ToString())) {
                 queryOne += ", TankkaartId ";
