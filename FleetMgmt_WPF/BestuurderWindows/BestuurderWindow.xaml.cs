@@ -137,6 +137,12 @@ namespace FleetMgmt_WPF {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
         }
+
+        private void btn_RijbewijsNavgiatie_Click(object sender, RoutedEventArgs e) {
+            RijbewijsWindow rijbewjsWindow = new RijbewijsWindow();
+            rijbewjsWindow.Show();
+            this.Close();
         }
+    }
     }
 

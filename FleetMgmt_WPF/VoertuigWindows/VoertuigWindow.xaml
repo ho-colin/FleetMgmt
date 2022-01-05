@@ -81,10 +81,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!-- Button links-->
-        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Left" Margin="10,50,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_VoertuigNavigatie_Click"/>
-        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,150,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_BestuurderNavigatie_Click"/>
-        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,250,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TankkaartNavigatie_Click"/>
-        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,350,10,0" VerticalAlignment="Top" Height="54" Width="118" Click="btn_TypeVoertuigNavigatie_Click"/>
+        <Button x:Name="btn_VoertuigNavigatie" Content="Voertuig" HorizontalAlignment="Right" Margin="0,32,0,0" VerticalAlignment="Top" Height="45" Width="108" Click="btn_VoertuigNavigatie_Click" />
+        <Button x:Name="btn_BestuurderNavigatie" Content="Bestuurder" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Height="43" Width="108" Click="btn_BestuurderNavigatie_Click"/>
+        <Button x:Name="btn_TankkaartNavigatie" Content="Tankkaart" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top" Height="41" Width="108" Click="btn_TankkaartNavigatie_Click" />
+        <Button x:Name="btn_TypeVoertuigNavigatie" Content="Type Voertuig" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Height="45" Width="108" Click="btn_TypeVoertuigNavigatie_Click" />
+        <Button x:Name="btn_RijbewijsNavgiatie"  HorizontalAlignment="Left" Content="Rijbewijs" Margin="10,349,0,20" Width="108" Click="btn_RijbewijsNavgiatie_Click"/>
 
         <!--Labels-->
         <Label Grid.Column="1" Content="Voertuig" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Height="61" Width="134"/>

@@ -3,6 +3,7 @@ using FleetMgmt_Business.Enums;
 using FleetMgmt_Business.Managers;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_WPF.BestuurderWindows;
+using FleetMgmt_WPF.RijbewijsWindows;
 using FleetMgmt_WPF.TankkaartWindows;
 using FleetMgmt_WPF.TypeVoertuigWindows;
 using FleetMgmt_WPF.VoertuigWindows;
@@ -155,6 +156,12 @@ namespace FleetMgmt_WPF {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
+        }
+
+        private void btn_RijbewijsNavgiatie_Click(object sender, RoutedEventArgs e) {
+            RijbewijsWindow rijbewijsWindow = new RijbewijsWindow();
+            rijbewijsWindow.Show();
+            this.Close();
         }
     }
 }
