@@ -29,8 +29,35 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
-        public List<Rijbewijs> toonRijbewijzen(Bestuurder b) {
-            throw new NotImplementedException();
+        public Bestuurder toonRijbewijzen(Bestuurder b) {
+            string query = "SELECT br.*,b.Naam,b.Achternaam,b.Geboortedatum FROM BestuurderRijbewijs br LEFT JOIN Bestuurder b ON br.Bestuurder=b.Rijksregisternummer WHERE Bestuurder=@bestuurder";
+            using (SqlConnection conn = ConnectionClass.getConnection()) {
+                using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                    cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        Bestuurder bDb = null;
+                        while (reader.Read()) {
+                            try {
+                                if(bDb == null) {
+                                    string gevondenRijksregisternmr = (string)reader["Bestuurder"];
+                                    string gevondenVoornaam = (string)reader["Naam"];
+                                    string gevondenAchternaam = (string)reader["Achternaam"];
+                                    DateTime gevondenGeboortedatum = (DateTime)reader["Geboortedatum"];
+                                    bDb = new Bestuurder(gevondenRijksregisternmr, gevondenAchternaam, gevondenVoornaam, gevondenGeboortedatum);
+                                }
+
+                                DateTime gevondenBehaald = (DateTime)reader["Behaald"];
+                                string gevondenCategorie = (string)reader["Categorie"];
+                                bDb.voegRijbewijsToe(new Rijbewijs(gevondenCategorie, gevondenBehaald));
+                            } catch (Exception ex) {
+                                throw new RijbewijsRepositoryException(ex.Message,ex);
+                            }
+                        }
+                        reader.Close();
+                        return bDb;
+                    }
+                }
+            }
         }
 
         public void verwijderRijbewijs(RijbewijsEnum r, Bestuurder b) {

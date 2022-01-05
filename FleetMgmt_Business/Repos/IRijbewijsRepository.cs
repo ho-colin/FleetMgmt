@@ -12,6 +12,6 @@ namespace FleetMgmt_Business.Repos {
         void voegRijbewijsToe(Rijbewijs r, Bestuurder b);
         void verwijderRijbewijs(RijbewijsEnum r, Bestuurder b);
         bool heeftRijbewijs(RijbewijsEnum r, Bestuurder b);
-        List<Rijbewijs> toonRijbewijzen(Bestuurder b);
+        Bestuurder toonRijbewijzen(Bestuurder b);
     }
 }
