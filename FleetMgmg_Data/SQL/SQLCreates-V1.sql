@@ -53,13 +53,13 @@ CREATE TABLE TankkaartBrandstof(
 
 
 ALTER TABLE Voertuig ADD CONSTRAINT FK_Voertuig_TypeVoertuig FOREIGN KEY (TypeVoertuig) REFERENCES TypeVoertuig(TypeVoertuig);
-ALTER TABLE Voertuig ADD CONSTRAINT FK_Voertuig_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer) ON DELETE CASCADE;
+ALTER TABLE Voertuig ADD CONSTRAINT FK_Voertuig_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer);
 
-ALTER TABLE BestuurderRijbewijs ADD CONSTRAINT FK_BestuurderRijbewijs_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer) ON DELETE CASCADE;
+ALTER TABLE BestuurderRijbewijs ADD CONSTRAINT FK_BestuurderRijbewijs_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer);
 
-ALTER TABLE TankkaartBrandstof ADD CONSTRAINT FK_TankkaartBrandstof_TankkaartId FOREIGN KEY (TankkaartId) REFERENCES Tankkaart(Id) ON DELETE CASCADE;
+ALTER TABLE TankkaartBrandstof ADD CONSTRAINT FK_TankkaartBrandstof_TankkaartId FOREIGN KEY (TankkaartId) REFERENCES Tankkaart(Id);
 
-ALTER TABLE Bestuurder ADD CONSTRAINT FK_Bestuurder_TankkaartId FOREIGN KEY (TankkaartId) REFERENCES Tankkaart(Id) ON DELETE CASCADE;
-ALTER TABLE Bestuurder ADD CONSTRAINT FK_Bestuurder_Chassisnummer FOREIGN KEY (VoertuigChassisnummer) REFERENCES Voertuig(Chassisnummer) ON DELETE CASCADE;
+ALTER TABLE Bestuurder ADD CONSTRAINT FK_Bestuurder_TankkaartId FOREIGN KEY (TankkaartId) REFERENCES Tankkaart(Id);
+ALTER TABLE Bestuurder ADD CONSTRAINT FK_Bestuurder_Chassisnummer FOREIGN KEY (VoertuigChassisnummer) REFERENCES Voertuig(Chassisnummer);
 
-ALTER TABLE Tankkaart ADD CONSTRAINT FK_Tankkaart_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer) ON DELETE CASCADE;
+ALTER TABLE Tankkaart ADD CONSTRAINT FK_Tankkaart_Bestuurder FOREIGN KEY (Bestuurder) REFERENCES Bestuurder(Rijksregisternummer);
