@@ -39,8 +39,9 @@ namespace FleetMgmt_WPF {
                 string gevondenAchterNaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
                 string gevondenVoornaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
                 DateTime? geboortedatum = Convert.ToDateTime(dtpckr_Geboortedatum.SelectedDate.HasValue ? dtpckr_Geboortedatum.SelectedDate.Value : null);
-                RijbewijsEnum? gevondenRijbewijs = this.rijbewijs == null ? null : this.rijbewijs;
-                bestuurders = new ObservableCollection<Bestuurder> (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, gevondenVoornaam, geboortedatum).ToList());
+                string gevondenRijbewijs = this.rijbewijs == null ? null : this.rijbewijs.ToString();
+                int? gevondenTankkaartId = this.tankkaart != null ? this.tankkaart.KaartNummer : null;
+                bestuurders = new ObservableCollection<Bestuurder> (_bestuurdersManager.toonBestuurders(gevondenRijks, gevondenAchterNaam, gevondenVoornaam, geboortedatum, gevondenTankkaartId, gevondenRijbewijs).ToList());
                 lstVw_Bestuurders.ItemsSource = bestuurders;
             }
             catch (Exception ex) {

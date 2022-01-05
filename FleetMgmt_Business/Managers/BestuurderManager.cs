@@ -37,9 +37,9 @@ namespace FleetMgmt_Business.Managers {
 
         }
 
-        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisterNummer, string achterNaam, string voorNaam, DateTime? geboortedatum) {
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisterNummer, string achterNaam, string voorNaam, DateTime? geboortedatum, int? tankkaartId, string rijbewijs) {
             try {
-                return repo.toonBestuurders(rijksregisterNummer, achterNaam, voorNaam, geboortedatum);
+                return repo.toonBestuurders(rijksregisterNummer, achterNaam, voorNaam, geboortedatum, tankkaartId, rijbewijs);
             }
             catch (Exception ex) {
                 throw new BestuurderManagerException("BestuurderManager: toonBestuurders - "+ex.Message, ex);

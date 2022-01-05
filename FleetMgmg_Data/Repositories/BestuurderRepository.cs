@@ -52,41 +52,6 @@ namespace FleetMgmg_Data.Repositories {
                     conn.Open();
                     transaction = conn.BeginTransaction();
 
-                    #region Rijbewijs
-                    if (huidigeBestuurder.rijbewijzen != bestuurder.rijbewijzen) {
-                        DataTable table = new DataTable();
-                        table.TableName = "BestuurderRijbewijs";
-
-                        table.Columns.Add("Id", typeof(int));
-                        table.Columns.Add("Bestuurder", typeof(string));
-
-
-                        table.Columns.Add("Categorie", typeof(string));
-                        table.Columns.Add("Behaald", typeof(DateTime));
-
-                        foreach (Rijbewijs rijbewijs in huidigeBestuurder.rijbewijzen) {
-                            var row = table.NewRow();
-                            row["Id"] = rijbewijs.ToString();
-                            row["Bestuurder"] = bestuurder.Rijksregisternummer;
-                            row["Categorie"] = rijbewijs.Categorie;
-                            row["Behaald"] = rijbewijs.BehaaldOp;
-                            table.Rows.Add(row);
-                        }
-                        if (huidigeBestuurder.rijbewijzen.Count > 0) {
-                            string tkDelQuery = "DELETE FROM BestuurderRijbewijs WHERE Id=@Id";
-                            using (SqlCommand deleteCmd = new SqlCommand(tkDelQuery, conn, transaction)) {
-                                deleteCmd.Parameters.AddWithValue("@Id", bestuurder.Rijksregisternummer);
-                                deleteCmd.ExecuteNonQuery();
-                            }
-                        }
-                        using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conn, SqlBulkCopyOptions.Default, transaction)) {
-                            sqlBulkCopy.DestinationTableName = table.TableName;
-                            sqlBulkCopy.WriteToServer(table);
-
-                        }
-                    }
-                    #endregion
-
                     #region Bestuurder
                     if(bestuurder.Voornaam != huidigeBestuurder.Voornaam || bestuurder.Achternaam != huidigeBestuurder.Achternaam) {
                         StringBuilder queryBuilder = new StringBuilder("UPDATE Bestuurder SET ");
@@ -129,9 +94,15 @@ namespace FleetMgmg_Data.Repositories {
                     // Als beide ingevuld zijn
                     if((huidigeBestuurder.Tankkaart != null && bestuurder.Tankkaart != null)) {
                         if(huidigeBestuurder.Tankkaart != bestuurder.Tankkaart) {
+                            string query0 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
                             string query1 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE TankkaartId=@tankkaartid";
                             string query2 = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
                             string query3 = "UPDATE Tankkaart SET Bestuurder=@bestuurder WHERE TankkaartId=@tankkaartId";
+
+                            using (SqlCommand cmd0 = new SqlCommand(query0, conn, transaction)) {
+                                cmd0.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                                cmd0.ExecuteNonQuery();
+                            }
 
                             using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
                                 cmd1.Parameters.AddWithValue("@tankkaartid",huidigeBestuurder.Tankkaart.KaartNummer);
@@ -152,9 +123,14 @@ namespace FleetMgmg_Data.Repositories {
                         }
                         // Nieuwe bestuurder heeft tankkaart oude niet
                     }else if(bestuurder.Tankkaart != null && huidigeBestuurder.Tankkaart == null) {
+                        string query0 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
                         string query1 = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
                         string query2 = "UPDATE Tankkaart SET Bestuurder=@bestuurder WHERE Id=@tankkaartId";
 
+                        using (SqlCommand cmd0 = new SqlCommand(query0, conn, transaction)) {
+                            cmd0.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                            cmd0.ExecuteNonQuery();
+                        }
                         using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
                             cmd1.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
                             cmd1.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
@@ -214,7 +190,6 @@ namespace FleetMgmg_Data.Repositories {
                 "WHERE b.Rijksregisternummer = @Rijksregisternummer";
             Bestuurder b = null;
             Tankkaart t = null;
-            List<TankkaartBrandstof> tankkaartBrandstof = null;
             List<Rijbewijs> r = null;
             Voertuig v = null;
             SqlConnection conn = ConnectionClass.getConnection();
@@ -233,29 +208,27 @@ namespace FleetMgmg_Data.Repositories {
                                     (string)reader["Achternaam"],
                                     (string)reader["Naam"],
                                     (DateTime)reader["Geboortedatum"]);
+                                //TODO: FIX RIJBEWIJS SYSTEEM
+                                b.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                             }
                             #endregion
 
                             #region Tankkaart
                             if (!reader.IsDBNull(reader.GetOrdinal("TankkaartId"))) {
-                                string pincode = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) {
-                                    pincode = (string)reader["Pincode"];
+                                if(t == null) {
+                                    string pincode = null;
+                                    if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) { pincode = (string)reader["Pincode"]; }
+                                    int kaartnummerDB = ((int)reader["Id"]);
+                                    DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
+                                    bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
+                                    t = new Tankkaart(kaartnummerDB, geldigDatumDB, pincode);
+                                    t.zetGeblokkeerd(geblokkeerdDB);
+                                    b.updateTankkaart(t);
                                 }
-                                int kaartnummerDB = ((int)reader["Id"]);
-                                DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
-                                string tankkaartBrandstofDB = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("TankkaartBrandstof"))) {
-                                    tankkaartBrandstofDB = (string)reader["TankkaartBrandstof"];
-                                }
-                                bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
 
-                                Tankkaart tk = new(kaartnummerDB, geldigDatumDB, pincode, b, tankkaartBrandstof, geblokkeerdDB);
+                                string tankkaartBrandstofDB = (string)reader["Brandstof"];
                                 TankkaartBrandstof ingelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), tankkaartBrandstofDB);
-                                if (!tankkaartBrandstof.Contains(ingelezenData)) {
-                                    tankkaartBrandstof.Add(ingelezenData);
-                                }
-                                b.updateTankkaart(tk);
+                                t.voegBrandstofToe(ingelezenData);
                             }
                             #endregion
 
@@ -311,7 +284,7 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         //Verkrijg de bestuurders aan de hand van verschillende parameters
-        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string achternaam, DateTime? geboortedatum) {
+        public IEnumerable<Bestuurder> toonBestuurders(string rijksregisternummer, string naam, string achternaam, DateTime? geboortedatum, int? tankkaartId, string rijbewijs) {
             List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
             SqlConnection conn = ConnectionClass.getConnection();
             StringBuilder query = new StringBuilder(" SELECT b.*, tb.Brandstof, tk.Id, tk.Pincode,"+
@@ -323,8 +296,9 @@ namespace FleetMgmg_Data.Repositories {
                 "LEFT JOIN Tankkaart tk ON b.TankkaartId = tk.Id "+
                 "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer = br.Bestuurder "+
                 "LEFT JOIN Voertuig v ON b.VoertuigChassisnummer = v.Chassisnummer "+
-                "LEFT JOIN TypeVoertuig tv ON v.TypeVoertuig = tv.TypeVoertuig ");
+                "LEFT JOIN TypeVoertuig tv ON v.TypeVoertuig = tv.TypeVoertuig");
 
+            #region Optionele Parameters
             bool where = false;
             bool and = false;
 
@@ -350,14 +324,26 @@ namespace FleetMgmg_Data.Repositories {
                 if (and) query.Append(" AND "); else and = true;
                 query.Append(" b.Geboortedatum=@geboortedatum");
             }
+            if (tankkaartId.HasValue) {
+                if (!where) query.Append(" WHERE "); where = true;
+                if (and) query.Append(" AND "); else and = true;
+                query.Append(" b.TankkaartId=@tankkaartid");
+            }
+            if (!string.IsNullOrWhiteSpace(rijbewijs)) {
+                if (!where) query.Append(" WHERE "); where = true;
+                if (and) query.Append(" AND "); else and = true;
+                query.Append(" br.Categorie=@rijbewijs");
+            }
+            #endregion
+
             using (SqlCommand cmd = conn.CreateCommand()) {
                 cmd.CommandText = query.ToString();
-                if (query.ToString().Contains("@rijksregisternummer")) cmd.Parameters.AddWithValue
-                        ("@rijksregisternummer", rijksregisternummer);
+                if (query.ToString().Contains("@rijksregisternummer")) cmd.Parameters.AddWithValue("@rijksregisternummer", rijksregisternummer);
                 if (query.ToString().Contains("@naam")) cmd.Parameters.AddWithValue("@naam", naam);
                 if (query.ToString().Contains("@achternaam")) cmd.Parameters.AddWithValue("@achternaam", achternaam);
-                if (query.ToString().Contains("@geboortedatum")) cmd.Parameters.AddWithValue
-                        ("@geboortedatum", geboortedatum.Value.ToString("yyyy-MM-dd"));
+                if (query.ToString().Contains("@geboortedatum")) cmd.Parameters.AddWithValue("@geboortedatum", geboortedatum.Value.ToString("yyyy-MM-dd"));
+                if (query.ToString().Contains("@tankkaartid")) cmd.Parameters.AddWithValue("@tankkaartid", tankkaartId);
+                if (query.ToString().Contains("@rijbewijs")) cmd.Parameters.AddWithValue("@rijbewijs", rijbewijs);
                 conn.Open();
                 try {
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
@@ -371,12 +357,9 @@ namespace FleetMgmg_Data.Repositories {
 
 
                             #region Bestuurder
-                            if (reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer")))throw new BestuurderRepositoryException("BestuurderRepository: toonBestuurders - Geen bestuurder gevonden!");
                             if (laatstGebruikteRijksregisternummer != (string)reader["Rijksregisternummer"]) {
                                 if (dbBestuurder != null) {
                                     if (dbRijbewijzen != null && dbBestuurder != null) { dbRijbewijzen.ForEach(x => dbBestuurder.voegRijbewijsToe(x)); }
-                                    //if (dbVoertuig != null && dbBestuurder != null) { dbBestuurder.updateVoertuig(dbVoertuig); }
-                                    //if (dbTankkaart != null && dbBestuurder != null) { dbBestuurder.updateTankkaart(dbTankkaart); }
                                     lijstbestuurder.Add(dbBestuurder);
                                     dbBestuurder = null;
                                     dbRijbewijzen = null;
@@ -396,21 +379,17 @@ namespace FleetMgmg_Data.Repositories {
 
                             #region Tankkaart
                             if (!reader.IsDBNull(reader.GetOrdinal("TankkaartId"))) {
-                                string pincode = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) {
-                                    pincode = (string)reader["Pincode"];
+                                if(dbTankkaart == null) {
+                                    string pincode = null;
+                                    if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) { pincode = (string)reader["Pincode"]; }
+                                    int kaartnummerDB = ((int)reader["Id"]);
+                                    DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
+                                    bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
+                                    dbTankkaart = new(kaartnummerDB, geldigDatumDB, pincode, dbBestuurder, brandstoffen, geblokkeerdDB);
+                                    dbTankkaart.updateInBezitVan(dbBestuurder);                                
                                 }
-                                int kaartnummerDB = ((int)reader["Id"]);
-                                DateTime geldigDatumDB = (DateTime)reader["GeldigDatum"];
-                                string tankkaartBrandstofDB = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
-                                    tankkaartBrandstofDB = (string)reader["Brandstof"];
-                                }
-                                bool geblokkeerdDB = (bool)reader["Geblokkeerd"];
-
-                                Tankkaart tk = new(kaartnummerDB, geldigDatumDB, pincode, dbBestuurder, brandstoffen, geblokkeerdDB);
-                                TankkaartBrandstof ingelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), tankkaartBrandstofDB);
-                                dbBestuurder.updateTankkaart(tk);
+                                TankkaartBrandstof brandstofDB = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
+                                dbTankkaart.voegBrandstofToe(brandstofDB);
                             }
                             #endregion
 

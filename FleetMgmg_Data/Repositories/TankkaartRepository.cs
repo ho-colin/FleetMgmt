@@ -212,6 +212,8 @@ namespace FleetMgmg_Data.Repositories {
                             }
                             if (b == null && !reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
                                 b = new Bestuurder((string)reader["Bestuurder"], (string)reader["Achternaam"], (string)reader["Naam"], (DateTime)reader["Geboortedatum"]);
+                                //TODO: Fix rijbewijs systeem
+                                b.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                             }
                             if (bestuurderRijbewijs == null) {
                                 if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
@@ -366,6 +368,7 @@ namespace FleetMgmg_Data.Repositories {
                                         (string)reader["Achternaam"],
                                         (string)reader["Naam"],
                                         (DateTime)reader["Geboortedatum"]);
+                                    dbBestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                                 }
                             }
                             #endregion
