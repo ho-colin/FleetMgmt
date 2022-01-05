@@ -88,72 +88,99 @@ namespace FleetMgmg_Data.Repositories {
                     #endregion
 
                     #region Bestuurder
-                    StringBuilder queryBuilder = new StringBuilder("UPDATE Bestuurder SET ");
-                    bool komma = false;
-                    if (huidigeBestuurder.Rijksregisternummer != bestuurder.Rijksregisternummer) {
-                        queryBuilder.Append(" rijksregisterNummer=@rijksregisterNummer");
-                        komma = true;
-                    }
-
-                    if (huidigeBestuurder.Achternaam != bestuurder.Achternaam) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" achternaam=@achternaam ");
-                    }
-
-                    if (huidigeBestuurder.Voornaam != bestuurder.Voornaam) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" naam=@naam");
-                    }
-
-                    if (huidigeBestuurder.GeboorteDatum != bestuurder.GeboorteDatum) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" geboorteDatum=@geboorteDatum ");
-                    }
-
-                    if (huidigeBestuurder.Tankkaart != bestuurder.Tankkaart) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" Tankkaaart=@TankkaartId ");
-                    }
-
-                    if (huidigeBestuurder.Voertuig != bestuurder.Voertuig) {
-                        if (komma) { queryBuilder.Append(","); } else komma = true;
-                        queryBuilder.Append(" Voertuig=@VoertuigChassisnummer");
-                    }
-                    queryBuilder.Append(" WHERE rijksregisternummer=@rijksregisternummer");
-
-                    using (SqlCommand cmd = new(queryBuilder.ToString(), conn, transaction)) {
-                        if (queryBuilder.ToString().Contains("@rijksregisternummer")) {
-                            cmd.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer == null ? DBNull.Value : bestuurder.Rijksregisternummer);
+                    if(bestuurder.Voornaam != huidigeBestuurder.Voornaam || bestuurder.Achternaam != huidigeBestuurder.Achternaam) {
+                        StringBuilder queryBuilder = new StringBuilder("UPDATE Bestuurder SET ");
+                        bool komma = false;
+                        if (huidigeBestuurder.Rijksregisternummer != bestuurder.Rijksregisternummer) {
+                            queryBuilder.Append(" rijksregisterNummer=@rijksregisterNummer");
+                            komma = true;
                         }
 
-                        if (queryBuilder.ToString().Contains("@naam")) {
-                            cmd.Parameters.AddWithValue("@naam", bestuurder.Voornaam == null ? DBNull.Value : bestuurder.Voornaam);
+                        if (huidigeBestuurder.Achternaam != bestuurder.Achternaam) {
+                            if (komma) { queryBuilder.Append(","); } else komma = true;
+                            queryBuilder.Append(" achternaam=@achternaam ");
                         }
 
-                        if (queryBuilder.ToString().Contains("@achternaam")) {
-                            cmd.Parameters.AddWithValue("@achternaam", bestuurder.Achternaam == null ? DBNull.Value : bestuurder.Achternaam);
+                        if (huidigeBestuurder.Voornaam != bestuurder.Voornaam) {
+                            if (komma) { queryBuilder.Append(","); } else komma = true;
+                            queryBuilder.Append(" naam=@naam ");
                         }
+                        queryBuilder.Append(" WHERE rijksregisternummer=@rijksregisternummer");
 
-                        if (queryBuilder.ToString().Contains("@geboorteDatum")) {
-                            cmd.Parameters.AddWithValue("@geboorteDatum", bestuurder.GeboorteDatum.ToString("dd-MM-yyyy"));
+                        using (SqlCommand cmd = new(queryBuilder.ToString(), conn, transaction)) {
+                            if (queryBuilder.ToString().Contains("@rijksregisternummer")) {
+                                cmd.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer == null ? DBNull.Value : bestuurder.Rijksregisternummer);
+                            }
+
+                            if (queryBuilder.ToString().Contains("@naam")) {
+                                cmd.Parameters.AddWithValue("@naam", bestuurder.Voornaam == null ? DBNull.Value : bestuurder.Voornaam);
+                            }
+
+                            if (queryBuilder.ToString().Contains("@achternaam")) {
+                                cmd.Parameters.AddWithValue("@achternaam", bestuurder.Achternaam == null ? DBNull.Value : bestuurder.Achternaam);
+                            }
+
+                            cmd.ExecuteNonQuery();
                         }
-
-                        if (queryBuilder.ToString().Contains("@TankkaartId")) {
-                            cmd.Parameters.AddWithValue("@TankkaartId", bestuurder.Tankkaart.KaartNummer.Equals(0) ? DBNull.Value : bestuurder.Tankkaart.KaartNummer);
-                        }
-
-                        if (queryBuilder.ToString().Contains("@VoertuigChassisnummer")) {
-                            cmd.Parameters.AddWithValue("@VoertuigChassisnummer", bestuurder.Voertuig.Chassisnummer.Equals(0) ? DBNull.Value : bestuurder.Voertuig.Chassisnummer);
-                        }
-
-                        cmd.ExecuteNonQuery();
                     }
                     #endregion
 
                     #region Tankkaart
+                    // Als beide ingevuld zijn
                     if((huidigeBestuurder.Tankkaart != null && bestuurder.Tankkaart != null)) {
                         if(huidigeBestuurder.Tankkaart != bestuurder.Tankkaart) {
-                            string query = "UPDATE Tankkaart SET Bestuurder WHERE ";
+                            string query1 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE TankkaartId=@tankkaartid";
+                            string query2 = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
+                            string query3 = "UPDATE Tankkaart SET Bestuurder=@bestuurder WHERE TankkaartId=@tankkaartId";
+
+                            using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                                cmd1.Parameters.AddWithValue("@tankkaartid",huidigeBestuurder.Tankkaart.KaartNummer);
+                                cmd1.ExecuteNonQuery();
+                            }
+
+                            using (SqlCommand cmd2 = new SqlCommand(query2, conn, transaction)) {
+                                cmd2.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                                cmd2.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
+                                cmd2.ExecuteNonQuery();
+                            }
+
+                            using (SqlCommand cmd3 = new SqlCommand(query3, conn, transaction)) {
+                                cmd3.Parameters.AddWithValue("@bestuurder", bestuurder.Rijksregisternummer);
+                                cmd3.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                                cmd3.ExecuteNonQuery();
+                            }
+                        }
+                        // Nieuwe bestuurder heeft tankkaart oude niet
+                    }else if(bestuurder.Tankkaart != null && huidigeBestuurder.Tankkaart == null) {
+                        string query1 = "UPDATE Bestuurder SET TankkaartId=@tankkaartid WHERE Rijksregisternummer=@rijksregisternummer";
+                        string query2 = "UPDATE Tankkaart SET Bestuurder=@bestuurder WHERE Id=@tankkaartId";
+
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                            cmd1.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                            cmd1.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, transaction)) {
+                            cmd2.Parameters.AddWithValue("@bestuurder", bestuurder.Rijksregisternummer);
+                            cmd2.Parameters.AddWithValue("@tankkaartid", bestuurder.Tankkaart.KaartNummer);
+                            cmd2.ExecuteNonQuery();
+                        }
+
+
+                        // Nieuwe bestuurder heeft geen tankkaart oude wel
+                    } else if(bestuurder.Tankkaart == null && huidigeBestuurder.Tankkaart != null) {
+                        string query1 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE Rijksregisternummer=@rijksregisternummer";
+                        string query2 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE TankkaartId=@tankkaartId";
+
+                        using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                            cmd1.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd2 = new SqlCommand(query2, conn, transaction)) {
+                            cmd2.Parameters.AddWithValue("@tankkaartid", huidigeBestuurder.Tankkaart.KaartNummer);
+                            cmd2.ExecuteNonQuery();
                         }
                     }
 
@@ -161,7 +188,7 @@ namespace FleetMgmg_Data.Repositories {
                     transaction.Commit();
 
                 }
-                catch (Exception ex) {
+                catch (Exception) {
                         transaction.Rollback();
                 }
                 finally {
@@ -202,9 +229,9 @@ namespace FleetMgmg_Data.Repositories {
 
                             #region Bestuurder
                             if (!reader.IsDBNull(reader.GetOrdinal("Rijksregisternummer"))) {
-                                b = new((string)reader["Rijksregisternummer"],
-                                    (string)reader["Naam"],
+                                b = new Bestuurder((string)reader["Rijksregisternummer"],
                                     (string)reader["Achternaam"],
+                                    (string)reader["Naam"],
                                     (DateTime)reader["Geboortedatum"]);
                             }
                             #endregion

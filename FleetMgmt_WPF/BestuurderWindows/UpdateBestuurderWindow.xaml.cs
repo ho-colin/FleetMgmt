@@ -39,6 +39,7 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
                 string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
                 Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, bestuurder.GeboorteDatum);
+                if(tankkaart != null) { b.updateTankkaart(tankkaart); }
                 _bestuurderManager.bewerkBestuurder(b);
                 DialogResult = true;
                 Close();
