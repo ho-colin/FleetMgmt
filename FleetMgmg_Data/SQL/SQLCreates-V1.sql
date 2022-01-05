@@ -29,10 +29,10 @@ CREATE TABLE Bestuurder(
 );
 
 CREATE TABLE BestuurderRijbewijs(
-	Id integer NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	Bestuurder nvarchar(15) NOT NULL,
 	Categorie nvarchar(5) NOT NULL,
 	Behaald date NOT NULL
+	PRIMARY KEY(Bestuurder,Categorie)
 );
 
 
