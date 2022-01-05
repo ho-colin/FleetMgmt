@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using FleetMgmt_WPF.BestuurderWindows;
+using FleetMgmt_WPF.RijbewijsWindows;
 
 namespace FleetMgmt_WPF.TankkaartWindows {
     /// <summary>
@@ -137,6 +138,12 @@ namespace FleetMgmt_WPF.TankkaartWindows {
             if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, @"^\d+$")) {
                 e.Handled = true;
             }
+        }
+
+        private void btn_RijbewijsNavgiatie_Click(object sender, RoutedEventArgs e) {
+            RijbewijsWindow rijbewijsWindow = new RijbewijsWindow();
+            rijbewijsWindow.Show();
+            this.Close();
         }
     }
 }

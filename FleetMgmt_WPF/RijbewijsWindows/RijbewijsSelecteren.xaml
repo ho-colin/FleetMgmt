@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="RijbewijsSelecteren" Height="400" Width="200">
-    <!-- Styling VoertuigWindow-->
+    <!-- Styling RijbewijsSelecterenWindow-->
     <Window.Resources>
         <Style TargetType="Button">
         <Setter Property="Foreground" Value="White" />

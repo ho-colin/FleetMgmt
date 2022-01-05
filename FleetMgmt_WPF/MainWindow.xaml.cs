@@ -1,4 +1,5 @@
-﻿using FleetMgmt_WPF.TankkaartWindows;
+﻿using FleetMgmt_WPF.RijbewijsWindows;
+using FleetMgmt_WPF.TankkaartWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,12 @@ namespace FleetMgmt_WPF {
         private void Button_Click_3(object sender, RoutedEventArgs e) {
             TankkaartWindow w = new TankkaartWindow();
             w.Show();
+            this.Close();
+        }
+
+        private void btn_RijbewijsNavgiatie_Click(object sender, RoutedEventArgs e) {
+            RijbewijsWindow RijbewijsWindow = new RijbewijsWindow();
+            RijbewijsWindow.Show();
             this.Close();
         }
     }
