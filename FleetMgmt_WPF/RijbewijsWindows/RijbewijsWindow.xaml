@@ -115,7 +115,7 @@
                   BorderThickness="5" 
                   Foreground="Black"
                   Grid.Column="1" 
-                  Margin="0,217,0,0">
+                  Margin="22,217,0,0">
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="btn_Delete" Header="Delete" Click="btn_Delete_Click"/>

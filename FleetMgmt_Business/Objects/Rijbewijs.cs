@@ -37,7 +37,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public override string ToString() {
-            return this.Categorie.ToString();
+            return $"{this.Categorie.ToString()} {this.BehaaldOp.ToShortDateString()}";
         }
     }
 }

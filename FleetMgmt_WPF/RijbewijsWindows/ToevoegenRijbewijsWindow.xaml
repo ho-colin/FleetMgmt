@@ -116,7 +116,7 @@
                Style="{StaticResource HeaderStyle}"
                Grid.Column="1"
                Grid.Row="0"
-                 Margin="10,10,10,5"
+                 Margin="10,10,10,0"
                Foreground="Black"/>
 
 
@@ -147,7 +147,7 @@
                     x:Name="btn_VoegRijbewijsToe" 
                     Content="Rijbewijs toevoegen" 
                     Margin="-227,46,210,-36" 
-                    Grid.Row="3"/>
+                    Grid.Row="3" Click="btn_VoegRijbewijsToe_Click"/>
 
             <Button
                     x:Name="btnReset" 
