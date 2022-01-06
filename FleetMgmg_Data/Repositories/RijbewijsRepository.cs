@@ -51,7 +51,7 @@ namespace FleetMgmg_Data.Repositories {
                                 bDb.voegRijbewijsToe(new Rijbewijs(gevondenCategorie, gevondenBehaald));
                             } catch (Exception ex) {
                                 throw new RijbewijsRepositoryException(ex.Message,ex);
-                            }
+                            } finally { conn.Close(); }
                         }
                         reader.Close();
                         return bDb;
@@ -61,11 +61,36 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public void verwijderRijbewijs(RijbewijsEnum r, Bestuurder b) {
-            throw new NotImplementedException();
+            if (!this.heeftRijbewijs(r, b)) throw new RijbewijsRepositoryException("Bestuurder heeft dit rijbewijs niet!");
+            string query = "DELETE FROM BestuurderRijbewijs WHERE Categorie=@categorie AND Bestuurder=@bestuurder";
+            using(SqlConnection conn = ConnectionClass.getConnection()) {
+                try {
+                    using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                        cmd.Parameters.AddWithValue("@categorie", r.ToString());
+                        cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
+                        cmd.ExecuteNonQuery();
+                    }
+                } catch (Exception ex) {
+                    throw new RijbewijsRepositoryException(ex.Message, ex);
+                } finally { conn.Close(); }
+            }
         }
 
         public void voegRijbewijsToe(Rijbewijs r, Bestuurder b) {
-            throw new NotImplementedException();
+            if (this.heeftRijbewijs(r.Categorie, b)) throw new RijbewijsRepositoryException("Bestuurder heeft dit rijbewijs al!");
+            string query = "INSERT INTO BestuurderRijbewijs (Bestuurder,Categorie,Behaald) VALUES (@bestuurder,@categorie,@behaald)";
+            using(SqlConnection conn = ConnectionClass.getConnection()) {
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
+                    try {
+                        cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
+                        cmd.Parameters.AddWithValue("@categorie", r.Categorie);
+                        cmd.Parameters.AddWithValue("@behaald", r.BehaaldOp.ToString("yyyy-MM-dd"));
+                        cmd.ExecuteNonQuery();
+                    } catch (Exception ex) {
+                        throw new RijbewijsRepositoryException(ex.Message, ex);
+                    } finally { conn.Close(); }
+                }
+            }
         }
     }
 }
