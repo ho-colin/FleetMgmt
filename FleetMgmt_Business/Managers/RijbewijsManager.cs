@@ -20,7 +20,7 @@ namespace FleetMgmt_Business.Managers {
             return repo.heeftRijbewijs(r, b);
         }
 
-        public List<Rijbewijs> toonRijbewijzen(Bestuurder b) {
+        public Bestuurder toonRijbewijzen(Bestuurder b) {
             return repo.toonRijbewijzen(b);
         }
 

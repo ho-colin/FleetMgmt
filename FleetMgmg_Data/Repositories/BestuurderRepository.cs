@@ -178,7 +178,7 @@ namespace FleetMgmg_Data.Repositories {
         //Selecteert de bestuurder
         public Bestuurder selecteerBestuurder(string rijks) {
             string query = "SELECT b.*, tb.Brandstof, tk.Id, tk.Pincode, "+
-                "tk.GeldigDatum, tk.Geblokkeerd, tk.Bestuurder, br.Id BehaaldId, "+
+                "tk.GeldigDatum, tk.Geblokkeerd, tk.Bestuurder, "+
                 "br.Categorie, br.Behaald, v.Merk, v.Model, v.Nummerplaat, v.Brandstof "+
                 "voertuigBrandstof, v.TypeVoertuig, v.Kleur, v.AantalDeuren, "+
                 "tv.Rijbewijs FROM bestuurder b "+
@@ -288,7 +288,7 @@ namespace FleetMgmg_Data.Repositories {
             List<Bestuurder> lijstbestuurder = new List<Bestuurder>();
             SqlConnection conn = ConnectionClass.getConnection();
             StringBuilder query = new StringBuilder(" SELECT b.*, tb.Brandstof, tk.Id, tk.Pincode,"+
-                "tk.GeldigDatum, tk.Geblokkeerd, tk.Bestuurder, br.Id BehaaldId, "+
+                "tk.GeldigDatum, tk.Geblokkeerd, tk.Bestuurder, "+
                 "br.Categorie, br.Behaald, v.Merk, v.Model, v.Nummerplaat, v.Brandstof "+
                 "voertuigBrandstof, v.TypeVoertuig, v.Kleur, v.AantalDeuren, "+
                 "tv.Rijbewijs FROM bestuurder b "+
