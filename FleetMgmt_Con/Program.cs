@@ -20,36 +20,18 @@ namespace FleetMgmt_Con {
             IBestuurderRepository Brepo = new BestuurderRepository();
             BestuurderManager bm = new BestuurderManager(Brepo);
 
-            //IEnumerable<Tankkaart> tk = repo.geefTankkaarten(null,null,null,null,null);
+            //Sectie Rijbewijs
+            IRijbewijsRepository rRepo = new RijbewijsRepository();
+            RijbewijsManager rm = new RijbewijsManager(rRepo);
 
-            //foreach(Tankkaart tank in tk) {
-            //    Console.WriteLine(tank);
-            //}
+            Bestuurder b = bm.selecteerBestuurder("00.10.01.001-68");
+            //rm.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today), b);
 
-            //Tankkaart teUpdaten = repo.geefTankkaarten(8, null, null, null, null).ElementAt(0);
-            //teUpdaten.zetGeblokkeerd(false);
-            //teUpdaten.updatePincode("6969");
+            Bestuurder metRibba = rm.toonRijbewijzen(b);
 
-            //repo.bewerkTankkaart(teUpdaten);
+            bool heeftDieDa = rm.heeftRijbewijs(RijbewijsEnum.AM, b);
 
-            //Tankkaart nieuweTankkaart1 = new Tankkaart(new DateTime(2022, 10, 25), "2548", null, null);
-            //repo.voegTankkaartToe(nieuweTankkaart1);
-
-            //Tankkaart nieuweTankkaart = new Tankkaart(500,new DateTime(2025, 12, 25), "6869", null, new List<TankkaartBrandstof>() { TankkaartBrandstof.Benzine, TankkaartBrandstof.Diesel}, false);
-            //repo.voegTankkaartToe(nieuweTankkaart);
-
-            ////Voeg Bestuurder Toe
-            //Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1996, 06, 05));
-            //bm.voegBestuurderToe(b)
-
-
-            ////Verwijder Bestuurder
-            //bm.verwijderBestuurder(b.Id);
-
-            //Update bestuurder
-
-            //Zoek Bestuurder
-
+            rm.verwijderRijbewijs(RijbewijsEnum.AM, b);
 
 
 

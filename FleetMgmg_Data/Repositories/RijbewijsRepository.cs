@@ -33,12 +33,13 @@ namespace FleetMgmg_Data.Repositories {
             string query = "SELECT br.*,b.Naam,b.Achternaam,b.Geboortedatum FROM BestuurderRijbewijs br LEFT JOIN Bestuurder b ON br.Bestuurder=b.Rijksregisternummer WHERE Bestuurder=@bestuurder";
             using (SqlConnection conn = ConnectionClass.getConnection()) {
                 using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                    conn.Open();
                     cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         Bestuurder bDb = null;
-                        while (reader.Read()) {
-                            try {
-                                if(bDb == null) {
+                        try {
+                            while (reader.Read()) {
+                                if (bDb == null) {
                                     string gevondenRijksregisternmr = (string)reader["Bestuurder"];
                                     string gevondenVoornaam = (string)reader["Naam"];
                                     string gevondenAchternaam = (string)reader["Achternaam"];
@@ -49,12 +50,12 @@ namespace FleetMgmg_Data.Repositories {
                                 DateTime gevondenBehaald = (DateTime)reader["Behaald"];
                                 string gevondenCategorie = (string)reader["Categorie"];
                                 bDb.voegRijbewijsToe(new Rijbewijs(gevondenCategorie, gevondenBehaald));
-                            } catch (Exception ex) {
-                                throw new RijbewijsRepositoryException(ex.Message,ex);
-                            } finally { conn.Close(); }
-                        }
-                        reader.Close();
-                        return bDb;
+                            }
+                            reader.Close();
+                            return bDb;
+                        } catch (Exception ex) {
+                            throw new RijbewijsRepositoryException(ex.Message, ex);
+                        } finally { conn.Close(); }
                     }
                 }
             }
@@ -66,6 +67,7 @@ namespace FleetMgmg_Data.Repositories {
             using(SqlConnection conn = ConnectionClass.getConnection()) {
                 try {
                     using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                        conn.Open();
                         cmd.Parameters.AddWithValue("@categorie", r.ToString());
                         cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
                         cmd.ExecuteNonQuery();
@@ -82,8 +84,9 @@ namespace FleetMgmg_Data.Repositories {
             using(SqlConnection conn = ConnectionClass.getConnection()) {
                 using(SqlCommand cmd = new SqlCommand(query, conn)) {
                     try {
+                        conn.Open();
                         cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
-                        cmd.Parameters.AddWithValue("@categorie", r.Categorie);
+                        cmd.Parameters.AddWithValue("@categorie", r.Categorie.ToString());
                         cmd.Parameters.AddWithValue("@behaald", r.BehaaldOp.ToString("yyyy-MM-dd"));
                         cmd.ExecuteNonQuery();
                     } catch (Exception ex) {
