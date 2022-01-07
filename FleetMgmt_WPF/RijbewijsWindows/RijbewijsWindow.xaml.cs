@@ -77,7 +77,7 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
             if (selecteerBestuurderWindow.ShowDialog() == true) {
                 this._bestuurder = selecteerBestuurderWindow.bestuurder;
                 lblBestuurderRijbewijs.Content = this._bestuurder.Voornaam + " " + this._bestuurder.Achternaam;
-                if (_bestuurder.rijbewijzen.Count > 0) {
+                if (_bestuurder.rijbewijzen != null) {
                     lstVw_Rijbewijzen.ItemsSource = _bestuurder.rijbewijzen;
                 }
             }
