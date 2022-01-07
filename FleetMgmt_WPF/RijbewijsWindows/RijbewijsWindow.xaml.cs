@@ -25,7 +25,7 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
     /// </summary>
     public partial class RijbewijsWindow : Window {
 
-        private Bestuurder _bestuurder = (Bestuurder)Application.Current.Properties["Bestuurder"];
+        private Bestuurder _bestuurder = null;
         RijbewijsManager rijbewijsManager = new RijbewijsManager(new RijbewijsRepository());
 
 
@@ -77,10 +77,7 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
             if (selecteerBestuurderWindow.ShowDialog() == true) {
                 this._bestuurder = selecteerBestuurderWindow.bestuurder;
                 lblBestuurderRijbewijs.Content = this._bestuurder.Voornaam + " " + this._bestuurder.Achternaam;
-                foreach (var r in this._bestuurder.rijbewijzen) {
-                    lstVw_Rijbewijzen.Items.Add(r.Categorie.ToString()); ;
-                    lstVw_Rijbewijzen.Items.Add(r.BehaaldOp.ToShortDateString());
-                }
+                lstVw_Rijbewijzen.ItemsSource = _bestuurder.rijbewijzen;
             }
 
         }
