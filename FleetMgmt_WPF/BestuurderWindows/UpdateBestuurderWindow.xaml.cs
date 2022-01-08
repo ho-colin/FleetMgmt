@@ -122,5 +122,17 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 lbl_TankkaartNummer.Content = this.tankkaart.KaartNummer;
             }
         }
+
+        private void btn_verwijderRijbewijsClick_Click(object sender, RoutedEventArgs e) {
+            if(this.bestuurder.rijbewijzen != null) {
+                this.bestuurder.rijbewijzen = null;
+            }
+        }
+
+        private void btn_verwijderTankaartClick_Click(object sender, RoutedEventArgs e) {
+            if(this.bestuurder.Tankkaart != null) {
+                this.bestuurder.Tankkaart = null;
+            }
+        }
     }
 }

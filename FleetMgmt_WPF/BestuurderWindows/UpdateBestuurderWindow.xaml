@@ -159,7 +159,8 @@
             <Button Click="btn_Update_Click" x:Name="btn_Update" Content="Updaten" Margin="50,291,0,0" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
             <Button Click="btn_Rijbewijs_Click"  x:Name="btn_Rijbewijs" Content="Rijbewijs selecteren" Margin="225,137,0,0" Height="20" Width="204" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
             <Button Click="btn_Tankkaart_Click" x:Name="btn_Tankkaart" Content="Tankkaart selecteren" Margin="225,165,0,0" Height="20" Width="204" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-
+            <Button x:Name="btn_verwijderRijbewijsClick" Click="btn_verwijderRijbewijsClick_Click" Content="X" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="40,139,0,0"/>
+            <Button x:Name="btn_verwijderTankaartClick" Click="btn_verwijderTankaartClick_Click" Content="X" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="40,166,0,0"/>
         </Grid>
     </Grid>
 </Window>

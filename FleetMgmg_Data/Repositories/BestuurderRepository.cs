@@ -53,7 +53,7 @@ namespace FleetMgmg_Data.Repositories {
                     transaction = conn.BeginTransaction();
 
                     #region Bestuurder
-                    if(bestuurder.Voornaam != huidigeBestuurder.Voornaam || bestuurder.Achternaam != huidigeBestuurder.Achternaam) {
+                    if (bestuurder.Voornaam != huidigeBestuurder.Voornaam || bestuurder.Achternaam != huidigeBestuurder.Achternaam) {
                         StringBuilder queryBuilder = new StringBuilder("UPDATE Bestuurder SET ");
                         bool komma = false;
                         if (huidigeBestuurder.Rijksregisternummer != bestuurder.Rijksregisternummer) {
@@ -90,9 +90,13 @@ namespace FleetMgmg_Data.Repositories {
                     }
                     #endregion
 
+                    #region Rijbewijs
+
+                    #endregion
+
                     #region Tankkaart
                     // Als beide ingevuld zijn
-                    if((huidigeBestuurder.Tankkaart != null && bestuurder.Tankkaart != null)) {
+                    if ((huidigeBestuurder.Tankkaart != null && bestuurder.Tankkaart != null)) {
                         if(huidigeBestuurder.Tankkaart != bestuurder.Tankkaart) {
                             string query0 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE TankkaartId=@tankkaartid";
                             string query1 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE TankkaartId=@tankkaartid";
@@ -232,7 +236,7 @@ namespace FleetMgmg_Data.Repositories {
                             }
                             #endregion
 
-                            #region Rijbewijs
+                            #region BestuurderRjbewijs
                             if (r == null) {
                                 if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
                                     if (r == null) { r = new List<Rijbewijs>(); }
@@ -354,8 +358,6 @@ namespace FleetMgmg_Data.Repositories {
                         Voertuig dbVoertuig = null;
                         Bestuurder dbBestuurder = null;
                         while (reader.Read()) {
-
-
                             #region Bestuurder
                             if (laatstGebruikteRijksregisternummer != (string)reader["Rijksregisternummer"]) {
                                 if (dbBestuurder != null) {
@@ -372,8 +374,16 @@ namespace FleetMgmg_Data.Repositories {
                                  (string)reader["Achternaam"],
                                  (string)reader["Naam"],
                                  (DateTime)reader["Geboortedatum"]);
-                                //TODO: FIX RIJBEWIJS SYSTEEM
-                                dbBestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
+                            }
+                            #endregion
+
+                            #region BestuurderRijbewijs
+                            if (dbBestuurder != null && !reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
+                                if (dbRijbewijzen == null) dbRijbewijzen = new List<Rijbewijs>();
+                                Rijbewijs rijbewijsBestuurder = new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
+                                if (!dbRijbewijzen.Contains(rijbewijsBestuurder)) { 
+                                    dbRijbewijzen.Add(rijbewijsBestuurder); 
+                                }
                             }
                             #endregion
 
@@ -394,7 +404,6 @@ namespace FleetMgmg_Data.Repositories {
                             #endregion
 
                             #region Voertuig & TypeVoertuig
-                            //Voertuig && TypeVoertuig
                             if (dbVoertuig == null && !reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))) {
                                 BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);
                                 RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);

@@ -19,7 +19,7 @@ namespace FleetMgmt_Business.Objects {
 
         public DateTime GeboorteDatum { get; private set; }
 
-        public Tankkaart Tankkaart { get; private set; }
+        public Tankkaart Tankkaart { get; set; }
 
         public Voertuig Voertuig { get; private set; }
 
