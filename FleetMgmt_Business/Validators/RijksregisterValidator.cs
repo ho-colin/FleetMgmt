@@ -46,7 +46,7 @@ namespace FleetMgmt_Business.Validators {
 
             if (controleGetal == vergelijk) {
                 return true;
-            } else throw new Exception("Geboortedatum en rijksregisternummer komen niet overeen!");
+            } else throw new RijksregisterException("Geboortedatum en rijksregisternummer komen niet overeen!");
         }
     }
 }

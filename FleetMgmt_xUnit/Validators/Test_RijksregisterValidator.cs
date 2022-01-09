@@ -17,7 +17,8 @@ namespace FleetMgmt_xUnit.Validators {
 
         [Fact]
         public void Test_Alles_Invalid() {
-            Assert.False(RijksregisterValidator.isGeldig("90.02.15-999-36", new DateTime(1995, 12, 10)));
+            var ex = Assert.Throws<RijksregisterException>(() => RijksregisterValidator.isGeldig("90.02.15-999-36", new DateTime(1995, 12, 10)));
+            Assert.Equal("Geboortedatum en rijksregisternummer komen niet overeen!", ex.Message);
         }
 
         [Theory]

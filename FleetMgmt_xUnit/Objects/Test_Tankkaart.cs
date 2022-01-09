@@ -21,14 +21,6 @@ namespace FleetMgmt_xUnit.Objects {
             Assert.Equal("Kaartnummer moet hoger zijn dan 1!", ex.Message);
         }
 
-        [Fact]
-        public void Test_geldigheidsDatum_Verleden_InValid() {
-            DateTime verleden = new DateTime(2020, 10, 15);
-            List<TankkaartBrandstof> dummyBrandstoffen = new List<TankkaartBrandstof>() { TankkaartBrandstof.Benzine };
-            var ex = Assert.Throws<TankkaartException>(() => new Tankkaart(10, verleden, "6969", null, dummyBrandstoffen, false));
-            Assert.Equal("Geldigheidsdatum moet groter zijn dan vandaag!", ex.Message);
-        }
-
         [Theory]
         [InlineData("A536")]
         [InlineData("ABCD")]

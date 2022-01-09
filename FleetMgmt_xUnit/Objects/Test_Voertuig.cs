@@ -47,15 +47,6 @@ namespace FleetMgmt_xUnit.Objects {
         }
 
         [Fact]
-        public void Test_UpdateBestuurder_Invalid() {
-            Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
-            Bestuurder b = new Bestuurder("90.02.01-999-02", "Colpaert", "Pieter", new DateTime(1990, 02, 27), new List<Rijbewijs>() {new Rijbewijs("B",DateTime.Now) });
-            v.updateBestuurder(b);
-            var ex = Assert.Throws<VoertuigException>(() => v.updateBestuurder(b));
-            Assert.Equal("Voertuig: UpdateBestuurder - Geen verschil", ex.Message);
-            Assert.Equal(b, v.Bestuurder);
-        }
-        [Fact]
         public void Test_UpdateAantalDeuren_Valid() {
             Voertuig v = new Voertuig(BrandstofEnum.Elektrisch, "1HGBH41JXMN109186", "Blauw", 5, "Volkswagen", "Golf", new TypeVoertuig("Hatchback", RijbewijsEnum.B), "1-AAA-123");
             v.updateAantalDeuren(3);

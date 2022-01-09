@@ -58,12 +58,6 @@ namespace FleetMgmt_xUnit.Objects
         }
 
         [Fact]
-        public void Test_GeboortedatumIsGeenToekomst() {
-            DateTime dt = new DateTime(2050, 12, 12);
-            var exc = Assert.Throws<BestuurderException>(() => new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", dt));
-            Assert.Equal("Bestuurder: Datum mag niet in de toekomst zijn!", exc.Message);
-        }
-        [Fact]
         public void Test_VoegRijbewijsToe_Valid() {
             Bestuurder b = new Bestuurder("90.02.01-999-02", "Gheysens", "Louis", new DateTime(1933, 12, 11));
             Rijbewijs r = new Rijbewijs("B", new DateTime(1998, 12, 13));
