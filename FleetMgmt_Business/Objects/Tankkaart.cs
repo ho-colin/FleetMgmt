@@ -23,7 +23,7 @@ namespace FleetMgmt_Business.Objects {
         public List<TankkaartBrandstof> Brandstoffen { get; private set; }
 
         public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode, Bestuurder inbezitvan, List<TankkaartBrandstof> brandstoffen, 
-            bool geblokkeerd) :this(geldigheidsdatum, pincode, inbezitvan, brandstoffen, geblokkeerd) {
+            bool geblokkeerd) : this(geldigheidsdatum, pincode, inbezitvan, brandstoffen, geblokkeerd) {
             zetKaartnummer(kaartnummer);
         }
 
@@ -31,8 +31,8 @@ namespace FleetMgmt_Business.Objects {
             zetBrandstoffen(brandstoffen);
             zetGeldigheidsDatum(geldigheidsdatum);
             zetPincode(pincode);
-            updateInBezitVan(inbezitvan);
             zetGeblokkeerd(geblokkeerd);
+            updateInBezitVan(inbezitvan);         
         }
 
         public Tankkaart(int kaartnummer, DateTime geldigheidsdatum, string pincode) {
@@ -42,6 +42,7 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateInBezitVan(Bestuurder bestuurder) {
+            if (Geblokkeerd && bestuurder != null) throw new TankkaartException("Tankkaart is geblokkeerd!");
             if (bestuurder == null) {
                 if(this.InBezitVan != null) {
                     this.InBezitVan.updateTankkaart(null);
