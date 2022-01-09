@@ -41,12 +41,13 @@ namespace FleetMgmg_Data.Repositories {
             SqlConnection conn = ConnectionClass.getConnection();
             string query = "SELECT v.Chassisnummer, v.Merk, v.Model, v.TypeVoertuig, v.Brandstof VoertuigBrandstof, v.Kleur, v.AantalDeuren, v.Nummerplaat," +
                 "b.Naam, b.Achternaam, b.Geboortedatum, b.Rijksregisternummer, " +
-                "t.Pincode, t.GeldigDatum, t.Geblokkeerd , tb.Brandstof, tb.TankkaartId, tv.Rijbewijs " +
+                "t.Pincode, t.GeldigDatum, t.Geblokkeerd , tb.Brandstof, tb.TankkaartId, tv.Rijbewijs, br.Categorie, br.Behaald " +
                 "FROM Voertuig v " +
                 "LEFT JOIN Bestuurder b ON v.Bestuurder = b.Rijksregisternummer " +
                 "LEFT JOIN Tankkaart t ON b.TankkaartId = t.Id " +
                 "LEFT JOIN TankkaartBrandstof tb ON t.Id = tb.TankkaartId " +
                 "LEFT JOIN TypeVoertuig tv ON tv.TypeVoertuig = v.TypeVoertuig " +
+                "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer = br.Bestuurder " +
                 "WHERE Chassisnummer=@chassisnummer";
             using (SqlCommand cmd = conn.CreateCommand()) {
                 cmd.CommandText = query;
@@ -64,15 +65,14 @@ namespace FleetMgmg_Data.Repositories {
                             if(voertuig == null) {
                                 BrandstofEnum brandstofDB = (BrandstofEnum) Enum.Parse(typeof(BrandstofEnum), (string)reader["VoertuigBrandstof"]);
                                 string chassisnummerDB = (string)reader["Chassisnummer"];
-                                string kleurDB = (string)reader["Kleur"];
+                                string kleurDB = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
                                 string merkDB = (string)reader["Merk"];
                                 string modelDB = (string)reader["Model"];
                                 RijbewijsEnum rijbewijsDB = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
                                 TypeVoertuig typeVoertuigDB = new TypeVoertuig((string)reader["TypeVoertuig"], rijbewijsDB);
                                 string nummerplaatDB = (string)reader["Nummerplaat"];
 
-                                int? aantalDeurenDB = null;
-                                if (!reader.IsDBNull(reader.GetOrdinal("AantalDeuren"))) { aantalDeurenDB = (int)reader["AantalDeuren"]; }
+                                int? aantalDeurenDB = reader.IsDBNull(reader.GetOrdinal("AantalDeuren")) ? null : (int)reader["AantalDeuren"];
 
                                 voertuig = new Voertuig(brandstofDB, chassisnummerDB, kleurDB, aantalDeurenDB, merkDB, modelDB, typeVoertuigDB, nummerplaatDB);
                             }
@@ -87,15 +87,18 @@ namespace FleetMgmg_Data.Repositories {
                                     DateTime geboortedatumDB = (DateTime)reader["Geboortedatum"];
 
                                     bestuurder = new Bestuurder(rijksregisterDB, achternaamDB, voornaamDB, geboortedatumDB);
-                                    //TODO: FIX RIJBEWIJS SYSTEE<
-                                    bestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
-                                    voertuig.updateBestuurder(bestuurder);
                                 }
                             }
                             #endregion
 
+                            #region Rijbewijs
+                            if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
+                                bestuurder.voegRijbewijsToe(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
+                            }
+                            #endregion
+
                             #region Tankkaart
-                            if(tankkaart == null) {
+                            if (tankkaart == null) {
                                 if (!reader.IsDBNull(reader.GetOrdinal("TankkaartId"))) {
 
                                     int tankkaartIdDB = (int)reader["TankkaartId"];

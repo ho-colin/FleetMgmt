@@ -60,11 +60,13 @@ namespace FleetMgmt_WPF.VoertuigWindows {
                 if (bestuurder != null) { bestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));  voertuig.updateBestuurder(gevondenBestuurder); }
                 Voertuig voertuigNew = vm.voegVoertuigToe(voertuig);
                 voertuigen.Add(voertuigNew);
+
+                this.DialogResult = true;
+                this.Close();
             } catch (Exception ex) {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
-            lstVw_Voertuigen.ItemsSource = voertuigen;
         }
 
         private void btn_ResetVelden_Click(object sender, RoutedEventArgs e) {
@@ -84,7 +86,6 @@ namespace FleetMgmt_WPF.VoertuigWindows {
             if (w.ShowDialog() == true) {
                 this.typeVoertuig = w.TypeVoertuig;
                 lbl_GeselecteerdeTypeVoertuig.Content = this.typeVoertuig.Type.ToString();
-                this.Close();
             }
         }
     }

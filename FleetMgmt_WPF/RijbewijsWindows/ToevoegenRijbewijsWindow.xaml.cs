@@ -44,9 +44,12 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
                      "en datum geselecteerd!", "Rijbewijs toevoegen", MessageBoxButton.OK);
                 RijbewijsEnum rijbewijsKeuze = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), cmbbx_Rijbewijs.SelectedItem.ToString());
                 Rijbewijs rijbewijs = new Rijbewijs(rijbewijsKeuze.ToString(), dtpckr_BehaaldOp.SelectedDate.Value);
-                rijbewijs.zetBehaaldOp(dtpckr_BehaaldOp.SelectedDate.Value);
+                bestuurder.voegRijbewijsToe(rijbewijs);
                 rijbewijsManager.voegRijbewijsToe(rijbewijs, bestuurder);
                 MessageBox.Show($"{rijbewijsKeuze} werd zonet toegevoegd aan {bestuurder.Voornaam} {bestuurder.Achternaam}");
+
+                this.DialogResult = true;
+                this.Close();
             }
             catch(Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);

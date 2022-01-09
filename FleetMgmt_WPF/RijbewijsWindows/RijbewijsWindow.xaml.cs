@@ -36,8 +36,10 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
 
         private void btn_RijbewijsToevoegen_Click(object sender, RoutedEventArgs e) {
             ToevoegenRijbewijsWindow tv = new ToevoegenRijbewijsWindow(_bestuurder);
-            tv.Show();
-            this.Close();
+            if(tv.ShowDialog() == true) {
+                lstVw_Rijbewijzen.ItemsSource = null;
+                lstVw_Rijbewijzen.ItemsSource = _bestuurder.rijbewijzen;
+            }
         }
 
         private void btn_Reset_Click(object sender, RoutedEventArgs e) {
@@ -51,15 +53,23 @@ namespace FleetMgmt_WPF.RijbewijsWindows {
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
-                RijbewijsEnum geslecteerdRijbewijs = (RijbewijsEnum)lstVw_Rijbewijzen.SelectedItem;
-                MessageBoxResult result = MessageBox.Show($"Wenst u het rijbewijs {geslecteerdRijbewijs.ToString()} te " +
-                    $"verwijderen van ${_bestuurder.Voornaam}?");
+                Rijbewijs geslecteerdRijbewijs = (Rijbewijs) lstVw_Rijbewijzen.SelectedItem;
+                MessageBoxResult result = MessageBox.Show($"Wenst u het rijbewijs {geslecteerdRijbewijs.Categorie.ToString()} te " +
+                    $"verwijderen van {_bestuurder.Voornaam}?","Rijbewijs verwijderen?",MessageBoxButton.YesNo);
                 switch (result) {
                     case MessageBoxResult.Yes:
-                        rijbewijsManager.verwijderRijbewijs(geslecteerdRijbewijs, _bestuurder);
-                        MessageBox.Show($"Het {geslecteerdRijbewijs.ToString()} rijbewijs van ${_bestuurder.Voornaam}" +
-                            $"werd zonet verwijderd!");
-                        break;
+                        try {
+                            rijbewijsManager.verwijderRijbewijs(geslecteerdRijbewijs.Categorie, _bestuurder);
+                            MessageBox.Show($"Het {geslecteerdRijbewijs.ToString()} rijbewijs van {_bestuurder.Voornaam}" +
+                                $"werd zonet verwijderd!");
+                            _bestuurder.verwijderRijbewijs(geslecteerdRijbewijs);
+                            lstVw_Rijbewijzen.ItemsSource = null;
+                            lstVw_Rijbewijzen.ItemsSource = _bestuurder.rijbewijzen;
+                            break;
+                        } catch (Exception ex) {
+                            MessageBox.Show(ex.Message);
+                            break;
+                        }
                     case MessageBoxResult.No:
                         break;
                 }

@@ -174,7 +174,7 @@ namespace FleetMgmg_Data.Repositories {
         }
 
         public Tankkaart selecteerTankkaart(int id) {
-            string query = "SELECT t.*,tb.Brandstof,b.Naam,b.Achternaam,b.Geboortedatum,b.VoertuigChassisnummer,br.Id BehaaldId,br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof,v.TypeVoertuig,v.Kleur,v.AantalDeuren,tv.Rijbewijs FROM tankkaart t " +
+            string query = "SELECT t.*,tb.Brandstof,b.Naam,b.Achternaam,b.Geboortedatum,b.VoertuigChassisnummer,br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof,v.TypeVoertuig,v.Kleur,v.AantalDeuren,tv.Rijbewijs FROM tankkaart t " +
                 "LEFT JOIN TankkaartBrandstof tb ON t.Id=tb.TankkaartId " +
                 "LEFT JOIN Bestuurder b ON t.Bestuurder=b.Rijksregisternummer " +
                 "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer=br.Bestuurder " +
@@ -185,7 +185,6 @@ namespace FleetMgmg_Data.Repositories {
             Tankkaart tk = null;
             List<TankkaartBrandstof> tankkaartBrandstof = null;
             Bestuurder b = null;
-            List<FleetMgmt_Business.Objects.Rijbewijs> bestuurderRijbewijs = null;
 
             Voertuig v = null;
 
@@ -203,6 +202,7 @@ namespace FleetMgmg_Data.Repositories {
                                 tk = new Tankkaart((int)reader["id"], (DateTime)reader["GeldigDatum"], null, null, null, (bool)reader["Geblokkeerd"]);
                                 if (!reader.IsDBNull(reader.GetOrdinal("Pincode"))) { tk.updatePincode((string)reader["Pincode"]); }
                             }
+
                             if (!reader.IsDBNull(reader.GetOrdinal("Brandstof"))) {
                                 if (tankkaartBrandstof == null) { tankkaartBrandstof = new List<TankkaartBrandstof>(); }
                                 TankkaartBrandstof tb = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), (string)reader["Brandstof"]);
@@ -210,31 +210,31 @@ namespace FleetMgmg_Data.Repositories {
                                     tankkaartBrandstof.Add(tb);
                                 }
                             }
+
                             if (b == null && !reader.IsDBNull(reader.GetOrdinal("Bestuurder"))) {
                                 b = new Bestuurder((string)reader["Bestuurder"], (string)reader["Achternaam"], (string)reader["Naam"], (DateTime)reader["Geboortedatum"]);
-                                //TODO: Fix rijbewijs systeem
-                                b.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                             }
-                            if (bestuurderRijbewijs == null) {
+
                                 if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
-                                    if (bestuurderRijbewijs == null) { bestuurderRijbewijs = new List<Rijbewijs>(); }
-                                    if (!bestuurderRijbewijs.Contains(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]))) {
-                                        bestuurderRijbewijs.Add(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
+                                    if (b.rijbewijzen == null) { b.rijbewijzen = new List<Rijbewijs>(); }
+                                    if (!b.rijbewijzen.Contains(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]))) {
+                                        b.voegRijbewijsToe(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
                                     }
                                 }
-                            }
+
                             if (v == null) {
                                 if (!reader.IsDBNull(reader.GetOrdinal("VoertuigChassisnummer"))) {
 
                                     string kleur = null;
                                     if (!reader.IsDBNull(reader.GetOrdinal("kleur"))) kleur = (string)reader["kleur"];
                                     RijbewijsEnum re = (RijbewijsEnum) Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
+                                    int? aantalDeuren = reader.IsDBNull(reader.GetOrdinal("AantalDeuren")) ? null : (int)reader["AantalDeuren"];
 
                                     v = new Voertuig(
                                         (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]), 
                                         (string)reader["VoertuigChassisnummer"], 
                                         kleur, 
-                                        (int)reader["AantalDeuren"], 
+                                        aantalDeuren, 
                                         (string)reader["merk"], 
                                         (string)reader["model"], 
                                         new TypeVoertuig((string)reader["TypeVoertuig"], re), 
@@ -246,7 +246,6 @@ namespace FleetMgmg_Data.Repositories {
 
                         tk.updateInBezitVan(b);
                         tk.zetBrandstoffen(tankkaartBrandstof);
-                        if (b != null && bestuurderRijbewijs != null) { b.rijbewijzen = bestuurderRijbewijs; }
                         if(b!=null && v != null) v.updateBestuurder(b);
 
                         return tk;
@@ -264,7 +263,7 @@ namespace FleetMgmg_Data.Repositories {
             SqlConnection conn = ConnectionClass.getConnection();
 
             #region TANKKAART AANMAKEN
-            StringBuilder query = new StringBuilder("SELECT t.*,tb.Brandstof,b.Naam,b.Achternaam,b.Geboortedatum,b.VoertuigChassisnummer,br.Id BehaaldId,br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof,v.TypeVoertuig,v.Kleur,v.AantalDeuren,tv.Rijbewijs FROM tankkaart t " +
+            StringBuilder query = new StringBuilder("SELECT t.*,tb.Brandstof,b.Naam,b.Achternaam,b.Geboortedatum,b.VoertuigChassisnummer,br.Categorie,br.Behaald,v.Merk,v.Model,v.Nummerplaat,v.Brandstof voertuigBrandstof,v.TypeVoertuig,v.Kleur,v.AantalDeuren,tv.Rijbewijs FROM tankkaart t " +
                 "LEFT JOIN TankkaartBrandstof tb ON t.Id=tb.TankkaartId " +
                 "LEFT JOIN Bestuurder b ON t.Bestuurder=b.Rijksregisternummer " +
                 "LEFT JOIN BestuurderRijbewijs br ON b.Rijksregisternummer=br.Bestuurder " +
@@ -368,7 +367,6 @@ namespace FleetMgmg_Data.Repositories {
                                         (string)reader["Achternaam"],
                                         (string)reader["Naam"],
                                         (DateTime)reader["Geboortedatum"]);
-                                    dbBestuurder.voegRijbewijsToe(new Rijbewijs("B", DateTime.Today));
                                 }
                             }
                             #endregion
@@ -384,8 +382,9 @@ namespace FleetMgmg_Data.Repositories {
                                 BrandstofEnum voertuigBrandstof = (BrandstofEnum)Enum.Parse(typeof(BrandstofEnum), (string)reader["voertuigBrandstof"]);
                                 RijbewijsEnum re = (RijbewijsEnum)Enum.Parse(typeof(RijbewijsEnum), (string)reader["Rijbewijs"]);
                                 string kleur = reader.IsDBNull(reader.GetOrdinal("Kleur")) ? null : (string)reader["Kleur"];
+                                int? aantalDeuren = reader.IsDBNull(reader.GetOrdinal("AantalDeuren")) ? null : (int)reader["AantalDeuren"];
 
-                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, (int)reader["AantalDeuren"], (string)reader["Merk"], (string)reader["Model"], new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
+                                dbVoertuig = new Voertuig(voertuigBrandstof, (string)reader["VoertuigChassisnummer"], kleur, aantalDeuren, (string)reader["Merk"], (string)reader["Model"], new TypeVoertuig((string)reader["TypeVoertuig"], re), (string)reader["Nummerplaat"]);
                             }
                             #endregion
 

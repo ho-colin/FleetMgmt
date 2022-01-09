@@ -42,7 +42,7 @@ namespace FleetMgmt_Business.Objects {
 
         public Voertuig(BrandstofEnum brandstof, string chassisnummer, string kleur, int? aantalDeuren, string merk, string model, TypeVoertuig typeVoertuig, string nummerplaat, Bestuurder bestuurder) 
             : this(brandstof, chassisnummer, kleur, aantalDeuren, merk, model, typeVoertuig, nummerplaat) {
-            this.Bestuurder = bestuurder;
+            this.updateBestuurder(bestuurder);
         }
 
         private void zetModel(string model) {
@@ -86,10 +86,12 @@ namespace FleetMgmt_Business.Objects {
         }
 
         public void updateBestuurder(Bestuurder bestuurder) {
-            if (bestuurder == this.Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
-            if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
-            this.Bestuurder = bestuurder;
-            if (bestuurder.Voertuig != this) { bestuurder.updateVoertuig(this); }           
+            //if (bestuurder == this.Bestuurder) throw new VoertuigException("Voertuig: UpdateBestuurder - Geen verschil");
+            if(bestuurder != null) {
+                if (!RijbewijsValidator.isBevoegd(bestuurder, this)) throw new VoertuigException("Voertuig - Bestuurder mist het vereiste rijbewijs!");
+                this.Bestuurder = bestuurder;
+                if (bestuurder.Voertuig != this) { bestuurder.updateVoertuig(this); }
+            } else { this.Bestuurder = bestuurder; }         
         }
 
         public void updateTypeVoertuig(TypeVoertuig type) {

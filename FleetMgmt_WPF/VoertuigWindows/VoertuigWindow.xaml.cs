@@ -112,7 +112,9 @@ namespace FleetMgmt_WPF {
 
         private void btn_VoertuigToevoegen_Click(object sender, RoutedEventArgs e) {
             VoertuigToevoegenWindow w = new VoertuigToevoegenWindow();
-            w.Show();
+            if (w.ShowDialog() == true) {
+                this.btn_VoertuigZoeken_Click(sender, e);
+            }
         }
 
         private void btn_VoertuigZoeken_Click(object sender, RoutedEventArgs e) {
