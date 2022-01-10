@@ -97,10 +97,18 @@ namespace FleetMgmt_WPF {
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
                 TypeVoertuig geselecteerd = (TypeVoertuig)lstvw_TypeVoertuig.SelectedItem;
-                tvm.verwijderTypeVoertuig(geselecteerd);
+                MessageBoxResult result = MessageBox.Show($"Wenst u het type voertuig: {geselecteerd.Type} te verwijderen?", "Verwijder TypeVoertuig", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        tvm.verwijderTypeVoertuig(geselecteerd);
+                        this.btn_TypeVoertuigZoeken_Click(sender, e);
+                        MessageBox.Show($"Type voertuig: {geselecteerd.Type} werd succesvol verwijderd!");
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
 
-                MessageBox.Show("Type succesvol verwijdert!", "Type Voertuig");
-                this.btn_TypeVoertuigZoeken_Click(sender, e);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }

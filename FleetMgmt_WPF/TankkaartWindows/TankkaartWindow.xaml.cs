@@ -127,8 +127,18 @@ namespace FleetMgmt_WPF.TankkaartWindows {
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
                 FleetMgmt_Business.Objects.Tankkaart tk = (FleetMgmt_Business.Objects.Tankkaart)lstVw_Tankkaarten.SelectedItem;
-                tm.verwijderTankkaart(tk.KaartNummer);
-                btn_TankkaartZoeken_Click(sender, e);
+                MessageBoxResult result = MessageBox.Show($"Wenst u Tankkaart met tankkaartnummer: {tk.KaartNummer} te verwijderen?", "Tankkaart verwijderen", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        tm.verwijderTankkaart(tk.KaartNummer);
+                        btn_TankkaartZoeken_Click(sender, e);
+                        MessageBox.Show($"Tankkaart met kaartnummmer: {tk.KaartNummer} werd zonet verwijderd!");
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
