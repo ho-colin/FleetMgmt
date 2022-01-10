@@ -53,12 +53,13 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 DateTime gevondenDatum = Convert.ToDateTime(txtbx_Geldigheidsdatum.SelectedDate.Value);
                 if(gevondenDatum < DateTime.Now){
                     MessageBox.Show("U mag geen datum in het verleden selecteren!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                } else {
+                    FleetMgmt_Business.Objects.Tankkaart tk = new FleetMgmt_Business.Objects.Tankkaart(gevondenDatum, gevondenPincode, gevondenBestuurder, brandstoffen, chekbx_Geblokkeerd.IsChecked.Value);
+
+                    FleetMgmt_Business.Objects.Tankkaart tkNew = tm.voegTankkaartToe(tk);
+                    tankkaarten.Add(tkNew);
                 }
-
-                FleetMgmt_Business.Objects.Tankkaart tk = new FleetMgmt_Business.Objects.Tankkaart(gevondenDatum, gevondenPincode, gevondenBestuurder, brandstoffen, chekbx_Geblokkeerd.IsChecked.Value);
-
-                FleetMgmt_Business.Objects.Tankkaart tkNew = tm.voegTankkaartToe(tk);
-                tankkaarten.Add(tkNew);
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, ex.GetType().Name);
             }
