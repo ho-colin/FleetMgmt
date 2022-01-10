@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FleetMgmt_WPF.TankkaartWindows"
         mc:Ignorable="d"
-        Title="TankkaartSelecteren" Height="450" Width="400">
+        Title="FleetManagement - Tankkaart" Height="450" Width="400">
     <Window.Resources>
         <!-- Styling voertuigwindow-->
         <Style TargetType="Button">

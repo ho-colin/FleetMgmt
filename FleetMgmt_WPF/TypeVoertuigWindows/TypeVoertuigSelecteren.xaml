@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="TypeVoertuigSelecteren" Height="450" Width="400">
+        Title="FleetManagement - TypeVoertuig" Height="450" Width="400">
     <Window.Resources>
         <!-- Styling voertuigwindow-->
         <Style TargetType="Button">

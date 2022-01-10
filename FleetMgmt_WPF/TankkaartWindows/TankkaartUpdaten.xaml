@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="TankkaartUpdaten" Height="450" Width="800">
+        Title="FleetManagement - Tankkaart" Height="450" Width="800">
     <Window.Resources>
         <!-- Styling voertuigwindow-->
         <Style TargetType="Button">

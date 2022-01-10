@@ -13,7 +13,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:FleetMgmt_WPF.RijbewijsWindows"
         mc:Ignorable="d"
-        Title="ToevoegenRijbewijsWindow" Height="300" Width="400">
+        Title="FleetManagement - Rijbewijs" Height="300" Width="400">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White" />

@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="RijbewijsSelecteren" Height="400" Width="200">
+        Title="FleetManagement - Rijbewijs" Height="400" Width="200">
     <!-- Styling RijbewijsSelecterenWindow-->
     <Window.Resources>
         <Style TargetType="Button">
