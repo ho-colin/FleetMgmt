@@ -24,6 +24,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
         public UpdateBestuurderWindow(Bestuurder bestuurder) {
             this.bestuurder = bestuurder;
+            if(this.bestuurder.Tankkaart != null) { this.tankkaart = this.bestuurder.Tankkaart; }
+
             InitializeComponent();
             Reset();
             this.ResizeMode = ResizeMode.NoResize;
@@ -38,9 +40,17 @@ namespace FleetMgmt_WPF.BestuurderWindows {
                 string gevondenRijks = string.IsNullOrWhiteSpace(txtbx_RijksregisterNummer.Text) ? null : txtbx_RijksregisterNummer.Text;
                 string gevondenNaam = string.IsNullOrWhiteSpace(txtbx_Voornaam.Text) ? null : txtbx_Voornaam.Text;
                 string gevondenAchternaam = string.IsNullOrWhiteSpace(txtbx_Achternaam.Text) ? null : txtbx_Achternaam.Text;
-                Bestuurder b = new Bestuurder(gevondenRijks, gevondenAchternaam, gevondenNaam, bestuurder.GeboorteDatum);
-                if(tankkaart != null) { b.updateTankkaart(tankkaart); }
-                _bestuurderManager.bewerkBestuurder(b);
+                
+                if(this.bestuurder.Voornaam != gevondenNaam) { bestuurder.zetVoornaam(gevondenNaam); }
+                if (this.bestuurder.Achternaam != gevondenAchternaam) { bestuurder.zetAchternaam(gevondenAchternaam); }
+
+                if (bestuurder.Tankkaart != null && tankkaart == null) { bestuurder.updateTankkaart(null); }
+                if(bestuurder.Tankkaart == null && tankkaart != null) { bestuurder.updateTankkaart(tankkaart); }
+                if (bestuurder.Tankkaart != null || tankkaart != null) {
+                    if (!bestuurder.Tankkaart.Equals(tankkaart)) { bestuurder.updateTankkaart(tankkaart); }
+                }
+
+                _bestuurderManager.bewerkBestuurder(bestuurder);
                 DialogResult = true;
                 Close();
             }catch(Exception ex) {

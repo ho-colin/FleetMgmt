@@ -145,7 +145,7 @@ namespace FleetMgmg_Data.Repositories {
                         // Nieuwe bestuurder heeft geen tankkaart oude wel
                     } else if(bestuurder.Tankkaart == null && huidigeBestuurder.Tankkaart != null) {
                         string query1 = "UPDATE Bestuurder SET TankkaartId=NULL WHERE Rijksregisternummer=@rijksregisternummer";
-                        string query2 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE TankkaartId=@tankkaartId";
+                        string query2 = "UPDATE Tankkaart SET Bestuurder=NULL WHERE Id=@tankkaartId";
 
                         using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
                             cmd1.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
@@ -223,7 +223,9 @@ namespace FleetMgmg_Data.Repositories {
 
                                 string tankkaartBrandstofDB = (string)reader["Brandstof"];
                                 TankkaartBrandstof ingelezenData = (TankkaartBrandstof)Enum.Parse(typeof(TankkaartBrandstof), tankkaartBrandstofDB);
-                                t.voegBrandstofToe(ingelezenData);
+                                if(t.Brandstoffen == null) { 
+                                    t.voegBrandstofToe(ingelezenData);
+                                } else { if(t.Brandstoffen != null && !t.Brandstoffen.Contains(ingelezenData)) { t.voegBrandstofToe(ingelezenData); } }
                             }
                             #endregion
 
@@ -425,7 +427,7 @@ namespace FleetMgmg_Data.Repositories {
             string queryTankkaart = "UPDATE TANKKAART SET Bestuurder = NULL WHERE Id = @Id";
             string queryBestuurder = "DELETE FROM Bestuurder WHERE rijksregisternummer=@rijksregisternummer";
             string queryVoertuig = "UPDATE VOERTUIG SET Bestuurder=NULL WHERE Bestuurder=@rijksregisternummer";
-            string queryRijbewijs = "DELETE FROM Rijbewijs WHERE Bestuurder=@rijksregisternummer";
+            string queryRijbewijs = "DELETE FROM BestuurderRijbewijs WHERE Bestuurder=@rijksregisternummer";
             SqlConnection conn = ConnectionClass.getConnection();
             using SqlCommand cmdBestuurder = new(queryBestuurder, conn);
             using SqlCommand cmdTankkaart = new(queryTankkaart, conn);
@@ -443,10 +445,10 @@ namespace FleetMgmg_Data.Repositories {
 
                 #endregion
 
-                #region Bestuurder
-                cmdBestuurder.Transaction = transaction;
-                cmdBestuurder.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
-                cmdBestuurder.ExecuteNonQuery();
+                #region Rijbewijs
+                cmdRijbewijs.Transaction = transaction;
+                cmdRijbewijs.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
+                cmdRijbewijs.ExecuteNonQuery();
                 #endregion
 
                 #region Voertuig
@@ -455,10 +457,10 @@ namespace FleetMgmg_Data.Repositories {
                 cmdVoertuig.ExecuteNonQuery();
                 #endregion
 
-                #region Rijbewijs
-                cmdRijbewijs.Transaction = transaction;
-                cmdRijbewijs.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
-                cmdRijbewijs.ExecuteNonQuery();
+                #region Bestuurder
+                cmdBestuurder.Transaction = transaction;
+                cmdBestuurder.Parameters.AddWithValue("@rijksregisternummer", bestuurder.Rijksregisternummer);
+                cmdBestuurder.ExecuteNonQuery();
                 #endregion
 
                 transaction.Commit();

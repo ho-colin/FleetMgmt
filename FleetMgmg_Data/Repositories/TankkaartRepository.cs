@@ -431,6 +431,14 @@ namespace FleetMgmg_Data.Repositories {
                     }
                     #endregion
 
+                    #region Brandstoffen
+                    string query1 = "DELETE FROM TankkaartBrandstof WHERE TankkaartId=@id";
+                    using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
+                        cmd1.Parameters.AddWithValue("@id", id);
+                        cmd1.ExecuteNonQuery();
+                    }
+                    #endregion
+
                     #region Verwijder TK
                     string query = "DELETE FROM Tankkaart WHERE Id=@id";
                     using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {

@@ -42,12 +42,12 @@ namespace FleetMgmt_Business.Objects {
             }
         }
 
-        private void zetAchternaam(string achternaam) {
+        public void zetAchternaam(string achternaam) {
             if (string.IsNullOrWhiteSpace(achternaam)) throw new BestuurderException("Bestuurder: Achternaam mag niet leeg zijn!");
             this.Achternaam = achternaam;
         }
 
-        private void zetVoornaam(string voornaam) {
+        public void zetVoornaam(string voornaam) {
             if (string.IsNullOrWhiteSpace(voornaam)) throw new BestuurderException("Bestuurder: Voornaam mag niet leeg zijn!");
             this.Voornaam = voornaam;
         }

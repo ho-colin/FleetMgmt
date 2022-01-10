@@ -61,6 +61,7 @@ namespace FleetMgmt_Business.Managers {
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {
             try {
+                if (this.bestaatBestuurder(bestuurder.Rijksregisternummer)) throw new BestuurderException("BestuurderManager : Bestuurder me dit rijksregisternummer bestaat al!");
                 return repo.voegBestuurderToe(bestuurder);
             }catch(Exception ex) {
                 throw new BestuurderException("BestuurderManager: VoegBestuurderToe - gefaald", ex);

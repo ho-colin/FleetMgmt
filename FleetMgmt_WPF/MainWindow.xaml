@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="FleetManagement" Height="450" Width="800">
     <Window.Resources>
         <!-- ACHTERGROND ZWART EN TEKST WIT-->
         <Style TargetType="Button">
