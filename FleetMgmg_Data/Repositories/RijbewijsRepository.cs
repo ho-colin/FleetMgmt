@@ -63,19 +63,37 @@ namespace FleetMgmg_Data.Repositories {
 
         public void verwijderRijbewijs(RijbewijsEnum r, Bestuurder b) {
             if (!this.heeftRijbewijs(r, b)) throw new RijbewijsRepositoryException("Bestuurder heeft dit rijbewijs niet!");
-            string query = "DELETE FROM BestuurderRijbewijs WHERE Categorie=@categorie AND Bestuurder=@bestuurder";
-            using(SqlConnection conn = ConnectionClass.getConnection()) {
+
+            bool heeftWagen = false;
+            string queryAuto = "SELECT Count(*) FROM Voertuig WHERE Bestuurder=@bestuurder";
+            using (SqlConnection conn = ConnectionClass.getConnection()) {
                 try {
-                    using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                    using (SqlCommand cmd = new SqlCommand(queryAuto, conn)) {
                         conn.Open();
-                        cmd.Parameters.AddWithValue("@categorie", r.ToString());
                         cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
-                        cmd.ExecuteNonQuery();
+                        int getal = (int)cmd.ExecuteScalar();
+                        heeftWagen = getal > 0 ? true : false;
                     }
                 } catch (Exception ex) {
                     throw new RijbewijsRepositoryException(ex.Message, ex);
-                } finally { conn.Close(); }
+                } finally { conn?.Close(); }
             }
+
+            if (!heeftWagen) {
+                string query = "DELETE FROM BestuurderRijbewijs WHERE Categorie=@categorie AND Bestuurder=@bestuurder";
+                using (SqlConnection conn = ConnectionClass.getConnection()) {
+                    try {
+                        using (SqlCommand cmd = new SqlCommand(query, conn)) {
+                            conn.Open();
+                            cmd.Parameters.AddWithValue("@categorie", r.ToString());
+                            cmd.Parameters.AddWithValue("@bestuurder", b.Rijksregisternummer);
+                            cmd.ExecuteNonQuery();
+                        }
+                    } catch (Exception ex) {
+                        throw new RijbewijsRepositoryException(ex.Message, ex);
+                    } finally { conn.Close(); }
+                }
+            } else throw new RijbewijsRepositoryException("Bestuurder is in bezit van wagen, om conflicten te vermijden mag je geen rijbewijs verwijderen.");
         }
 
         public void voegRijbewijsToe(Rijbewijs r, Bestuurder b) {
