@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="BestuurderToevoegenWindow" Height="300" Width="400">
+        Title="FleetManagement - Bestuurder" Height="300" Width="400">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White" />
