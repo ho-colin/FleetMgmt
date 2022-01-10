@@ -107,7 +107,6 @@
                        Content="Tankkaart:" Grid.Column="1" 
                        Grid.Row="6" Margin="5"/>
 
-                <Label x:Name="lbl_AantalRijbewijzen" Style="{StaticResource HeaderStyle}" Grid.Column="2" Margin="217,11,238,3" Grid.Row="5" Grid.ColumnSpan="3"/>
                 <Label x:Name="lbl_TankkaartNummer" Style="{StaticResource HeaderStyle}" Grid.Column="2" Margin="217,4,238,10" Grid.Row="6" Grid.ColumnSpan="3"/>
 
                 <!-- Textboxen -->
