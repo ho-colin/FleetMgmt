@@ -34,6 +34,24 @@ namespace FleetMgmg_Data.Repositories {
             }
         }
 
+        public bool bestaatVoertuigNmrPlaat(string nummerplaat) {
+            SqlConnection connection = ConnectionClass.getConnection();
+            string query = "SELECT Count(*) FROM Voertuig WHERE Nummerplaat=@nummerplaat";
+            using (SqlCommand command = connection.CreateCommand()) {
+                connection.Open();
+                try {
+                    command.CommandText = query;
+                    command.Parameters.AddWithValue("@nummerplaat", nummerplaat);
+                    int exists = (int)command.ExecuteScalar();
+                    if (exists > 0) return true; return false;
+                } catch (Exception ex) {
+                    throw new VoertuigRepositoryException("VoertuigRepository: BestaatVoertuig - Er heeft een fout voorgedaan!", ex);
+                } finally {
+                    connection.Close();
+                }
+            }
+        }
+
         public Voertuig geefVoertuig(string chassisnummer) {
             Voertuig voertuig = null;
             Bestuurder bestuurder = null;

@@ -25,6 +25,10 @@ namespace FleetMgmt_Business.Managers {
             }
         }
 
+        public bool bestaatVoertuigNmrPlaat(string nummerplaat) {
+            return repo.bestaatVoertuigNmrPlaat(nummerplaat);
+        }
+
         public void bewerkVoertuig(Voertuig voertuig) {
             try {
                 repo.bewerkVoertuig(voertuig);
@@ -59,6 +63,8 @@ namespace FleetMgmt_Business.Managers {
 
         public Voertuig voegVoertuigToe(Voertuig voertuig) {
             try {
+                if (this.bestaatVoertuig(voertuig.Chassisnummer)) throw new VoertuigManagerException("Voertuig met dit chassisnummer bestaat al!");
+                if (this.bestaatVoertuigNmrPlaat(voertuig.Nummerplaat)) throw new VoertuigManagerException("Voertuig met deze nummerplaat bestaat al!");
                 return repo.voegVoertuigToe(voertuig);
             } catch (Exception ex) {
                 throw new VoertuigManagerException(ex.Message, ex);
