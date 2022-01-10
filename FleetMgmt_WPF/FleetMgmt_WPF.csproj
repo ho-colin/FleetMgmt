@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FleetMgmg_Data\FleetMgmg_Data.csproj" />
     <ProjectReference Include="..\FleetMgmt_Business\FleetMgmt_Business.csproj" />
+    <ProjectReference Include="..\FleetMgmt_Con\FleetMgmt_Con.csproj" />
   </ItemGroup>
 
 </Project>
