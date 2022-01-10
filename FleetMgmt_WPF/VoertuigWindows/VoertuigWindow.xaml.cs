@@ -152,8 +152,17 @@ namespace FleetMgmt_WPF {
         private void btn_Delete_Click(object sender, RoutedEventArgs e) {
             try {
                 Voertuig v = (Voertuig)dtgd_Voertuigen.SelectedItem;
-                vm.verwijderVoertuig(v);
-                btn_VoertuigZoeken_Click(sender, e);
+                MessageBoxResult result = MessageBox.Show($"Wenst u voertuig met chassisnummer: {v.Chassisnummer} te verwijderen?", "Verwijder voertuig", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        vm.verwijderVoertuig(v);
+                        btn_VoertuigZoeken_Click(sender, e);
+                        MessageBox.Show($"Voertuig met chassisnummer: {v.Chassisnummer} werd zonet verwijderd!");
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
             } catch (Exception ex) {
 
                 MessageBox.Show(ex.Message, ex.GetType().Name);

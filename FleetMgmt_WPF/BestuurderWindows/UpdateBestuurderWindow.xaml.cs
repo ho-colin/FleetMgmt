@@ -91,8 +91,8 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             this.txtbx_Geboortedatum.Text = bestuurder.GeboorteDatum.ToShortDateString();
             this.txtbx_RijksregisterNummer.Text = bestuurder.Rijksregisternummer;
             txtbx_RijksregisterNummeOud.Text = bestuurder.Rijksregisternummer;
-            txtbx_VoornaamOud.Text = bestuurder.Achternaam;
-            txtbx_AchternaamOud.Text = bestuurder.Voornaam;
+            txtbx_VoornaamOud.Text = bestuurder.Voornaam;
+            txtbx_AchternaamOud.Text = bestuurder.Achternaam;
             txtbx_GeboortedatumOud.Text = bestuurder.GeboorteDatum.ToShortDateString();
 
             if(bestuurder.rijbewijzen.Count > 0) {
