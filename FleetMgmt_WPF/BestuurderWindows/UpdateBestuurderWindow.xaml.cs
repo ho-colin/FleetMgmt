@@ -97,7 +97,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
 
             if(bestuurder.rijbewijzen.Count > 0) {
                 txtbx_RijbewijsOud.Text = string.Join(',', bestuurder.rijbewijzen.Select(x => x.ToString()));
-                lbl_AantalRijbewijzen.Content = bestuurder.rijbewijzen.Count;
             } else { txtbx_RijbewijsOud.Text = "Geen rijbewijs!"; }
 
             if(bestuurder.Tankkaart != null) {
@@ -111,7 +110,6 @@ namespace FleetMgmt_WPF.BestuurderWindows {
             RijbewijsSelecteren rijbewijsSelectereb = new RijbewijsSelecteren();
             if (rijbewijsSelectereb.ShowDialog() == true) {
                 this.rijbewijzen = rijbewijsSelectereb.Rijbewijzen;
-                lbl_AantalRijbewijzen.Content = this.rijbewijzen.Count;
             }
         }
 
