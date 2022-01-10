@@ -51,8 +51,7 @@ namespace FleetMgmt_WPF.TankkaartWindows {
                 FleetMgmt_Business.Objects.Bestuurder gevondenBestuurder = bestuurder == null ? null : bestuurder;
                 string gevondenPincode = string.IsNullOrWhiteSpace(txtbw_Pincode.Text) ? null : txtbw_Pincode.Text;
                 DateTime gevondenDatum = Convert.ToDateTime(txtbx_Geldigheidsdatum.SelectedDate.Value);
-                if(gevondenDatum < DateTime.Now)
-                {
+                if(gevondenDatum < DateTime.Now){
                     MessageBox.Show("U mag geen datum in het verleden selecteren!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
