@@ -426,6 +426,7 @@ namespace FleetMgmg_Data.Repositories {
             Voertuig huidigVoertuig = this.geefVoertuig(voertuig.Chassisnummer);
             if (voertuig.Equals(huidigVoertuig)) throw new VoertuigRepositoryException("VoertuigRepository : bewerkVoertuig - Er is niks verandert!"); 
             string query1 = "UPDATE Voertuig SET Merk=@merk,Model=@model,Brandstof=@brandstof,TypeVoertuig=@typevoertuig,Kleur=@kleur,AantalDeuren=@aantaldeuren,Bestuurder=@bestuurder WHERE Chassisnummer=@chassisnummer";
+            string query2 = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
             SqlTransaction transaction = null;
             using (SqlConnection conn = ConnectionClass.getConnection()) {
                 try {
@@ -433,6 +434,11 @@ namespace FleetMgmg_Data.Repositories {
                     transaction = conn.BeginTransaction();
 
                     #region Voertuig
+                    using (SqlCommand cmd2 = new SqlCommand(query2, conn, transaction)) {
+                        cmd2.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                        cmd2.ExecuteNonQuery();
+                    }
+
                     using (SqlCommand cmd1 = new SqlCommand(query1, conn, transaction)) {
                         cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
                         cmd1.Parameters.AddWithValue("@merk", voertuig.Merk);
@@ -448,37 +454,13 @@ namespace FleetMgmg_Data.Repositories {
                     #endregion
 
                     #region Bestuurder
-                    // Huidige bestuurder niet null, nieuwe bestuurder niet null
-                    if (huidigVoertuig.Bestuurder != null && voertuig.Bestuurder != null) {
-                        // huidige bestuurder niet gelijk aan nieuwe bestuurder
-                        if (!huidigVoertuig.Bestuurder.Equals(voertuig.Bestuurder)) {
-                            string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
-                            using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
-                                cmd.Parameters.AddWithValue("@chassisnummer",voertuig.Chassisnummer);
-                                cmd.ExecuteNonQuery();
-                            }
+                    if(voertuig.Bestuurder != null) {
+                        string nieuwQuery = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
+                        using (SqlCommand cmd1 = new SqlCommand(nieuwQuery, conn, transaction)) {
+                            cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
+                            cmd1.Parameters.AddWithValue("@rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
 
-                            string nieuwQuery = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
-                            using (SqlCommand cmd1 = new SqlCommand(nieuwQuery, conn, transaction)) {
-                                cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
-                                cmd1.Parameters.AddWithValue("@rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
-
-                                cmd1.ExecuteNonQuery();
-                            }
-                        }
-                    //nieuwe bestuurder is null
-                    }else if(voertuig.Bestuurder == null) {
-                        string query = "UPDATE Bestuurder SET VoertuigChassisnummer=NULL WHERE VoertuigChassisnummer=@chassisnummer";
-                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
-                            cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
-                            cmd.ExecuteNonQuery();
-                        }
-                    }else if(voertuig.Bestuurder != null) {
-                        string query = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
-                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction)) {
-                            cmd.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
-                            cmd.Parameters.AddWithValue("@rijksregisternummer", voertuig.Bestuurder.Rijksregisternummer);
-                            cmd.ExecuteNonQuery();
+                            cmd1.ExecuteNonQuery();
                         }
                     }
                     #endregion
