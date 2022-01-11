@@ -39,5 +39,14 @@ namespace FleetMgmt_Business.Objects {
         public override string ToString() {
             return $"{this.Categorie.ToString()} {this.BehaaldOp.ToShortDateString()}";
         }
+
+        public override bool Equals(object obj) {
+            return obj is Rijbewijs rijbewijs &&
+                   Categorie == rijbewijs.Categorie;
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Categorie);
+        }
     }
 }

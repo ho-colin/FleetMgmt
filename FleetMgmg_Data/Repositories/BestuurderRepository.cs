@@ -368,7 +368,8 @@ namespace FleetMgmg_Data.Repositories {
 
                             #region Rijbewijs
                             if (!reader.IsDBNull(reader.GetOrdinal("Categorie"))) {
-                                dbBestuurder.voegRijbewijsToe(new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]));
+                                Rijbewijs ingelezen = new Rijbewijs((string)reader["Categorie"], (DateTime)reader["Behaald"]);
+                                if (!dbBestuurder.rijbewijzen.Contains(ingelezen)) { dbBestuurder.voegRijbewijsToe(ingelezen); }
                             }
                             #endregion
 
