@@ -407,6 +407,7 @@ namespace FleetMgmg_Data.Repositories {
 
                         reader.Close();
                         if (dbBestuurder != null && !lijstbestuurder.Contains(dbBestuurder)) { lijstbestuurder.Add(dbBestuurder); }
+                        if(dbBestuurder != null && dbVoertuig != null) { dbVoertuig.updateBestuurder(dbBestuurder); }
                         return lijstbestuurder;
                     }
                 }catch(Exception ex) {

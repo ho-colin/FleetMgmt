@@ -479,9 +479,8 @@ namespace FleetMgmg_Data.Repositories {
                                 cmdR.Parameters.AddWithValue("@bestuurder", voertuig.Bestuurder.Rijksregisternummer);
                                 int heeftRijbewijs = (int)cmdR.ExecuteScalar();
                                 if(heeftRijbewijs < 1) { throw new VoertuigRepositoryException($"Bestuurder mist het vereiste rijbewijs ({voertuig.TypeVoertuig.vereistRijbewijs.ToString()})"); }
-                            } catch (Exception) {
-
-                                throw;
+                            } catch (Exception ex) {
+                                throw new VoertuigRepositoryException($"Rijbewijs check misgelopen!, {ex.Message}",ex);
                             }
                         }
 
