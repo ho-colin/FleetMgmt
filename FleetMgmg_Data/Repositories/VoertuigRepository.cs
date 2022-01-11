@@ -400,6 +400,21 @@ namespace FleetMgmg_Data.Repositories {
 
                     #region Bestuurder
                     if(voertuig.Bestuurder != null) {
+
+                        //CHECK GELDIG RIJBEWIJS
+                        string rijbewijsQuery = "SELECT Count(*) FROM BestuurderRijbewijs WHERE Categorie=@categorie AND Bestuurder=@bestuurder";
+                        using (SqlCommand cmdR = new SqlCommand(rijbewijsQuery, conn, transaction)) {
+                            try {
+                                cmdR.Parameters.AddWithValue("@categorie", voertuig.TypeVoertuig.vereistRijbewijs.ToString());
+                                cmdR.Parameters.AddWithValue("@bestuurder", voertuig.Bestuurder.Rijksregisternummer);
+                                int heeftRijbewijs = (int)cmdR.ExecuteScalar();
+                                if (heeftRijbewijs < 1) { throw new VoertuigRepositoryException($"Bestuurder mist het vereiste rijbewijs ({voertuig.TypeVoertuig.vereistRijbewijs.ToString()})"); }
+                            } catch (Exception) {
+
+                                throw;
+                            }
+                        }
+
                         using (SqlCommand cmd2 = new SqlCommand(queryB, conn, transaction)) {
 
                             cmd2.Parameters.AddWithValue("@Chassisnummer", voertuig.Chassisnummer);
@@ -455,6 +470,21 @@ namespace FleetMgmg_Data.Repositories {
 
                     #region Bestuurder
                     if(voertuig.Bestuurder != null) {
+
+                        //CHECK GELDIG RIJBEWIJS
+                        string rijbewijsQuery = "SELECT Count(*) FROM BestuurderRijbewijs WHERE Categorie=@categorie AND Bestuurder=@bestuurder";
+                        using(SqlCommand cmdR = new SqlCommand(rijbewijsQuery, conn, transaction)) {
+                            try {
+                                cmdR.Parameters.AddWithValue("@categorie", voertuig.TypeVoertuig.vereistRijbewijs.ToString());
+                                cmdR.Parameters.AddWithValue("@bestuurder", voertuig.Bestuurder.Rijksregisternummer);
+                                int heeftRijbewijs = (int)cmdR.ExecuteScalar();
+                                if(heeftRijbewijs < 1) { throw new VoertuigRepositoryException($"Bestuurder mist het vereiste rijbewijs ({voertuig.TypeVoertuig.vereistRijbewijs.ToString()})"); }
+                            } catch (Exception) {
+
+                                throw;
+                            }
+                        }
+
                         string nieuwQuery = "UPDATE Bestuurder SET VoertuigChassisnummer=@chassisnummer WHERE Rijksregisternummer=@rijksregisternummer";
                         using (SqlCommand cmd1 = new SqlCommand(nieuwQuery, conn, transaction)) {
                             cmd1.Parameters.AddWithValue("@chassisnummer", voertuig.Chassisnummer);
