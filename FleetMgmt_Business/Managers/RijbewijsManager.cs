@@ -22,7 +22,7 @@ namespace FleetMgmt_Business.Managers {
                 return repo.heeftRijbewijs(r, b);
             }
             catch(Exception ex) {
-                throw new RijbewijsManagerException("RijbewijsManager: heeftRijbewijs - gefaald", ex);
+                throw new RijbewijsManagerException($"RijbewijsManager: heeftRijbewijs - {ex.Message}", ex);
             }
         }
 
@@ -31,7 +31,7 @@ namespace FleetMgmt_Business.Managers {
                 return repo.toonRijbewijzen(b);
             }
             catch(Exception ex) {
-                throw new RijbewijsManagerException("RijbewijsManager: toonRijbewijzen - gefaald", ex);
+                throw new RijbewijsManagerException($"RijbewijsManager: toonRijbewijzen - {ex.Message}", ex);
             }
         }
 
@@ -40,7 +40,7 @@ namespace FleetMgmt_Business.Managers {
                 repo.verwijderRijbewijs(r, b);
             }
             catch(Exception ex) {
-                throw new RijbewijsManagerException("RijbewijsManager: verwijderRijbewijs - gefaald", ex);
+                throw new RijbewijsManagerException($"RijbewijsManager: verwijderRijbewijs - {ex.Message}", ex);
             }
         }
 
@@ -49,7 +49,7 @@ namespace FleetMgmt_Business.Managers {
                 repo.voegRijbewijsToe(r, b);
             }
             catch(Exception ex) {
-                throw new RijbewijsManagerException("RijbewijsManager: voegRijbewijsToe - gefaald", ex);
+                throw new RijbewijsManagerException($"RijbewijsManager: voegRijbewijsToe - {ex.Message}", ex);
             }
         }
     }
