@@ -56,7 +56,13 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public void verwijderBestuurder(Bestuurder bestuurder) {
-            repo.verwijderBestuurder(bestuurder);
+            try {
+                repo.verwijderBestuurder(bestuurder);
+            }
+            catch(Exception ex) {
+                throw new BestuurderManagerException("BestuurderManager: verwijderBestuurder - gefaald", ex);
+            }
+
         }
 
         public Bestuurder voegBestuurderToe(Bestuurder bestuurder) {

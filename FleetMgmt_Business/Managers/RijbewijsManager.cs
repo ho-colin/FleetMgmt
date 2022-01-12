@@ -1,4 +1,5 @@
 ﻿using FleetMgmt_Business.Enums;
+using FleetMgmt_Business.Exceptions;
 using FleetMgmt_Business.Objects;
 using FleetMgmt_Business.Repos;
 using System;
@@ -17,19 +18,39 @@ namespace FleetMgmt_Business.Managers {
         }
 
         public bool heeftRijbewijs(RijbewijsEnum r, Bestuurder b) {
-            return repo.heeftRijbewijs(r, b);
+            try {
+                return repo.heeftRijbewijs(r, b);
+            }
+            catch(Exception ex) {
+                throw new RijbewijsManagerException("RijbewijsManager: heeftRijbewijs - gefaald", ex);
+            }
         }
 
         public Bestuurder toonRijbewijzen(Bestuurder b) {
-            return repo.toonRijbewijzen(b);
+            try {
+                return repo.toonRijbewijzen(b);
+            }
+            catch(Exception ex) {
+                throw new RijbewijsManagerException("RijbewijsManager: toonRijbewijzen - gefaald", ex);
+            }
         }
 
         public void verwijderRijbewijs(RijbewijsEnum r, Bestuurder b) {
-            repo.verwijderRijbewijs(r, b);
+            try {
+                repo.verwijderRijbewijs(r, b);
+            }
+            catch(Exception ex) {
+                throw new RijbewijsManagerException("RijbewijsManager: verwijderRijbewijs - gefaald", ex);
+            }
         }
 
         public void voegRijbewijsToe(Rijbewijs r, Bestuurder b) {
-            repo.voegRijbewijsToe(r, b);
+            try {
+                repo.voegRijbewijsToe(r, b);
+            }
+            catch(Exception ex) {
+                throw new RijbewijsManagerException("RijbewijsManager: voegRijbewijsToe - gefaald", ex);
+            }
         }
     }
 }
